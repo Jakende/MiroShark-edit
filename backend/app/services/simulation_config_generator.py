@@ -579,16 +579,16 @@ class SimulationConfigGenerator:
 Please generate a time configuration JSON.
 
 ### Basic Principles (for reference only, adjust flexibly based on specific events and participant groups):
-- Follow a typical daily activity schedule
+- Follow a typical professional activity schedule
 - Midnight 0-5am almost no activity (activity coefficient 0.05)
 - Morning 6-8am gradually active (activity coefficient 0.4)
 - Work hours 9am-6pm moderately active (activity coefficient 0.7)
-- Evening 7-10pm is peak time (activity coefficient 1.5)
+- Evening 7-10pm is peak time for citizens and public reactions (activity coefficient 1.5)
 - After 11pm activity declines (activity coefficient 0.5)
-- General pattern: low activity at night, increasing in morning, moderate during work, peak in evening
+- General pattern: low activity at night, increasing in morning, moderate during work, peak in evening for public discourse
 - **Important**: The following example values are for reference only; you need to adjust specific time periods based on event nature and participant group characteristics
-  - For example: student groups may peak at 9-11pm; media active all day; official institutions only during work hours
-  - For example: breaking news may cause late-night discussion, off_peak_hours can be shortened appropriately
+  - For example: expert/academic groups may peak at 9-11am; media active all day; institutions only during work hours
+  - For example: urgent policy announcements may cause late-night discussion, off_peak_hours can be shortened appropriately
 
 ### Return JSON format (no markdown)
 
@@ -602,29 +602,29 @@ Example:
     "off_peak_hours": [0, 1, 2, 3, 4, 5],
     "morning_hours": [6, 7, 8],
     "work_hours": [9, 10, 11, 12, 13, 14, 15, 16, 17, 18],
-    "reasoning": "Time configuration explanation for this event"
+    "reasoning": "Time configuration explanation for this discourse/policy scenario"
 }}
 
 Field descriptions:
-- total_simulation_hours (int): Total simulation duration, 24-168 hours, shorter for breaking events, longer for ongoing topics
+- total_simulation_hours (int): Total simulation duration, 24-168 hours, shorter for urgent policy responses, longer for ongoing debates or peer-review processes
 - minutes_per_round (int): Duration per round, 30-120 minutes, recommended 60 minutes
 - agents_per_hour_min (int): Minimum Agents activated per hour (range: 1-{max_agents_allowed})
 - agents_per_hour_max (int): Maximum Agents activated per hour (range: 1-{max_agents_allowed})
-- peak_hours (int array): Peak hours, adjust based on event participant groups
+- peak_hours (int array): Peak hours, adjust based on participant group (institutions: 9-17, public: 18-22)
 - off_peak_hours (int array): Off-peak hours, usually late night/early morning
 - morning_hours (int array): Morning hours
 - work_hours (int array): Work hours
 - reasoning (string): Brief explanation of why this configuration was chosen"""
 
         system_prompt = (
-            "You are a social media simulation architect. Return pure JSON.\n\n"
+            "You are a complex discourse and policy simulation architect. Return pure JSON.\n\n"
             "TIMING HEURISTICS:\n"
-            "- Breaking news / crisis: short rounds (15-30 min), 24-48 hours total, high activity\n"
-            "- Product launch / announcement: medium rounds (30-60 min), 48-72 hours, front-loaded activity\n"
-            "- Policy debate / slow-burn issue: long rounds (60-120 min), 72-168 hours, steady activity\n"
-            "- Peak hours: 8-10 AM and 6-9 PM local time. Quiet: 12-6 AM.\n"
-            "- More agents = lower per-agent activity (they can't all post every round).\n"
-            "- The simulation should feel like real-time social media — bursts of activity, not constant noise."
+            "- Urgent policy announcement / crisis response: short rounds (15-30 min), 24-48 hours total, high activity\n"
+            "- Publication of a report / paper / proposal: medium rounds (30-60 min), 48-72 hours, front-loaded activity\n"
+            "- Ongoing policy debate / peer-review process / public consultation: long rounds (60-120 min), 72-168 hours, steady activity\n"
+            "- Peak hours: 9-11 AM and 2-5 PM for formal discourse; 6-9 PM for public/citizen reactions.\n"
+            "- More agents = lower per-agent activity (they can't all publish statements every round).\n"
+            "- The simulation should feel like an organic discourse — formal statements, expert reviews, and public reactions, not constant noise."
         )
 
         try:
@@ -723,34 +723,35 @@ Simulation requirement: {simulation_requirement}
 
 ## Task
 Please generate event configuration JSON:
-- Extract hot topic keywords
-- Describe public opinion development direction
-- Design initial post content, **each post must specify poster_type (publisher type)**
+- Extract core arguments or key policy implications as discourse keywords
+- Describe the overall discourse development direction (who supports, who opposes, how the debate evolves)
+- Design initial statements/memorandums/proposals, **each must specify poster_type (publisher type)**
 
-**Important**: poster_type must be selected from the "Available Entity Types" above, so initial posts can be assigned to suitable Agents for publishing.
-For example: official statements should be published by Official/University types, news by MediaOutlet, student opinions by Student.
+**Important**: poster_type must be selected from the "Available Entity Types" above, so initial statements can be assigned to suitable Agents for publishing.
+For example: policy proposals should be published by Institution/Government types, expert analyses by Expert/Academic types, citizen reactions by Person types.
 
 Return JSON format (no markdown):
 {{
-    "hot_topics": ["keyword1", "keyword2", ...],
-    "narrative_direction": "<public opinion development direction description>",
+    "hot_topics": ["core argument or policy implication 1", "core argument or policy implication 2", ...],
+    "narrative_direction": "<discourse development direction description>",
     "initial_posts": [
-        {{"content": "post content", "poster_type": "entity type (must be selected from available types)"}},
+        {{"content": "statement/proposal/review content", "poster_type": "entity type (must be selected from available types)"}},
         ...
     ],
     "reasoning": "<brief explanation>"
 }}"""
 
         system_prompt = (
-            "You are a public opinion simulation designer. Return pure JSON.\n\n"
+            "You are a public discourse and policy debate designer. Return pure JSON.\n\n"
             "EVENT DESIGN HEURISTICS:\n"
-            "- Initial posts should feel organic, not like press releases. Real people break news casually.\n"
-            "- The first poster should be whoever would realistically learn about this first "
-            "(journalist, insider, affected person — not an institution).\n"
-            "- Schedule 2-3 'plot twists' — new information that changes the dynamic mid-simulation.\n"
-            "- Hot topics should emerge from the scenario, not be forced. Think: what would trend?\n"
+            "- Initial statements should reflect realistic discourse dynamics: an institution publishes a proposal, "
+            "an expert reviews it, a citizen reacts to its real-world impact.\n"
+            "- The first statement should come from whoever would realistically initiate the discourse "
+            "(an institution issuing a memorandum, a researcher publishing findings, or a journalist reporting a policy change).\n"
+            "- Schedule 2-3 'turning points' — new evidence, a counter-argument, or an unexpected endorsement that shifts the debate.\n"
+            "- Core arguments or key policy implications should emerge organically from the scenario context.\n"
             "- poster_type must exactly match available entity types.\n"
-            "- Narrative direction should have tension — not everyone agrees, and that's the point."
+            "- Narrative direction should have tension — stakeholders hold differing positions, and that's the point."
         )
 
         try:
@@ -965,7 +966,7 @@ Generate ONE prediction market that best captures the central question of this s
                 "summary": e.summary[:summary_len] if e.summary else ""
             })
 
-        prompt = f"""Based on the following information, generate social media activity configuration for each entity.
+        prompt = f"""Based on the following information, generate discourse participation configuration for each stakeholder.
 
 Simulation requirement: {simulation_requirement}
 
@@ -975,12 +976,13 @@ Simulation requirement: {simulation_requirement}
 ```
 
 ## Task
-Generate activity configuration for each entity, note:
-- **Time follows typical daily schedule**: Midnight 0-5am almost no activity, evening 7-10pm most active
-- **Official institutions** (University/GovernmentAgency): Low activity (0.1-0.3), active during work hours (9-17), slow response (60-240 min), high influence (2.5-3.0)
-- **Media** (MediaOutlet): Medium activity (0.4-0.6), active all day (8-23), fast response (5-30 min), high influence (2.0-2.5)
-- **Individuals** (Student/Person/Alumni): High activity (0.6-0.9), mainly active in evening (18-23), fast response (1-15 min), low influence (0.8-1.2)
-- **Public figures/experts**: Medium activity (0.4-0.6), medium-high influence (1.5-2.0)
+Generate activity configuration for each stakeholder, note:
+- **Time follows a professional schedule**: Late night 0-5am almost no activity, morning 9-11am and afternoon 2-5pm peak for formal actors, evening 6-9pm peak for citizens/public
+- **Institutions/Governments** (University/GovernmentAgency/Government): Low activity (0.1-0.3), active during work hours (9-17), slow response (60-240 min), high influence (2.5-3.0)
+- **Media/Journalists** (MediaOutlet/Journalist/Media): Medium activity (0.4-0.6), active all day (8-23), fast response (5-30 min), high influence (2.0-2.5)
+- **Experts/Academics** (Professor/Expert/Researcher/Academic/Official): Moderate activity (0.3-0.5), active during work and evening hours (8-22), moderate response (15-90 min), high influence (1.5-2.0)
+- **Advocacy/NGOs** (NGO/AdvocacyGroup/Advocacy/Lobbyist): Medium-high activity (0.5-0.7), active during work and evening hours, moderate response (15-60 min), medium influence (1.2-1.8)
+- **Normal Population/Citizens** (Person/Organization fallback): High activity (0.6-0.9), mainly active in evening (18-23), fast response (1-15 min), lower influence (0.8-1.2) — represent grassroots reactions to real-world policy impact
 
 Return JSON format (no markdown):
 {{
@@ -988,9 +990,9 @@ Return JSON format (no markdown):
         {{
             "agent_id": <must match input>,
             "activity_level": <0.0-1.0>,
-            "posts_per_hour": <posting frequency>,
-            "comments_per_hour": <commenting frequency>,
-            "active_hours": [<active hours list, considering typical daily schedule>],
+            "posts_per_hour": <statement/contribution frequency>,
+            "comments_per_hour": <response/reaction frequency>,
+            "active_hours": [<active hours list, considering professional or citizen schedule>],
             "response_delay_min": <minimum response delay in minutes>,
             "response_delay_max": <maximum response delay in minutes>,
             "sentiment_bias": <-1.0 to 1.0>,
@@ -1002,18 +1004,18 @@ Return JSON format (no markdown):
 }}"""
 
         system_prompt = (
-            "You are a social media behavior analyst. Return pure JSON.\n\n"
+            "You are a stakeholder and public behavior analyst. Return pure JSON.\n\n"
             "AGENT BEHAVIOR HEURISTICS:\n"
-            "- Institutions post rarely (0.5-1/hr) but with high influence. They don't shitpost.\n"
-            "- Journalists post frequently (2-4/hr) during business hours, mostly sharing/commenting.\n"
-            "- Activists post heavily (3-5/hr) at all hours with strong sentiment bias.\n"
-            "- Regular people post occasionally (0.3-1/hr) and mostly like/comment rather than post.\n"
-            "- Experts post moderately (1-2/hr) with neutral tone but high influence.\n"
+            "- Institutions/Governments publish rarely (0.1-0.3/hr) but with very high influence. They issue formal statements and policy reviews.\n"
+            "- Experts/Academics publish moderately (0.3-0.8/hr) during business and evening hours, with detailed peer-reviews and arguments.\n"
+            "- Media/Journalists report and synthesize frequently (1-3/hr) during business hours, mostly covering and contextualizing developments.\n"
+            "- NGOs/Advocacy groups publish position papers and mobilize public opinion (0.5-1.5/hr) with moderate-strong sentiment bias.\n"
+            "- Normal Population/Citizens (Person fallback) react to the real-world impact of the policy, express concerns, or share personal experiences (0.3-1/hr), mainly in the evening with localized but frequent contributions.\n"
             "- stance should reflect the entity's actual position from the document, not random assignment.\n"
             "- sentiment_bias and stance must be CONSISTENT: a supportive entity should have positive bias.\n"
-            "- influence_weight: 2.0-3.0 for institutions/media, 1.0-2.0 for experts, 0.5-1.0 for individuals.\n"
-            "- active_hours should reflect the entity's timezone and role (journalists: business hours, "
-            "activists: evenings, institutions: 9-5)."
+            "- influence_weight: 2.5-3.0 for institutions/governments, 1.5-2.0 for experts/media, 1.0-1.5 for NGOs, 0.5-1.0 for normal population.\n"
+            "- active_hours should reflect the entity's role: institutions/experts during business hours (9-17), "
+            "media all day (8-22), normal population mainly evenings (18-23)."
         )
 
         try:
@@ -1053,11 +1055,12 @@ Return JSON format (no markdown):
         return configs
 
     def _generate_agent_config_by_rule(self, entity: EntityNode) -> Dict[str, Any]:
-        """Generate single Agent configuration based on rules (Chinese daily schedule)"""
+        """Generate single Agent configuration based on rules (professional discourse schedule)"""
         entity_type = (entity.get_entity_type() or "Unknown").lower()
 
-        if entity_type in ["university", "governmentagency", "ngo"]:
-            # Official institutions: active during work hours, low frequency, high influence
+        if entity_type in ["university", "governmentagency", "government"]:
+            # Institutions/Governments: active during work hours, low frequency, very high influence
+            # Issue formal statements and policy reviews; infrequent but high impact
             return {
                 "activity_level": 0.2,
                 "posts_per_hour": 0.1,
@@ -1069,8 +1072,9 @@ Return JSON format (no markdown):
                 "stance": "neutral",
                 "influence_weight": 3.0
             }
-        elif entity_type in ["mediaoutlet"]:
-            # Media: active all day, moderate frequency, high influence
+        elif entity_type in ["mediaoutlet", "journalist", "media"]:
+            # Media/Journalists: active all day, moderate-high frequency, high influence
+            # Report and synthesize developments across the discourse
             return {
                 "activity_level": 0.5,
                 "posts_per_hour": 0.8,
@@ -1082,8 +1086,9 @@ Return JSON format (no markdown):
                 "stance": "observer",
                 "influence_weight": 2.5
             }
-        elif entity_type in ["professor", "expert", "official"]:
-            # Experts/professors: active during work + evening hours, moderate frequency
+        elif entity_type in ["professor", "expert", "researcher", "academic", "official"]:
+            # Experts/Academics: active during work and evening hours, moderate frequency
+            # Publish detailed peer-reviews and arguments; moderate frequency, high influence
             return {
                 "activity_level": 0.4,
                 "posts_per_hour": 0.3,
@@ -1095,34 +1100,23 @@ Return JSON format (no markdown):
                 "stance": "neutral",
                 "influence_weight": 2.0
             }
-        elif entity_type in ["student"]:
-            # Students: mainly evening, high frequency
-            return {
-                "activity_level": 0.8,
-                "posts_per_hour": 0.6,
-                "comments_per_hour": 1.5,
-                "active_hours": [8, 9, 10, 11, 12, 13, 18, 19, 20, 21, 22, 23],  # Morning + evening
-                "response_delay_min": 1,
-                "response_delay_max": 15,
-                "sentiment_bias": 0.0,
-                "stance": "neutral",
-                "influence_weight": 0.8
-            }
-        elif entity_type in ["alumni"]:
-            # Alumni: mainly evening
+        elif entity_type in ["advocacygroup", "advocacy", "ngoadvocacy", "lobbyist", "ngo"]:
+            # Advocacy/NGOs: active during work and evening hours, medium-high frequency
+            # Publish position papers and mobilize public opinion
             return {
                 "activity_level": 0.6,
-                "posts_per_hour": 0.4,
-                "comments_per_hour": 0.8,
-                "active_hours": [12, 13, 19, 20, 21, 22, 23],  # Lunch break + evening
-                "response_delay_min": 5,
-                "response_delay_max": 30,
-                "sentiment_bias": 0.0,
+                "posts_per_hour": 0.5,
+                "comments_per_hour": 1.0,
+                "active_hours": list(range(8, 23)),  # 8:00-22:59
+                "response_delay_min": 10,
+                "response_delay_max": 60,
+                "sentiment_bias": 0.1,
                 "stance": "neutral",
-                "influence_weight": 1.0
+                "influence_weight": 1.5
             }
         else:
-            # Ordinary people: evening peak
+            # Normal population/Citizens (Person/Organization fallback): evening peak
+            # React to the real-world impact of the policy; express concerns or personal experiences
             return {
                 "activity_level": 0.7,
                 "posts_per_hour": 0.5,
