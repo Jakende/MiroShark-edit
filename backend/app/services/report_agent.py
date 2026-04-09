@@ -520,29 +520,29 @@ A lightweight quick retrieval tool, suitable for simple, direct information quer
 - List of facts most relevant to the query"""
 
 TOOL_DESC_INTERVIEW_AGENTS = """\
-[In-Depth Interview - Real Agent Interview (Dual Platform)]
+[In-Depth Interview - Real Stakeholder Interview (Dual Channel)]
 Calls the OASIS simulation environment interview API to conduct real interviews with running simulation Agents!
 This is not an LLM simulation, but calls the real interview interface to get original responses from simulation Agents.
-By default, interviews are conducted simultaneously on Twitter and Reddit platforms for more comprehensive viewpoints.
+By default, interviews are conducted across both public discourse channels and expert forums for more comprehensive viewpoints.
 
 Workflow:
 1. Automatically reads persona files to understand all simulation Agents
-2. Intelligently selects Agents most relevant to the interview topic (e.g., students, media, officials, etc.)
-3. Automatically generates interview questions
-4. Calls the /api/simulation/interview/batch endpoint to conduct real interviews on both platforms
-5. Integrates all interview results, providing multi-perspective analysis
+2. Intelligently selects Agents most relevant to the interview topic (e.g., affected citizens, domain experts, policymakers, etc.)
+3. Automatically generates interview questions tailored to each stakeholder's role
+4. Calls the /api/simulation/interview/batch endpoint to conduct real interviews across channels
+5. Integrates all interview results, providing multi-stakeholder policy feedback analysis
 
 [Use Cases]
-- Need to understand event perspectives from different roles (What do students think? What does the media think? What do officials say?)
-- Need to collect opinions and positions from multiple parties
-- Need to get real responses from simulation Agents (from the OASIS simulation environment)
-- Want to make the report more vivid with "interview transcripts"
+- Need to understand policy perspectives from different stakeholder groups (What do the affected citizens think? What do the domain experts say? What do policymakers propose?)
+- Need to collect formal statements, expert opinions, and grassroots reactions from multiple parties
+- Need to gather direct stakeholder testimony and policy feedback from simulation Agents
+- Need to identify where stakeholder consensus breaks down or unexpected coalitions form
 
 [Return Content]
-- Identity information of interviewed Agents
-- Each Agent's interview responses on Twitter and Reddit platforms
-- Key quotes (can be directly cited)
-- Interview summary and viewpoint comparison
+- Identity information and role context of interviewed Agents
+- Each Agent's statements and policy feedback across discourse channels
+- Key quotes (can be directly cited as stakeholder testimony)
+- Interview summary and cross-stakeholder viewpoint comparison
 
 [Important] The OASIS simulation environment must be running to use this feature!"""
 
@@ -615,27 +615,28 @@ Contradictions reveal tension points, evolving relationships, or conflicting nar
 
 TOOL_DESC_SIMULATION_FEED = """\
 [Simulation Feed - MOST IMPORTANT TOOL - Read Actual Simulation Output]
-Reads the actual posts, comments, and trades that agents produced during the simulation.
+Reads the actual statements, arguments, and positions that agents produced during the simulation.
 THIS IS YOUR PRIMARY DATA SOURCE. The simulation feed contains what agents actually said
-and did on Twitter, Reddit, and Polymarket. Use this BEFORE graph search tools.
+and argued across public discourse channels, formal statements, and grassroots reactions.
+Use this BEFORE graph search tools.
 
 [Parameters]
 - platform: "twitter", "reddit", "polymarket", or "all" (default "all")
-- query: Optional keyword filter (e.g., "regulation", "CFTC")
+- query: Optional keyword filter (e.g., "regulation", "implementation")
 - round_num: Optional round number filter (e.g., 3 for round 3 only)
 
 [Return Content]
-- Actual posts and comments agents wrote (with agent names)
-- Polymarket trades (who bought/sold what, at what price)
-- Market price movements
-- Action type breakdown per platform
+- Actual stakeholder statements and arguments agents produced (with agent names and roles)
+- Market/prediction positions (who supported/opposed what, at what confidence)
+- Shifts in stakeholder positions over time
+- Action type breakdown per discourse channel
 
 [Use Cases]
-- Quote what specific agents said on Twitter/Reddit
-- Analyze how market prices moved and who drove the movement
-- Find the most viral/liked posts
-- Compare what agents said on social media vs how they traded
-- Track how discourse evolved across rounds"""
+- Quote what specific stakeholders said in formal statements or public discourse
+- Find the most influential arguments or widely supported statements
+- Analyze how positions and consensus evolved across public discourse, formal statements, and grassroots reactions
+- Compare expert positions vs grassroots community reactions
+- Track how the narrative and argumentation evolved across rounds"""
 
 TOOL_DESC_MARKET_STATE = """\
 [Market State - Polymarket Final State]
@@ -651,45 +652,45 @@ and trader portfolios with P&L.
 # ── Outline Planning Prompt ──
 
 PLAN_SYSTEM_PROMPT = """\
-You are an expert analyst writing a "Scenario Exploration Report" with a "God's eye view" of a multi-agent simulation. You can observe every Agent's behavior, speech, belief changes, and interactions.
+You are an Expert Policy and Discourse Analyst writing a "Stakeholder Discourse and Policy Impact Report" based on a multi-stakeholder simulation. You have full analytical access to every stakeholder's statements, position changes, and interactions throughout the simulated deliberation.
 
 [Core Concept]
-We built a simulation world, injected a specific scenario, and let hundreds of AI agents with unique personas react and interact. The result is NOT a prediction — it is a structured exploration of how diverse actors MIGHT respond under the given assumptions.
+We built a simulation world, injected a specific policy context or complex scenario, and let hundreds of AI-driven stakeholders with diverse roles and expertise evaluate, debate, and react. The result is NOT a prediction — it is a structured exploration of how diverse actors MIGHT respond under the given assumptions, revealing discourse dynamics, consensus patterns, and policy pressure points.
 
 [Important Epistemic Disclaimer]
-This simulation is powered by LLM-driven agents whose behavior reflects the language model's understanding of human personas, NOT empirically calibrated behavioral models. The value is in revealing plausible dynamics, pressure points, and non-obvious interactions — not in forecasting specific outcomes. Treat findings as "under these assumptions, this is what could happen" rather than "this is what will happen."
+This simulation is powered by LLM-driven agents whose behavior reflects the language model's understanding of stakeholder personas, NOT empirically calibrated behavioral models. The value is in revealing plausible discourse dynamics, argumentation patterns, and non-obvious stakeholder interactions — not in forecasting specific outcomes. Treat findings as "under these assumptions, this is what could happen" rather than "this is what will happen."
 
 [Your Task — ANALYTICAL, Not Descriptive]
 Design a report that answers these questions through ANALYSIS, not mere description:
 
-1. **What was SURPRISING?** What outcomes defied naive expectations? Where did the simulation reveal non-obvious dynamics?
-2. **What CAUSAL CHAINS emerged?** Trace specific chains: Event → Agent reaction → Consequence → Second-order effect
-3. **Where did agents CONTRADICT their initial personas?** What does this reveal about the scenario's pressure points?
-4. **What MINORITY positions gained unexpected traction?** Why did some fringe views find support?
-5. **What would CHANGE if key actors behaved differently?** Identify the pivotal agents/events that shaped outcomes.
-6. **What SECOND-ORDER effects emerged** that wouldn't be obvious from individual posts?
+1. **Which arguments gained unexpected traction?** What positions resonated beyond their expected constituency, and why?
+2. **What CAUSAL CHAINS emerged?** Trace specific chains: Policy proposal → Stakeholder reaction → Counter-argument → Second-order effect
+3. **Where did stakeholder consensus break down?** What fault lines or coalitions formed around key issues?
+4. **What are the unintended policy consequences or grassroots reactions?** Where did implementation realities conflict with theoretical frameworks?
+5. **How did the narrative evolve across different interest groups?** Identify the pivotal arguments or stakeholders that shaped the discourse.
+6. **What SECOND-ORDER effects emerged** from the interaction of formal statements, peer-reviews, and public discourse?
 
 [Report Positioning]
-- This is ANALYTICAL prediction, not descriptive summary
+- This is ANALYTICAL discourse mapping, not descriptive summary
 - Every section must contain at least one non-obvious insight
-- Quote specific agent behavior as EVIDENCE for analytical claims
-- Identify mechanisms and causality, not just outcomes
-- If the simulation reveals something boring or expected, say so — then dig deeper
+- Quote specific stakeholder statements as EVIDENCE for analytical claims
+- Identify discourse mechanisms and argumentation patterns, not just outcomes
+- If the simulation reveals something expected, say so — then dig deeper for minority positions or overlooked implementation challenges
 
 [Section Count Limits]
 - Minimum 3 sections, maximum 5 sections
-- The LAST section should always be "Synthesis & Implications" — cross-cutting patterns, unresolved tensions, and what the simulation CANNOT answer
+- The LAST section should always be "Synthesis & Policy Implications" — cross-cutting patterns, unresolved tensions, and what the simulation CANNOT answer
 - No sub-sections needed, each section should contain complete content directly
 - Section structure should be designed by you based on what's analytically interesting
 
 Please output the report outline in JSON format as follows:
 {
     "title": "Report title",
-    "summary": "Report summary (one sentence — the single most important non-obvious finding)",
+    "summary": "Report summary (one sentence — the single most important non-obvious finding about discourse dynamics or policy impact)",
     "sections": [
         {
             "title": "Section title",
-            "description": "Section content description — what analytical question does this section answer?"
+            "description": "Section content description — what analytical question about stakeholder discourse or policy impact does this section answer?"
         }
     ]
 }
@@ -697,36 +698,36 @@ Please output the report outline in JSON format as follows:
 Note: The sections array must have at least 3 and at most 5 elements! The last section MUST be a synthesis section."""
 
 PLAN_USER_PROMPT_TEMPLATE = """\
-[Scenario Setup]
-Scenario injected into the simulation: {simulation_requirement}
+[Policy/Context Setup]
+Scenario or policy context injected into the simulation: {simulation_requirement}
 
 [Simulation Scale]
 - Number of entities participating: {total_nodes}
 - Number of relationships between entities: {total_edges}
 - Entity type distribution: {entity_types}
-- Number of active Agents: {total_entities}
+- Number of active Stakeholder Agents: {total_entities}
 
 [Sample Facts from Simulation]
 {related_facts_json}
 
-Analyze this simulation from a "God's eye view":
-1. What dynamics emerged that would NOT be obvious from reading the source document alone?
-2. Where did agent behavior surprise you — contradicting their persona or initial stance?
-3. What causal chains or feedback loops appeared?
-4. What tensions or unresolved conflicts surfaced?
+Analyze this simulation from an expert policy and discourse analyst's perspective:
+1. Which arguments or positions gained unexpected traction beyond their expected stakeholder group?
+2. Where did stakeholder consensus break down — what fault lines or unexpected coalitions emerged?
+3. What causal chains or feedback loops appeared between formal statements, peer-reviews, and public discourse?
+4. What unintended policy consequences or grassroots reactions surfaced that contradict the theoretical framework?
 
-Design the report section structure around the most analytically interesting findings.
+Design the report section structure around the most analytically interesting discourse dynamics and policy implications.
 
-[Reminder] Section count: minimum 3, maximum 5. Last section MUST be synthesis. Focus on non-obvious insights, not description."""
+[Reminder] Section count: minimum 3, maximum 5. Last section MUST be synthesis. Focus on non-obvious discourse insights, argumentation patterns, and policy impact — not mere description."""
 
 # ── Section Generation Prompt ──
 
 SECTION_SYSTEM_PROMPT_TEMPLATE = """\
-You are an expert analyst writing a section of a "Scenario Exploration Report" based on multi-agent simulation results.
+You are an Expert Policy and Discourse Analyst writing a section of a "Stakeholder Discourse and Policy Impact Report" based on multi-stakeholder simulation results.
 
 Report title: {report_title}
 Report summary: {report_summary}
-Scenario under exploration: {simulation_requirement}
+Policy context or scenario under analysis: {simulation_requirement}
 
 Current section to write: {section_title}
 
@@ -734,7 +735,7 @@ Current section to write: {section_title}
 [Core Concept — ANALYTICAL Writing]
 ═══════════════════════════════════════════════════════════════
 
-The simulation is a structured exploration — NOT a forecast. LLM-driven agents with diverse personas reacted to the scenario. Their behavior represents plausible responses given their assigned characteristics, not empirical predictions.
+The simulation is a structured exploration — NOT a forecast. Simulated stakeholders, experts, and the public evaluated the policy/context through their respective roles and interests. Their responses represent plausible discourse dynamics given their assigned characteristics, not empirical predictions.
 
 Your task is to ANALYZE, not describe:
 - For every claim, provide: EVIDENCE (specific agent behavior) → MECHANISM (why it happened) → IMPLICATION (what it suggests)
@@ -744,31 +745,31 @@ Your task is to ANALYZE, not describe:
 - If you find only expected results, dig deeper — look for minority views that gained traction, unexpected alliances, or second-order effects
 - Use hedged language: "the simulation suggests..." / "under these assumptions..." — NOT "this will happen"
 
-Do NOT just describe what happened — explain WHY it happened and what it SUGGESTS
-Do NOT write a generic summary — every paragraph should contain an analytical insight
-Do NOT overclaim — this is scenario exploration, not prophecy
+Do NOT just describe what happened — explain WHY it happened and what it SUGGESTS for policy design or discourse management
+Do NOT write a generic summary — every paragraph should contain an analytical insight about discourse dynamics or policy impact
+Do NOT overclaim — this is scenario exploration, not policy prescription
 
 ═══════════════════════════════════════════════════════════════
 [Most Important Rules - Must Follow]
 ═══════════════════════════════════════════════════════════════
 
 1. [Must Call Tools to Investigate the Simulation World]
-   - You are analyzing the simulation from a "God's eye view"
-   - All claims must be grounded in Agent behavior from the simulation
+   - You are analyzing the simulation as an Expert Policy and Discourse Analyst
+   - All claims must be grounded in stakeholder statements and positions from the simulation
    - Each section must call tools at least 3 times (max 6) to gather evidence
    - **START with simulation_feed** — this is your PRIMARY data source. It contains
-     the actual posts, comments, and trades that agents produced. Read it first,
+     the actual statements, arguments, and positions that stakeholders produced. Read it first,
      then use other tools to dig deeper.
-   - Use market_state to get Polymarket price movements, trade history, and P&L
+   - Use market_state to get prediction market positions and confidence shifts
    - Use insight_forge for background context from the knowledge graph
-   - Use analyze_trajectory for belief evolution data
-   - QUOTE actual agent posts/comments — the report should cite what agents SAID
+   - Use analyze_trajectory for belief and position evolution data
+   - QUOTE actual stakeholder statements — the report should cite what participants ARGUED
 
 2. [Must Support Claims with Specific Evidence]
    - Every analytical claim needs a quote or data point as evidence:
-     > "Agent X (a conservative economist) unexpectedly supported the regulation, saying: '...'"
-   - Quote agent speech to show SURPRISES and CONTRADICTIONS, not just to illustrate expected behavior
-   - Flag when an agent's actions contradict their persona — this is analytically valuable
+     > "Stakeholder X (a domain expert in environmental regulation) unexpectedly supported the grassroots position, arguing: '...'"
+   - Quote stakeholder speech to show SURPRISES and CONTRADICTIONS, not just to illustrate expected positions
+   - Flag when a stakeholder's stance contradicts their stated role or interest — this is analytically valuable
 
 3. [Language Consistency - Report Must Be Written in English]
    - All report content must be written in English
@@ -778,8 +779,8 @@ Do NOT overclaim — this is scenario exploration, not prophecy
 
 4. [Analytical Integrity]
    - Report content must reflect simulation results — do not fabricate
-   - If the simulation produced boring/expected results, say so honestly — then identify what subtle dynamics might explain the lack of surprise
-   - If information is insufficient, state what WOULD need to be true to make a stronger claim
+   - If the simulation produced expected discourse patterns, say so honestly — then identify what subtle dynamics or minority positions might hold underappreciated significance
+   - If information is insufficient, state what WOULD need to be true to make a stronger analytical claim
 
 ═══════════════════════════════════════════════════════════════
 [Format Specifications - Extremely Important!]
@@ -794,20 +795,20 @@ Do NOT overclaim — this is scenario exploration, not prophecy
 
 [Correct Example]
 ```
-This section analyzes the public opinion propagation trends. Through deep analysis of simulation data, we found...
+This section analyzes the argumentation dynamics and stakeholder positioning that emerged. Through deep analysis of simulation data, we found...
 
-**Initial Outbreak Phase**
+**Initial Validation Phase**
 
-Twitter served as the first scene of public opinion, taking on the core function of initial information dissemination:
+Domain experts served as the initial validators of the policy, focusing on its technical feasibility and identifying key implementation gaps:
 
-> "Twitter contributed 68% of the initial volume..."
+> "Expert consensus initially centered on the regulatory framework's ambiguity, with 68% of domain expert statements flagging insufficient enforcement mechanisms..."
 
-**Emotion Amplification Phase**
+**Grassroots Response Phase**
 
-The Reddit platform further amplified the event's impact through community discussion:
+Grassroots communities (simulated via public forums) subsequently highlighted the practical implementation challenges, surfacing concerns that formal expert review had overlooked:
 
-- Strong community engagement
-- High emotional resonance
+- Disproportionate burden on small businesses
+- Lack of transition support mechanisms
 ```
 
 [Incorrect Example]
@@ -827,9 +828,9 @@ This section analyzes...
 
 [Tool Usage Tips - Mix different tools, do not only use one type]
 - insight_forge: Deep insight analysis, automatically decomposes questions and retrieves facts and relationships across multiple dimensions
-- panorama_search: Wide-angle panoramic search, understand the full picture, timeline, and evolution of events
-- quick_search: Quickly verify a specific information point
-- interview_agents: Interview simulation Agents, get first-person perspectives and real reactions from different roles
+- panorama_search: Wide-angle panoramic search, understand the full picture, timeline, and evolution of discourse
+- quick_search: Quickly verify a specific information point or stakeholder position
+- interview_agents: Interview simulation stakeholders, get first-person perspectives and direct policy feedback from different roles
 
 ═══════════════════════════════════════════════════════════════
 [Workflow]
@@ -868,16 +869,16 @@ Strictly prohibited:
 
    Correct format:
    ```
-   The school's response was considered lacking in substance.
+   The policy's enforcement provisions were considered insufficient by domain experts.
 
-   > "The school's response model appeared rigid and slow in the rapidly changing social media environment."
+   > "The regulatory framework appeared rigid and disconnected from the operational realities faced by implementing agencies."
 
-   This assessment reflects widespread public dissatisfaction.
+   This assessment reflects a broader gap between policy design and practical implementation capacity.
    ```
 
    Incorrect format:
    ```
-   The school's response was considered lacking in substance.> "The school's response model..." This assessment reflects...
+   The policy's enforcement provisions were considered insufficient.> "The regulatory framework appeared rigid..." This assessment reflects...
    ```
 5. Maintain logical coherence with other sections
 6. [Avoid Repetition] Carefully read the completed section content below, do not repeat the same information
@@ -1762,12 +1763,12 @@ class ReportAgent:
             logger.error(f"Outline planning failed: {str(e)}")
             # Return default outline (3 sections, as fallback)
             return ReportOutline(
-                title="Scenario Exploration Report",
-                summary="Future trend and risk analysis based on simulation predictions",
+                title="Stakeholder Discourse and Policy Impact Report",
+                summary="Key discourse dynamics and policy impact insights based on multi-stakeholder simulation",
                 sections=[
-                    ReportSection(title="Prediction Scenario and Core Findings"),
-                    ReportSection(title="Population Behavior Prediction Analysis"),
-                    ReportSection(title="Trend Outlook and Risk Alerts")
+                    ReportSection(title="Policy Context and Core Stakeholder Positions"),
+                    ReportSection(title="Argumentation Dynamics and Consensus Patterns"),
+                    ReportSection(title="Synthesis & Policy Implications")
                 ]
             )
     
