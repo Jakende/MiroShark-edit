@@ -40,7 +40,7 @@ Entities represent any meaningful subject found in the text: individuals, compan
 ## Entity Type Rules (STRICT)
 
 - Exactly 10 entity types
-- First 8: specific types derived from the text (e.g. Researcher, Policy, ScientificStudy for academic papers; Politician, Regulation, PoliticalParty for policy documents; Argument, Concept, Event for discourse analysis)
+- First 8: specific types derived from the text (e.g. Researcher, Policy, ScientificStudy for academic papers; Politician, Regulation, PoliticalParty for policy documents; Argument, Concept, Event for discourse analysis; Citizen, GeneralPublic for analyses that include the perspective of the normal population)
 - Last 2 MUST be fallback types: `Person` (any individual) and `Organization` (any organization)
 - Each type needs 1-3 attributes. Reserved attribute names (do NOT use): name, uuid, group_id, created_at, summary. Use full_name, title, role, position, etc.
 - Specific types must have clear non-overlapping boundaries
@@ -147,7 +147,7 @@ Based on the above content, design entity types and relationship types suitable 
 **Rules that must be followed**:
 1. Must output exactly 10 entity types
 2. The last 2 must be fallback types: Person (individual fallback) and Organization (organization fallback)
-3. The first 8 are specific types designed based on text content (may include abstract concepts, policies, arguments, regulations, events, or scientific studies)
+3. The first 8 are specific types designed based on text content (may include abstract concepts, policies, arguments, regulations, events, scientific studies, or population groups such as citizens and the general public)
 4. Attribute names cannot use reserved words like name, uuid, group_id, etc.; use full_name, org_name, etc. instead
 """
 
@@ -190,12 +190,12 @@ Based on the above content, design entity types and relationship types suitable 
         # Fallback type definitions
         person_fallback = {
             "name": "Person",
-            "description": "Any individual person not fitting other specific person types.",
+            "description": "Any individual person not fitting other specific person types, including members of the general public.",
             "attributes": [
                 {"name": "full_name", "type": "text", "description": "Full name of the person"},
                 {"name": "role", "type": "text", "description": "Role or occupation"}
             ],
-            "examples": ["ordinary citizen", "anonymous netizen"]
+            "examples": ["ordinary citizen", "member of the general public", "anonymous netizen"]
         }
 
         organization_fallback = {
