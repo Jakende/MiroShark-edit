@@ -520,10 +520,10 @@ A lightweight quick retrieval tool, suitable for simple, direct information quer
 - List of facts most relevant to the query"""
 
 TOOL_DESC_INTERVIEW_AGENTS = """\
-[In-Depth Interview - Real Stakeholder Interview (Dual Channel)]
+[In-Depth Interview - Real Stakeholder Interview (Multi-Channel)]
 Calls the OASIS simulation environment interview API to conduct real interviews with running simulation Agents!
 This is not an LLM simulation, but calls the real interview interface to get original responses from simulation Agents.
-By default, interviews are conducted across both public discourse channels and expert forums for more comprehensive viewpoints.
+By default, interviews are conducted across multiple discourse channels (public forums, expert channels, and formal statement channels) for more comprehensive viewpoints.
 
 Workflow:
 1. Automatically reads persona files to understand all simulation Agents
@@ -621,7 +621,7 @@ and argued across public discourse channels, formal statements, and grassroots r
 Use this BEFORE graph search tools.
 
 [Parameters]
-- platform: "twitter", "reddit", "polymarket", or "all" (default "all")
+- platform: "twitter" (public discourse channel), "reddit" (community/grassroots channel), "polymarket" (prediction/confidence channel), or "all" (default "all")
 - query: Optional keyword filter (e.g., "regulation", "implementation")
 - round_num: Optional round number filter (e.g., 3 for round 3 only)
 
