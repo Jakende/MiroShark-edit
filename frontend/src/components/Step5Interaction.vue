@@ -54,8 +54,8 @@
                 <div v-else-if="currentSectionIndex === idx + 1" class="loading-state">
                   <div class="loading-icon">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                      <circle cx="12" cy="12" r="10" stroke-width="4" stroke="#E5E7EB"></circle>
-                      <path d="M12 2a10 10 0 0 1 10 10" stroke-width="4" stroke="#4B5563" stroke-linecap="round"></path>
+                      <circle cx="12" cy="12" r="10" stroke-width="4" stroke="#DDDDDD"></circle>
+                      <path d="M12 2a10 10 0 0 1 10 10" stroke-width="4" stroke="#555555" stroke-linecap="round"></path>
                     </svg>
                   </div>
                   <span class="loading-text">Generating {{ section.title }}...</span>
@@ -72,7 +72,7 @@
             <div class="waiting-ring"></div>
             <div class="waiting-ring"></div>
           </div>
-          <span class="waiting-text">Waiting for Report Agent...</span>
+          <span class="waiting-text">Waiting for Report Stakeholder...</span>
         </div>
       </div>
 
@@ -98,7 +98,7 @@
               <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
               </svg>
-              <span>Chat with Report Agent</span>
+              <span>Consult with Report Stakeholder</span>
             </button>
             <div class="agent-dropdown" v-if="profiles.length > 0">
               <button 
@@ -110,13 +110,13 @@
                   <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                   <circle cx="12" cy="7" r="4"></circle>
                 </svg>
-                <span>{{ selectedAgent ? selectedAgent.username : 'Persona Chat' }}</span>
+                <span>{{ selectedAgent ? selectedAgent.username : 'Consult with Stakeholder' }}</span>
                 <svg class="dropdown-arrow" :class="{ open: showAgentDropdown }" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2">
                   <polyline points="6 9 12 15 18 9"></polyline>
                 </svg>
               </button>
               <div v-if="showAgentDropdown" class="dropdown-menu">
-                <div class="dropdown-header">Select Chat Target</div>
+                <div class="dropdown-header">Select Stakeholder</div>
                 <div 
                   v-for="(agent, idx) in profiles" 
                   :key="idx"
@@ -250,7 +250,7 @@
                 </svg>
               </div>
               <p class="empty-text">
-                {{ chatTarget === 'report_agent' ? 'Chat with Report Agent to explore report details' : 'Chat with simulated individuals to understand their perspectives' }}
+                {{ chatTarget === 'report_agent' ? 'Consult with the report stakeholder to review memorandum details' : 'Consult with simulated stakeholders to understand their perspectives' }}
               </p>
             </div>
             <div 
@@ -266,7 +266,7 @@
               <div class="message-content">
                 <div class="message-header">
                   <span class="sender-name">
-                    {{ msg.role === 'user' ? 'You' : (chatTarget === 'report_agent' ? 'Report Agent' : (selectedAgent?.username || 'Agent')) }}
+                    {{ msg.role === 'user' ? 'You' : (chatTarget === 'report_agent' ? 'Report Stakeholder' : (selectedAgent?.username || 'Stakeholder')) }}
                   </span>
                   <span class="message-time">{{ formatTime(msg.timestamp) }}</span>
                 </div>
@@ -1545,17 +1545,17 @@ watch(() => props.simulationId, (newId) => {
 }
 
 .survey-pill {
-  background: rgba(67,193,101,0.1);
-  color: #43C165;
+  background: rgba(17,17,17,0.1);
+  color: #111111;
 }
 
 .survey-pill:hover {
-  background: rgba(67,193,101,0.15);
-  color: #43C165;
+  background: rgba(17,17,17,0.15);
+  color: #111111;
 }
 
 .survey-pill.active {
-  background: #43C165;
+  background: #111111;
   color: #FAFAFA;
 }
 
@@ -1719,23 +1719,23 @@ watch(() => props.simulationId, (newId) => {
 }
 
 .tool-purple .tool-icon-wrapper {
-  background: rgba(139, 92, 246, 0.1);
-  color: #8B5CF6;
+  background: rgba(51,51,51,0.1);
+  color: #333333;
 }
 
 .tool-blue .tool-icon-wrapper {
-  background: rgba(255,107,26,0.1);
-  color: #FF6B1A;
+  background: rgba(51,51,51,0.1);
+  color: #333333;
 }
 
 .tool-orange .tool-icon-wrapper {
-  background: rgba(255,107,26,0.1);
-  color: #FF6B1A;
+  background: rgba(51,51,51,0.1);
+  color: #333333;
 }
 
 .tool-green .tool-icon-wrapper {
-  background: rgba(67,193,101,0.1);
-  color: #43C165;
+  background: rgba(17,17,17,0.1);
+  color: #111111;
 }
 
 .tool-content {
@@ -1978,7 +1978,7 @@ watch(() => props.simulationId, (newId) => {
 
 .dropdown-item:hover {
   background: var(--color-gray, #F5F5F5);
-  border-left-color: #FF6B1A;
+  border-left-color: #333333;
 }
 
 .dropdown-item:first-of-type {
@@ -2242,7 +2242,7 @@ watch(() => props.simulationId, (newId) => {
 
 .chat-input:focus {
   outline: none;
-  border-color: #FF6B1A;
+  border-color: #333333;
 }
 
 .chat-input:disabled {
@@ -2379,8 +2379,8 @@ watch(() => props.simulationId, (newId) => {
 }
 
 .agent-checkbox.checked {
-  background: rgba(67,193,101,0.1);
-  border-color: #43C165;
+  background: rgba(17,17,17,0.1);
+  border-color: #111111;
 }
 
 .agent-checkbox input {
@@ -2404,7 +2404,7 @@ watch(() => props.simulationId, (newId) => {
 }
 
 .agent-checkbox.checked .checkbox-avatar {
-  background: #43C165;
+  background: #111111;
   color: #FAFAFA;
 }
 
@@ -2445,8 +2445,8 @@ watch(() => props.simulationId, (newId) => {
 }
 
 .agent-checkbox.checked .checkbox-indicator {
-  background: #43C165;
-  border-color: #43C165;
+  background: #111111;
+  border-color: #111111;
   color: #FAFAFA;
 }
 
@@ -2501,7 +2501,7 @@ watch(() => props.simulationId, (newId) => {
 
 .survey-input:focus {
   outline: none;
-  border-color: #FF6B1A;
+  border-color: #333333;
 }
 
 .survey-submit-btn {
@@ -2903,11 +2903,11 @@ watch(() => props.simulationId, (newId) => {
   flex-shrink: 0;
 }
 
-.popup-action-badge.type-create_post, .popup-action-badge.type-quote_post { background: rgba(67,193,101,0.1); color: #43C165; }
-.popup-action-badge.type-like_post, .popup-action-badge.type-upvote_post { background: rgba(255,107,26,0.1); color: #FF6B1A; }
-.popup-action-badge.type-create_comment { background: rgba(255,107,26,0.1); color: #FF6B1A; }
-.popup-action-badge.type-repost { background: rgba(139, 92, 246, 0.1); color: #7B1FA2; }
-.popup-action-badge.type-follow { background: rgba(14, 116, 144, 0.1); color: #00838F; }
+.popup-action-badge.type-create_post, .popup-action-badge.type-quote_post { background: rgba(17,17,17,0.1); color: #111111; }
+.popup-action-badge.type-like_post, .popup-action-badge.type-upvote_post { background: rgba(51,51,51,0.1); color: #333333; }
+.popup-action-badge.type-create_comment { background: rgba(51,51,51,0.1); color: #333333; }
+.popup-action-badge.type-repost { background: rgba(51,51,51,0.1); color: #333333; }
+.popup-action-badge.type-follow { background: rgba(51,51,51,0.1); color: #333333; }
 
 .popup-action-round {
   font-size: 10px;

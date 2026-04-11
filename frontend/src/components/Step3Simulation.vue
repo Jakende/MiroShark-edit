@@ -45,7 +45,7 @@
         class="action-btn secondary"
         :class="{ active: showInfluence }"
         @click="showInfluence = !showInfluence"
-        title="Agent influence leaderboard"
+        title="Stakeholder influence leaderboard"
       >
         ◈ Influence
       </button>
@@ -81,7 +81,7 @@
       <span class="events-divider"></span>
       <span class="events-platform">X <span class="events-count">{{ runStatus.twitter_actions_count || 0 }}</span></span>
       <span class="events-slash">/</span>
-      <span class="events-platform">Reddit <span class="events-count">{{ runStatus.reddit_actions_count || 0 }}</span></span>
+      <span class="events-platform">Forum <span class="events-count">{{ runStatus.reddit_actions_count || 0 }}</span></span>
       <span class="events-slash">/</span>
       <span class="events-platform">Polymarket <span class="events-count">{{ runStatus.polymarket_actions_count || 0 }}</span></span>
     </div>
@@ -101,14 +101,14 @@
             <span class="stat"><span class="stat-label">TIME</span><span class="stat-value mono">{{ twitterElapsedTime }}</span></span>
             <span class="stat"><span class="stat-label">ACTS</span><span class="stat-value mono">{{ runStatus.twitter_actions_count || 0 }}</span></span>
           </div>
-          <div class="platform-actions-list"><span class="action-tag">POST</span><span class="action-tag">LIKE</span><span class="action-tag">REPOST</span><span class="action-tag">QUOTE</span><span class="action-tag">FOLLOW</span></div>
+          <div class="platform-actions-list"><span class="action-tag">STATEMENT</span><span class="action-tag">ENDORSE</span><span class="action-tag">CITE</span><span class="action-tag">MEMO</span><span class="action-tag">TRACK</span></div>
         </div>
 
-        <!-- Reddit -->
+        <!-- Public Forum -->
         <div class="platform-status reddit" :class="{ active: runStatus.reddit_running, completed: runStatus.reddit_completed, selected: filteredPlatform === 'reddit', dimmed: filteredPlatform && filteredPlatform !== 'reddit' }" @click="filterByPlatform('reddit')">
           <div class="platform-left">
-            <img src="/reddit.png" class="platform-icon-img" alt="Reddit" />
-            <span class="platform-name">Reddit</span>
+            <img src="/reddit.png" class="platform-icon-img" alt="Public Forum" />
+            <span class="platform-name">Forum</span>
             <span v-if="runStatus.reddit_completed" class="status-badge done">done</span>
           </div>
           <div class="platform-stats">
@@ -116,7 +116,7 @@
             <span class="stat"><span class="stat-label">TIME</span><span class="stat-value mono">{{ redditElapsedTime }}</span></span>
             <span class="stat"><span class="stat-label">ACTS</span><span class="stat-value mono">{{ runStatus.reddit_actions_count || 0 }}</span></span>
           </div>
-          <div class="platform-actions-list"><span class="action-tag">POST</span><span class="action-tag">COMMENT</span><span class="action-tag">LIKE</span><span class="action-tag">DISLIKE</span><span class="action-tag">SEARCH</span><span class="action-tag">FOLLOW</span></div>
+          <div class="platform-actions-list"><span class="action-tag">STATEMENT</span><span class="action-tag">MEMO</span><span class="action-tag">ENDORSE</span><span class="action-tag">REBUT</span><span class="action-tag">REVIEW</span><span class="action-tag">TRACK</span></div>
         </div>
 
         <!-- Polymarket -->
@@ -131,7 +131,7 @@
             <span class="stat"><span class="stat-label">TIME</span><span class="stat-value mono">{{ polymarketElapsedTime }}</span></span>
             <span class="stat"><span class="stat-label">TRADES</span><span class="stat-value mono">{{ runStatus.polymarket_actions_count || 0 }}</span></span>
           </div>
-          <div class="platform-actions-list"><span class="action-tag">BROWSE</span><span class="action-tag">BUY</span><span class="action-tag">SELL</span><span class="action-tag">CREATE</span><span class="action-tag">COMMENT</span></div>
+          <div class="platform-actions-list"><span class="action-tag">SCAN</span><span class="action-tag">POSITION +</span><span class="action-tag">POSITION -</span><span class="action-tag">CREATE</span><span class="action-tag">MEMO</span></div>
         </div>
       </div>
     </div>
@@ -156,7 +156,7 @@
       <!-- Platform Filter Bar -->
       <div v-if="filteredPlatform" class="agent-filter-bar">
         <div class="filter-info">
-          <span class="filter-name" :class="filteredPlatform">{{ filteredPlatform === 'twitter' ? 'X' : filteredPlatform === 'reddit' ? 'Reddit' : 'Polymarket' }}</span>
+          <span class="filter-name" :class="filteredPlatform">{{ filteredPlatform === 'twitter' ? 'Stakeholder Platform' : filteredPlatform === 'reddit' ? 'Public Forum' : 'Forecast Forum' }}</span>
           <span class="filter-count">{{ chronologicalActions.length }} events</span>
         </div>
         <button class="filter-clear" @click="clearPlatformFilter">Clear</button>
@@ -197,7 +197,7 @@
                 <div class="header-meta">
                   <div class="platform-indicator" :class="action.platform">
                     <svg v-if="action.platform === 'twitter'" viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                    <img v-else-if="action.platform === 'reddit'" src="/reddit.png" class="platform-logo" alt="Reddit" />
+                    <img v-else-if="action.platform === 'reddit'" src="/reddit.png" class="platform-logo" alt="Public Forum" />
                     <img v-else-if="action.platform === 'polymarket'" src="/pm.png" class="platform-logo" alt="Polymarket" />
                   </div>
                   <div class="action-badge" :class="getActionTypeClass(action.action_type)">
@@ -220,7 +220,7 @@
                   <div v-if="action.action_args?.original_content" class="quoted-block">
                     <div class="quote-header">
                       <svg class="icon-small" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
-                      <span class="quote-label">@{{ action.action_args.original_author_name || 'User' }}</span>
+                      <span class="quote-label">@{{ action.action_args.original_author_name || 'Stakeholder' }}</span>
                     </div>
                     <div class="quote-text">
                       {{ truncateContent(action.action_args.original_content, 150) }}
@@ -232,7 +232,7 @@
                 <template v-if="action.action_type === 'REPOST'">
                   <div class="repost-info">
                     <svg class="icon-small" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg>
-                    <span class="repost-label">Reposted from @{{ action.action_args?.original_author_name || 'User' }}</span>
+                    <span class="repost-label">Cited from @{{ action.action_args?.original_author_name || 'Stakeholder' }}</span>
                   </div>
                   <div v-if="action.action_args?.original_content" class="repost-content">
                     {{ truncateContent(action.action_args.original_content, 200) }}
@@ -243,7 +243,7 @@
                 <template v-if="action.action_type === 'LIKE_POST'">
                   <div class="like-info">
                     <svg class="icon-small filled" viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-                    <span class="like-label">Liked @{{ action.action_args?.post_author_name || 'User' }}'s post</span>
+                    <span class="like-label">Endorsed @{{ action.action_args?.post_author_name || 'Stakeholder' }}'s statement</span>
                   </div>
                   <div v-if="action.action_args?.post_content" class="liked-content">
                     "{{ truncateContent(action.action_args.post_content, 120) }}"
@@ -257,7 +257,7 @@
                   </div>
                   <div v-if="action.action_args?.post_id" class="comment-context">
                     <svg class="icon-small" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-                    <span>Reply to post #{{ action.action_args.post_id }}</span>
+                    <span>Reply to statement #{{ action.action_args.post_id }}</span>
                   </div>
                 </template>
 
@@ -265,7 +265,7 @@
                 <template v-if="action.action_type === 'SEARCH_POSTS'">
                   <div class="search-info">
                     <svg class="icon-small" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                    <span class="search-label">Search Query:</span>
+                    <span class="search-label">Review Query:</span>
                     <span class="search-query">"{{ action.action_args?.query || '' }}"</span>
                   </div>
                 </template>
@@ -274,7 +274,7 @@
                 <template v-if="action.action_type === 'FOLLOW'">
                   <div class="follow-info">
                     <svg class="icon-small" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
-                    <span class="follow-label">Followed @{{ action.action_args?.target_user_name || action.action_args?.target_user || action.action_args?.user_id || 'User' }}</span>
+                    <span class="follow-label">Tracked @{{ action.action_args?.target_user_name || action.action_args?.target_user || action.action_args?.user_id || 'Stakeholder' }}</span>
                   </div>
                 </template>
 
@@ -282,7 +282,7 @@
                 <template v-if="action.action_type === 'DISLIKE_POST'">
                   <div class="like-info">
                     <svg class="icon-small" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path></svg>
-                    <span class="like-label">Disliked @{{ action.action_args?.post_author_name || 'User' }}'s post</span>
+                    <span class="like-label">Rebutted @{{ action.action_args?.post_author_name || 'Stakeholder' }}'s statement</span>
                   </div>
                   <div v-if="action.action_args?.post_content" class="liked-content">
                     "{{ truncateContent(action.action_args.post_content, 120) }}"
@@ -293,7 +293,7 @@
                 <template v-if="action.action_type === 'DISLIKE_COMMENT'">
                   <div class="like-info">
                     <svg class="icon-small" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path></svg>
-                    <span class="like-label">Disliked @{{ action.action_args?.comment_author_name || 'User' }}'s comment</span>
+                    <span class="like-label">Rebutted @{{ action.action_args?.comment_author_name || 'Stakeholder' }}'s memorandum</span>
                   </div>
                   <div v-if="action.action_args?.comment_content" class="liked-content">
                     "{{ truncateContent(action.action_args.comment_content, 120) }}"
@@ -304,7 +304,7 @@
                 <template v-if="action.action_type === 'MUTE'">
                   <div class="follow-info">
                     <svg class="icon-small" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"></path><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
-                    <span class="follow-label">Muted @{{ action.action_args?.target_user_name || action.action_args?.user_id || 'User' }}</span>
+                    <span class="follow-label">De-prioritized @{{ action.action_args?.target_user_name || action.action_args?.user_id || 'Stakeholder' }}</span>
                   </div>
                 </template>
 
@@ -313,7 +313,7 @@
                   <div class="vote-info">
                     <svg v-if="action.action_type === 'UPVOTE_POST'" class="icon-small" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"></polyline></svg>
                     <svg v-else class="icon-small" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                    <span class="vote-label">{{ action.action_type === 'UPVOTE_POST' ? 'Upvoted' : 'Downvoted' }} Post</span>
+                    <span class="vote-label">{{ action.action_type === 'UPVOTE_POST' ? 'Endorsed' : 'Rebutted' }} Statement</span>
                   </div>
                   <div v-if="action.action_args?.post_content" class="voted-content">
                     "{{ truncateContent(action.action_args.post_content, 120) }}"
@@ -331,7 +331,7 @@
                 <!-- BUY_SHARES -->
                 <template v-if="action.action_type === 'BUY_SHARES'">
                   <div class="trade-info">
-                    <span class="trade-direction buy">BUY</span>
+                    <span class="trade-direction buy">POSITION +</span>
                     <span class="trade-detail">{{ formatShares(action.action_args?.shares) }} <strong>{{ action.action_args?.outcome }}</strong> shares</span>
                     <span class="trade-cost">@ ${{ formatPrice(action.action_args?.price) }}</span>
                     <span class="trade-total">${{ formatPrice(action.action_args?.cost) }}</span>
@@ -342,7 +342,7 @@
                 <!-- SELL_SHARES -->
                 <template v-if="action.action_type === 'SELL_SHARES'">
                   <div class="trade-info">
-                    <span class="trade-direction sell">SELL</span>
+                    <span class="trade-direction sell">POSITION -</span>
                     <span class="trade-detail">{{ formatShares(action.action_args?.shares) }} <strong>{{ action.action_args?.outcome }}</strong> shares</span>
                     <span class="trade-cost">@ ${{ formatPrice(action.action_args?.price || (action.action_args?.usd_received && action.action_args?.shares ? action.action_args.usd_received / action.action_args.shares : null)) }}</span>
                     <span class="trade-total text-green">${{ formatPrice(action.action_args?.usd_received) }}</span>
@@ -849,27 +849,27 @@ const fetchRunStatusDetail = async () => {
 // Helpers
 const getActionTypeLabel = (type) => {
   const labels = {
-    'CREATE_POST': 'POST',
-    'REPOST': 'REPOST',
-    'LIKE_POST': 'LIKE',
-    'CREATE_COMMENT': 'COMMENT',
-    'LIKE_COMMENT': 'LIKE',
-    'DISLIKE_POST': 'DISLIKE',
-    'DISLIKE_COMMENT': 'DISLIKE',
-    'MUTE': 'MUTE',
+    'CREATE_POST': 'STATEMENT',
+    'REPOST': 'CITE',
+    'LIKE_POST': 'ENDORSE',
+    'CREATE_COMMENT': 'MEMO',
+    'LIKE_COMMENT': 'ENDORSE',
+    'DISLIKE_POST': 'REBUT',
+    'DISLIKE_COMMENT': 'REBUT',
+    'MUTE': 'DE-PRIORITIZE',
     'DO_NOTHING': 'IDLE',
-    'FOLLOW': 'FOLLOW',
-    'SEARCH_POSTS': 'SEARCH',
-    'QUOTE_POST': 'QUOTE',
-    'UPVOTE_POST': 'UPVOTE',
-    'DOWNVOTE_POST': 'DOWNVOTE',
+    'FOLLOW': 'TRACK',
+    'SEARCH_POSTS': 'REVIEW',
+    'QUOTE_POST': 'MEMO',
+    'UPVOTE_POST': 'ENDORSE',
+    'DOWNVOTE_POST': 'REBUT',
     // Polymarket
-    'BUY_SHARES': 'BUY',
-    'SELL_SHARES': 'SELL',
-    'CREATE_MARKET': 'NEW MARKET',
-    'BROWSE_MARKETS': 'BROWSE',
+    'BUY_SHARES': 'POSITION +',
+    'SELL_SHARES': 'POSITION -',
+    'CREATE_MARKET': 'NEW FORUM',
+    'BROWSE_MARKETS': 'SCAN',
     'VIEW_PORTFOLIO': 'PORTFOLIO',
-    'COMMENT_ON_MARKET': 'COMMENT',
+    'COMMENT_ON_MARKET': 'MEMO',
   }
   return labels[type] || type || 'UNKNOWN'
 }
@@ -1109,7 +1109,7 @@ onUnmounted(() => {
 }
 
 .events-total {
-  color: #FF6B1A;
+  color: #333333;
   font-weight: 700;
   font-size: 13px;
 }
@@ -1172,7 +1172,7 @@ onUnmounted(() => {
 
 .platform-status.selected {
   opacity: 1;
-  border-color: #FF6B1A;
+  border-color: #333333;
   background: #FAFAFA;
 }
 
@@ -1182,7 +1182,7 @@ onUnmounted(() => {
 
 .platform-status.active {
   opacity: 1;
-  border-color: #FF6B1A;
+  border-color: #333333;
   background: #FAFAFA;
 }
 
@@ -1192,8 +1192,8 @@ onUnmounted(() => {
 
 .platform-status.completed {
   opacity: 1;
-  border-color: #43C165;
-  background: rgba(67,193,101,0.06);
+  border-color: #111111;
+  background: rgba(17,17,17,0.06);
 }
 
 .platform-actions-list {
@@ -1220,7 +1220,7 @@ onUnmounted(() => {
   font-family: var(--font-mono, 'Space Mono', monospace);
   font-size: 8px;
   color: #FAFAFA;
-  background: #43C165;
+  background: #111111;
   padding: 1px 6px;
   font-weight: 600;
   text-transform: uppercase;
@@ -1349,7 +1349,7 @@ onUnmounted(() => {
 
 .status-badge {
   margin-left: auto;
-  color: #43C165;
+  color: #111111;
   display: flex;
   align-items: center;
 }
@@ -1401,12 +1401,12 @@ onUnmounted(() => {
 }
 
 .action-btn.danger {
-  background: #FF4444;
+  background: #666666;
   color: #FAFAFA;
 }
 
 .action-btn.danger:hover:not(:disabled) {
-  background: #E03C3C;
+  background: #666666;
 }
 
 .action-btn:disabled {
@@ -1564,8 +1564,8 @@ onUnmounted(() => {
 
 .breakdown-divider { color: rgba(10,10,10,0.2); }
 .breakdown-item.twitter, .filter-name.twitter { color: #0A0A0A; }
-.breakdown-item.reddit, .filter-name.reddit { color: #FF6B1A; }
-.breakdown-item.polymarket, .filter-name.polymarket { color: #FF6B1A; }
+.breakdown-item.reddit, .filter-name.reddit { color: #333333; }
+.breakdown-item.polymarket, .filter-name.polymarket { color: #333333; }
 
 /* --- Timeline Feed --- */
 .timeline-feed {
@@ -1616,11 +1616,11 @@ onUnmounted(() => {
 }
 
 .timeline-item.twitter .marker-dot { background: #0A0A0A; }
-.timeline-item.reddit .marker-dot { background: #FF6B1A; }
-.timeline-item.polymarket .marker-dot { background: #FF6B1A; }
+.timeline-item.reddit .marker-dot { background: #333333; }
+.timeline-item.polymarket .marker-dot { background: #333333; }
 .timeline-item.twitter .timeline-marker { border-color: #0A0A0A; }
-.timeline-item.reddit .timeline-marker { border-color: #FF6B1A; }
-.timeline-item.polymarket .timeline-marker { border-color: #FF6B1A; }
+.timeline-item.reddit .timeline-marker { border-color: #333333; }
+.timeline-item.polymarket .timeline-marker { border-color: #333333; }
 
 /* Card Layout */
 .timeline-card {
@@ -1633,7 +1633,7 @@ onUnmounted(() => {
 }
 
 .timeline-card:hover {
-  border-color: #FF6B1A;
+  border-color: #333333;
 }
 
 /* All platforms flow in single column */
@@ -1648,8 +1648,8 @@ onUnmounted(() => {
 }
 
 .timeline-item.twitter .timeline-card { border-left: 2px solid #0A0A0A; }
-.timeline-item.reddit .timeline-card { border-left: 2px solid #FF6B1A; }
-.timeline-item.polymarket .timeline-card { border-left: 2px solid #FF6B1A; }
+.timeline-item.reddit .timeline-card { border-left: 2px solid #333333; }
+.timeline-item.polymarket .timeline-card { border-left: 2px solid #333333; }
 
 /* Card Content Styles */
 .card-header {
@@ -1738,8 +1738,8 @@ onUnmounted(() => {
 .badge-action { background: #FAFAFA; color: rgba(10,10,10,0.5); border: 1px solid rgba(10,10,10,0.12); }
 .badge-meta { background: #FAFAFA; color: rgba(10,10,10,0.4); border: 1px dashed rgba(10,10,10,0.2); }
 .badge-idle { opacity: 0.5; }
-.badge-trade-buy { background: rgba(67,193,101,0.1); color: #43C165; border-color: rgba(67,193,101,0.2); }
-.badge-trade-sell { background: rgba(255,68,68,0.1); color: #FF4444; border-color: rgba(255,68,68,0.2); }
+.badge-trade-buy { background: #FAFAFA; color: #0A0A0A; border-color: #0A0A0A; }
+.badge-trade-sell { background: #0A0A0A; color: #FAFAFA; border-color: #0A0A0A; }
 
 /* Polymarket trade cards */
 .trade-info {
@@ -1758,8 +1758,8 @@ onUnmounted(() => {
   padding: 1px 6px;
   letter-spacing: 3px;
 }
-.trade-direction.buy { background: rgba(67,193,101,0.1); color: #43C165; }
-.trade-direction.sell { background: rgba(255,68,68,0.1); color: #FF4444; }
+.trade-direction.buy { background: #FAFAFA; color: #0A0A0A; border: 1px solid #0A0A0A; }
+.trade-direction.sell { background: #0A0A0A; color: #FAFAFA; border: 1px solid #0A0A0A; }
 
 .trade-detail { color: rgba(10,10,10,0.7); }
 .trade-cost { color: rgba(10,10,10,0.4); font-size: 11px; }
@@ -1851,13 +1851,13 @@ onUnmounted(() => {
 .pulse-ring {
   width: 32px;
   height: 32px;
-  border: 2px solid #FF6B1A;
+  border: 2px solid #333333;
   animation: ripple 2s infinite;
 }
 
 @keyframes ripple {
-  0% { transform: scale(0.8); opacity: 1; border-color: #FF6B1A; }
-  100% { transform: scale(2.5); opacity: 0; border-color: rgba(255,107,26,0.1); }
+  0% { transform: scale(0.8); opacity: 1; border-color: #333333; }
+  100% { transform: scale(2.5); opacity: 0; border-color: rgba(51,51,51,0.1); }
 }
 
 /* Animation */
@@ -1951,7 +1951,7 @@ onUnmounted(() => {
   width: 14px;
   height: 14px;
   border: 2px solid rgba(255, 255, 255, 0.3);
-  border-top-color: #FF6B1A;
+  border-top-color: #333333;
   animation: spin 0.8s linear infinite;
   margin-right: 6px;
 }
