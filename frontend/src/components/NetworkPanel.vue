@@ -111,14 +111,14 @@ let nodePositions = {}    // agent_name -> { x, y } (updated by simulation tick)
 let graphBuilt = false
 
 const platformColors = { twitter: '#0A0A0A', reddit: '#666666', polymarket: '#CCCCCC' }
+const platformLabels = Object.freeze({
+  twitter: 'Platform A',
+  reddit: 'Platform B',
+  polymarket: 'Platform C'
+})
 
 const formatPlatformLabel = (platform) => {
-  const labels = {
-    twitter: 'Platform A',
-    reddit: 'Platform B',
-    polymarket: 'Platform C'
-  }
-  return labels[platform] || (platform || 'Platform')
+  return platformLabels[platform] || (platform || 'Platform')
 }
 
 const actionIcons = {
