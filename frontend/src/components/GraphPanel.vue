@@ -438,13 +438,14 @@ const formatDateTime = (dateStr) => {
   }
 }
 
+const PLATFORM_LABELS = {
+  twitter: 'Platform A',
+  reddit: 'Platform B',
+  polymarket: 'Platform C'
+}
+
 const formatPlatformLabel = (platform) => {
-  const labels = {
-    twitter: 'Platform A',
-    reddit: 'Platform B',
-    polymarket: 'Platform C'
-  }
-  return labels[platform] || (platform || 'Platform')
+  return PLATFORM_LABELS[platform] || (platform || 'Platform')
 }
 
 const getBadgeTextColor = (backgroundColor) => {
