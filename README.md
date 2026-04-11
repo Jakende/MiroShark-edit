@@ -5,8 +5,8 @@
 <h1 align="center">MiroShark</h1>
 
 <p align="center">
-  <strong>Universal Swarm Intelligence Engine — Run Locally or with Any Cloud API</strong><br>
-  Multi-agent simulation engine: upload any document (press release, policy draft, financial report), and it generates hundreds of AI agents with unique personalities that simulate public reaction on social media — posts, arguments, opinion shifts — hour by hour.
+  <strong>Complex Context, Policy, and Discourse Analysis Engine</strong><br>
+  MiroShark transforms policy papers, scientific drafts, and institutional reports into structured knowledge graphs and multi-stakeholder simulations for rigorous discourse analysis.
 </p>
 
 <p align="center">
@@ -27,13 +27,21 @@
 
 ---
 
+## What MiroShark Delivers
+
+- **Knowledge Graph Extraction from Policy Papers** — Build Neo4j graphs from long-form policy, governance, or research documents.
+- **Multi-Stakeholder Simulation** — Generate grounded stakeholder profiles and simulate structured discourse across multiple channels.
+- **Peer-Review Dynamics** — Model rebuttals, endorsements, and argument evolution over iterative rounds.
+- **Policy Impact Analysis** — Track stance shifts, confidence changes, and potential implementation risks.
+- **Evidence-Aware Reporting** — Produce analysis reports tied to observed discourse events, graph context, and trajectory signals.
+
 ## How It Works
 
-1. **Graph Build** — Extracts entities and relationships from your document into a Neo4j knowledge graph. NER uses few-shot examples and rejection rules to filter garbage entities. Chunk processing is parallelized with batched Neo4j writes (UNWIND).
-2. **Agent Setup** — Generates personas grounded in the knowledge graph. Each entity gets 5 layers of context: graph attributes, relationships, semantic search, related nodes, and LLM-powered web research (auto-triggers for public figures or when graph context is thin). Individual vs. institutional personas are detected automatically via keyword matching.
-3. **Simulation** — All three platforms (Twitter, Reddit, Polymarket) run simultaneously via `asyncio.gather`. A single LLM-generated prediction market with non-50/50 starting price drives Polymarket trading. Agents see cross-platform context: traders read Twitter/Reddit posts, social media agents see market prices. A sliding-window round memory compacts old rounds via background LLM calls. Belief states track stance, confidence, and trust per agent with heuristic updates each round.
-4. **Report** — A ReACT agent writes analytical reports using `simulation_feed` (actual posts/comments/trades), `market_state` (prices/P&L), graph search, and belief trajectory tools. Reports cite what agents actually said and how markets moved.
-5. **Interaction** — Chat directly with any agent via persona chat, or send questions to groups. Click any agent to view their full profile and simulation history.
+1. **Graph Build** — Extracts entities, concepts, and relationships from source material into a knowledge graph.
+2. **Stakeholder Setup** — Generates stakeholder profiles grounded in graph attributes, contextual links, and enrichment signals.
+3. **Discourse Simulation** — Runs synchronized stakeholder discourse channels with shared memory and cross-channel context.
+4. **Impact Report** — Produces structured policy/discourse reports with argument traces and impact indicators.
+5. **Stakeholder Consultation** — Enables direct follow-up questioning of simulated stakeholder perspectives.
 
 ## Screenshots
 
@@ -56,9 +64,9 @@
 
 ## Architecture
 
-### Cross-Platform Simulation Engine
+### Multi-Channel Discourse Engine
 
-All three platforms execute simultaneously each round. Data flows between them:
+Stakeholder channels execute simultaneously each round. Data flows between them:
 
 ```
                     ┌─────────────────────────────────────────┐
@@ -69,18 +77,19 @@ All three platforms execute simultaneously each round. Data flows between them:
                     └──────┬──────────┬──────────┬────────────┘
                            │          │          │
                     ┌──────▼───┐ ┌────▼─────┐ ┌─▼────────────┐
-                    │ Twitter  │ │  Reddit  │ │  Polymarket   │
+                    │Stakeholder│ │ Public   │ │ Forecast Market│
+                    │ Platform  │ │ Forums   │ │               │
                     │          │ │          │ │               │
-                    │ Posts    │ │ Comments │ │ Trades (AMM)  │
-                    │ Likes    │ │ Upvotes  │ │ Single market │
-                    │ Reposts  │ │ Threads  │ │ Buy/Sell/Wait │
+                    │ Statements│ │ Rebuttals│ │ Trades (AMM)  │
+                    │ Endorse   │ │ Citations│ │ Single market │
+                    │ Amplify   │ │ Threads  │ │ Buy/Sell/Wait │
                     └──────┬───┘ └────┬─────┘ └─┬────────────┘
                            │          │          │
                     ┌──────▼──────────▼──────────▼────────────┐
-                    │         Market-Media Bridge              │
-                    │  Social sentiment → trader prompts       │
-                    │  Market prices → social media prompts    │
-                    │  Social posts → trader observation       │
+                    │      Market-Discourse Bridge             │
+                    │  Discourse sentiment → trader prompts    │
+                    │  Market prices → discourse prompts       │
+                    │  Discourse updates → trader observation  │
                     └──────┬──────────┬──────────┬────────────┘
                            │          │          │
                     ┌──────▼──────────▼──────────▼────────────┐
@@ -91,9 +100,9 @@ All three platforms execute simultaneously each round. Data flows between them:
                     └─────────────────────────────────────────┘
 ```
 
-### Polymarket Integration
+### Forecast-Market Integration
 
-A single prediction market is generated by the LLM during config creation, tailored to the simulation's core question. The AMM uses constant-product pricing with non-50/50 initial prices based on the LLM's probability estimate. Traders see actual Twitter/Reddit posts in their observation prompt alongside portfolio and market data.
+A single forecast market is generated during config creation and aligned to the core policy question. The AMM uses constant-product pricing with model-based priors. Traders consume live discourse summaries alongside portfolio and market state.
 
 ### Performance
 
@@ -102,12 +111,12 @@ A single prediction market is generated by the LLM during config creation, tailo
 | Neo4j writes | 1 transaction per entity | Batched UNWIND (10x faster) |
 | Chunk processing | Sequential | Parallel ThreadPoolExecutor (3x faster) |
 | Config generation | Sequential batches | Parallel batches (3x faster) |
-| Platform execution | Twitter+Reddit parallel, Polymarket sequential | All 3 parallel |
+| Channel execution | Sequential channel orchestration | Parallel multi-channel orchestration |
 | Memory compaction | Blocking | Background thread |
 
 ### Web Enrichment
 
-When generating personas for public figures (politicians, CEOs, founders) or when graph context is thin (<150 chars), the system makes an LLM research call to enrich the profile with real-world data. Set `WEB_SEARCH_MODEL=perplexity/sonar-pro` in `.env` for grounded web search via OpenRouter.
+When generating profiles for notable stakeholders (policy makers, institutions, domain experts) or when graph context is thin (<150 chars), MiroShark runs optional enrichment calls to ground profile context with real-world signals.
 
 ## Quick Start
 
@@ -514,10 +523,10 @@ By default, only response previews (200 chars) are logged. Set `MIROSHARK_LOG_PR
 
 ## Use Cases
 
-- **PR crisis testing** — simulate public reaction to a press release before publishing
-- **Trading signals** — feed financial news and observe simulated market sentiment
-- **Policy analysis** — test draft regulations against a simulated public
-- **Creative experiments** — feed a novel with a lost ending; agents write a narratively consistent conclusion
+- **Policy impact evaluation** — test draft regulations against simulated multi-stakeholder discourse
+- **Debate structuring** — map argument chains, rebuttals, and consensus paths before formal hearings
+- **Scientific peer-review rehearsal** — simulate reviewer perspectives, critique patterns, and revision pressure points
+- **Institutional risk analysis** — evaluate downstream narrative and confidence shifts across stakeholder groups
 
 Support the project : 0xd7bc6a05a56655fb2052f742b012d1dfd66e1ba3
 AGPL-3.0. See [LICENSE](./LICENSE).
