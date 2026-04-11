@@ -455,8 +455,8 @@ const downloadComparison = () => {
   transition: all 0.15s;
 }
 .download-btn:hover {
-  border-color: #333333;
-  color: #333333;
+  border-color: #FAFAFA;
+  color: #FAFAFA;
 }
 
 /* Selector Bar */
