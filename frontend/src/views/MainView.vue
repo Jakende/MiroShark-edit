@@ -550,7 +550,6 @@ onUnmounted(() => {
 .dot {
   width: 8px;
   height: 8px;
-  border-radius: 50%;
   background: rgba(250,250,250,0.2);
 }
 

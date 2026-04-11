@@ -809,7 +809,7 @@ const startSimulation = () => {
 
 .upload-zone.drag-over {
   border-color: var(--color-gray-mid);
-  background: rgba(10,10,10,0.05);
+  background: rgba(0,0,0,0.05);
 }
 
 .upload-placeholder { text-align: center; }
