@@ -554,7 +554,7 @@ onUnmounted(() => {
 }
 
 .status-indicator.processing .dot { background: var(--color-gray-mid); animation: pulse 1s infinite; }
-.status-indicator.completed .dot { background: var(--color-white); border: 1px solid var(--color-white); }
+.status-indicator.completed .dot { background: var(--color-white); border: 1px solid var(--color-black); }
 .status-indicator.error .dot { background: transparent; border: 1px dashed var(--color-white); }
 
 @keyframes pulse { 50% { opacity: 0.5; } }

@@ -28,7 +28,7 @@
 
         <div class="hero-desc">
           <p>
-            Upload any document. <span class="highlight-bold">MiroShark</span> extracts key stakeholders, generates <span class="highlight-dark">simulated stakeholders</span> with unique analytical profiles, and simulates how they react across Public Discourse and Policy Platforms. Watch statements evolve, arguments spread, and memoranda emerge.
+            Upload any document. <span class="highlight-bold">MiroShark</span> identifies key entities, generates <span class="highlight-dark">simulated stakeholders</span> with unique analytical profiles, and simulates how they react across Public Discourse and Policy Platforms. Watch statements evolve, arguments spread, and memoranda emerge.
           </p>
           <p class="slogan-text">
             Don't predict the future. Simulate it<span class="blinking-cursor">_</span>
