@@ -772,19 +772,20 @@ class OasisProfileGenerator:
         """Get system prompt"""
         if is_individual:
             return (
-                "You are an expert character writer creating social media personas for a "
-                "multi-agent simulation. Your personas must feel like REAL people — messy, "
-                "opinionated, contradictory, specific. Avoid generic corporate-speak or "
-                "balanced-sounding descriptions. Every person has biases, blind spots, and "
-                "strong feelings about something. Lean into those.\n\n"
+                "You are an expert stakeholder and behavioral analyst creating realistic "
+                "participant profiles for a policy and discourse simulation. Your personas "
+                "must feel like real citizens, experts, and professionals participating in "
+                "complex public debate. They should be opinionated, specific, and shaped by "
+                "clear biases, incentives, and blind spots, but expressed in serious civic "
+                "or professional discourse.\n\n"
                 "Return valid JSON. All string values must be plain text (no newlines, no markdown). "
                 "Use English."
             )
         return (
-            "You are an expert in institutional communications creating official social media "
-            "account personas for a multi-agent simulation. Institutional accounts have a distinct "
-            "voice — formal but not robotic, on-message but not tone-deaf. They hedge on "
-            "controversies, amplify achievements, and deflect criticism with practiced diplomacy.\n\n"
+            "You are an expert in institutional communications creating communication profiles for a "
+            "multi-agent policy and discourse simulation. Institutional entities have "
+            "a distinct voice — formal but not robotic, on-message, and strategically consistent "
+            "across memorandums, press releases, policy briefs, and public statements.\n\n"
             "Return valid JSON. All string values must be plain text (no newlines, no markdown). "
             "Use English."
         )
@@ -802,7 +803,7 @@ class OasisProfileGenerator:
         attrs_str = json.dumps(entity_attributes, ensure_ascii=False) if entity_attributes else "None"
         context_str = context[:3000] if context else "No additional context"
 
-        return f"""Create a persona for this person to use in a social media simulation.
+        return f"""Create a persona for this person to use in a complex policy and public discourse simulation.
 
 ENTITY: {entity_name} ({entity_type})
 SUMMARY: {entity_summary}
@@ -813,14 +814,14 @@ CONTEXT (from knowledge graph and research):
 
 Return JSON with these fields:
 
-"bio": A punchy social media bio (2-3 sentences). Not a resume — a vibe. What would this person actually write in their Twitter/Reddit bio? Include their attitude, not just their job title.
+"bio": A concise professional or personal summary (2-3 sentences). Not just a resume, but a statement of their primary perspective or role in society.
 
 "persona": A rich character description (800-1200 words). Write this as a character brief for an actor, not a Wikipedia entry. Cover:
 - WHO THEY ARE: Background, career, education. But focus on what shaped their worldview, not just facts.
-- HOW THEY THINK: Their reasoning style — do they argue from data, emotion, authority, personal experience? Are they charitable to opponents or combative? Do they change their mind easily or dig in?
+- HOW THEY THINK: Their reasoning style — do they argue from data, emotion, authority, personal experience? How do they evaluate evidence? Do they rely on peer-reviewed data, personal anecdotes, or ideological principles? Do they change their mind easily or dig in?
 - WHAT THEY CARE ABOUT: Their 2-3 strongest opinions on the simulation topic. Be specific — not "supports regulation" but "believes self-regulation has failed because of X, and points to Y as evidence."
 - THEIR BLIND SPOTS: What are they wrong about, or what do they refuse to consider? Every real person has these.
-- ONLINE BEHAVIOR: How they actually post — long threads vs. one-liners, sarcastic vs. earnest, confrontational vs. diplomatic, uses data vs. anecdotes. Do they dunk on people? Do they write essays? Do they meme?
+- DISCOURSE BEHAVIOR: How they communicate their arguments — do they write detailed analytical memorandums, emotional appeals, or short critical rebuttals? Do they engage constructively or use dismissive rhetoric?
 - WHAT WOULD MAKE THEM CHANGE THEIR MIND: What evidence or argument could shift their position? Or are they unmovable on this topic?
 
 "age": Integer
@@ -846,7 +847,7 @@ IMPORTANT: Do NOT include karma, friend_count, follower_count, or statuses_count
         attrs_str = json.dumps(entity_attributes, ensure_ascii=False) if entity_attributes else "None"
         context_str = context[:3000] if context else "No additional context"
 
-        return f"""Create an official social media account persona for this organization.
+        return f"""Create an institutional communication profile for this organization.
 
 ENTITY: {entity_name} ({entity_type})
 SUMMARY: {entity_summary}
@@ -857,19 +858,19 @@ CONTEXT (from knowledge graph and research):
 
 Return JSON with these fields:
 
-"bio": The official account bio (2-3 sentences). Professional but not boring. Think real organizational Twitter bios — they have personality within institutional constraints.
+"bio": The official institutional summary (2-3 sentences). Professional, reflecting their public mission and strategic positioning.
 
-"persona": A communications playbook for this account (600-900 words). This is a guide for how the account behaves online:
+"persona": A communications playbook for this institution (600-900 words). This is a guide for how the institution communicates publicly:
 - INSTITUTIONAL IDENTITY: What is this organization, and what is its public mission? What image does it project?
 - OFFICIAL POSITION: Where does this organization stand on the simulation topic? What's the official line? How do they frame it?
 - VOICE AND TONE: Formal vs. accessible? Does it use jargon or plain language? First person plural ("we believe") or third person ("the organization maintains")? Does it show personality or stay buttoned-up?
-- CONTENT STRATEGY: What does this account actually post? Press releases, data, opinion pieces, event promotion? Does it engage in debates or just broadcast?
+- CONTENT STRATEGY: What kind of statements does this institution release? Press releases, data, opinion pieces, event promotion? Does it engage in debates or just broadcast?
 - CONTROVERSY HANDLING: How does it respond to criticism? Ignore, deflect, address head-on, or issue a carefully worded non-response?
-- RED LINES: What will this account never say or do? What positions would be off-brand?
+- RED LINES: What will this institution never say or do? What positions would be off-brand?
 
 "age": 30
 "gender": "other"
-"mbti": MBTI type reflecting the account's communication style. VARY THIS — not all orgs are ISTJ. \
+"mbti": MBTI type reflecting the institution's communication style. VARY THIS — not all orgs are ISTJ. \
 Examples: "ISTJ" (conservative, by-the-book), "ENTJ" (assertive, agenda-setting), "ENFJ" (community-building, outreach), \
 "INTP" (technical, research-focused), "ESTP" (bold, action-oriented)
 "country": Country where headquartered
@@ -894,7 +895,7 @@ IMPORTANT: Do NOT include karma, friend_count, follower_count, or statuses_count
         if entity_type_lower in ["student", "alumni"]:
             return {
                 "bio": f"{entity_type} with interests in academics and social issues.",
-                "persona": f"{entity_name} is a {entity_type.lower()} who is actively engaged in academic and social discussions. They enjoy sharing perspectives and connecting with peers.",
+                "persona": f"{entity_name} is a {entity_type.lower()} who is actively engaged in public and academic discourse. They enjoy sharing perspectives and connecting with peers.",
                 "age": random.randint(18, 30),
                 "gender": random.choice(["male", "female"]),
                 "mbti": random.choice(self.MBTI_TYPES),
@@ -916,9 +917,14 @@ IMPORTANT: Do NOT include karma, friend_count, follower_count, or statuses_count
             }
         
         elif entity_type_lower in ["mediaoutlet", "socialmediaplatform"]:
+            media_bio = (
+                f"Official communications and news from {entity_name}."
+                if entity_type_lower == "mediaoutlet"
+                else f"Official institutional communications from {entity_name}."
+            )
             return {
-                "bio": f"Official account for {entity_name}. News and updates.",
-                "persona": f"{entity_name} is a media entity that reports news and facilitates public discourse. The account shares timely updates and engages with the audience on current events.",
+                "bio": media_bio,
+                "persona": f"{entity_name} is a media institution that reports news and facilitates public discourse. The entity shares timely updates and engages with the audience on current events.",
                 "age": 30,  # Virtual age for institutions
                 "gender": "other",  # Institutions use other
                 "mbti": "ISTJ",  # Institutional style: rigorous and conservative
@@ -929,7 +935,7 @@ IMPORTANT: Do NOT include karma, friend_count, follower_count, or statuses_count
 
         elif entity_type_lower in ["university", "governmentagency", "ngo", "organization"]:
             return {
-                "bio": f"Official account of {entity_name}.",
+                "bio": f"Official communications from {entity_name}.",
                 "persona": f"{entity_name} is an institutional entity that communicates official positions, announcements, and engages with stakeholders on relevant matters.",
                 "age": 30,  # Virtual age for institutions
                 "gender": "other",  # Institutions use other
@@ -943,7 +949,7 @@ IMPORTANT: Do NOT include karma, friend_count, follower_count, or statuses_count
             # Default persona
             return {
                 "bio": entity_summary[:500] if entity_summary else f"{entity_type}: {entity_name}",
-                "persona": entity_summary or f"{entity_name} is a {entity_type.lower()} participating in social discussions.",
+                "persona": entity_summary or f"{entity_name} is a {entity_type.lower()} participating in public and academic discourse.",
                 "age": random.randint(25, 50),
                 "gender": random.choice(["male", "female"]),
                 "mbti": random.choice(self.MBTI_TYPES),
@@ -1374,4 +1380,3 @@ IMPORTANT: Do NOT include karma, friend_count, follower_count, or statuses_count
         """[Deprecated] Please use save_profiles() method"""
         logger.warning("save_profiles_to_json is deprecated, please use save_profiles method")
         self.save_profiles(profiles, file_path, platform)
-
