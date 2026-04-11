@@ -19,16 +19,16 @@
       <!-- Upper Section: Hero Area -->
       <section class="hero-section">
         <div class="tag-row">
-          <span class="orange-tag">A Concise & Universal Swarm Intelligence Engine</span>
+          <span class="dark-tag">A Concise & Universal Policy Discourse Engine</span>
         </div>
 
         <h1 class="main-title">
-          <span class="gradient-text">Simulate the Future Instantly</span>
+          <span class="gradient-text">Simulate Complex Discourse Instantly</span>
         </h1>
 
         <div class="hero-desc">
           <p>
-            Upload any document. <span class="highlight-bold">MiroShark</span> extracts the key players, generates <span class="highlight-orange">hundreds of AI agents</span> with unique personas, and simulates how they'd react on Twitter, Reddit, and Polymarket. Watch opinions form, arguments spread, and markets move.
+            Upload any document. <span class="highlight-bold">MiroShark</span> extracts key stakeholders, generates <span class="highlight-dark">simulated stakeholders</span> with unique analytical profiles, and simulates how they react across Public Discourse and Policy Platforms. Watch statements evolve, arguments spread, and memorandums emerge.
           </p>
           <p class="slogan-text">
             Don't predict the future. Simulate it<span class="blinking-cursor">_</span>
@@ -52,7 +52,7 @@
           
           <h2 class="section-title">Ready</h2>
           <p class="section-desc">
-            Prediction engine on standby. Upload documents to initialize the simulation sequence.
+            Policy discourse engine on standby. Upload documents to initialize the simulation sequence.
           </p>
           
 
@@ -72,29 +72,29 @@
               <div class="workflow-item">
                 <span class="step-num">02</span>
                 <div class="step-info">
-                  <div class="step-title">Agent Setup</div>
-                  <div class="step-desc">Entity-relation extraction & Persona generation & Environment config Agent injects simulation parameters</div>
+                  <div class="step-title">Stakeholder Setup</div>
+                  <div class="step-desc">Entity-relation extraction & Analytical profile generation & Environment configuration injects simulation parameters</div>
                 </div>
               </div>
               <div class="workflow-item">
                 <span class="step-num">03</span>
                 <div class="step-info">
                   <div class="step-title">Start Simulation</div>
-                  <div class="step-desc">Dual-platform parallel simulation & Automatic prediction requirement parsing & Dynamic temporal memory updates</div>
+                  <div class="step-desc">Multi-stakeholder parallel simulation & Automatic policy requirement parsing & Dynamic temporal memory updates</div>
                 </div>
               </div>
               <div class="workflow-item">
                 <span class="step-num">04</span>
                 <div class="step-info">
                   <div class="step-title">Report Generation</div>
-                  <div class="step-desc">ReportAgent has a rich toolset for in-depth interaction with the post-simulation environment</div>
+                  <div class="step-desc">The report analyst has a rich toolset for in-depth interaction with the post-simulation environment</div>
                 </div>
               </div>
               <div class="workflow-item">
                 <span class="step-num">05</span>
                 <div class="step-info">
                   <div class="step-title">Deep Interaction</div>
-                  <div class="step-desc">Chat with any agent in the simulated world & Converse with the ReportAgent</div>
+                  <div class="step-desc">Chat with any stakeholder in the simulated world & Converse with the report analyst</div>
                 </div>
               </div>
             </div>
@@ -438,7 +438,7 @@ const startSimulation = () => {
   transition: var(--transition-fast);
 }
 
-.settings-btn:hover { color: var(--color-orange); }
+.settings-btn:hover { color: var(--color-black); }
 
 /* ── Main Content ── */
 .main-content {
@@ -466,8 +466,8 @@ const startSimulation = () => {
   font-size: 13px;
 }
 
-.orange-tag {
-  background: var(--color-orange);
+.dark-tag {
+  background: var(--color-black);
   color: var(--color-white);
   padding: 4px var(--space-sm);
   font-weight: 700;
@@ -488,8 +488,9 @@ const startSimulation = () => {
 }
 
 .gradient-text {
-  color: var(--color-orange);
-  -webkit-text-fill-color: var(--color-orange);
+  background: linear-gradient(90deg, var(--color-black) 0%, var(--color-gray-mid) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   display: inline;
 }
 
@@ -509,8 +510,8 @@ const startSimulation = () => {
   font-weight: 400;
 }
 
-.highlight-orange {
-  color: var(--color-orange);
+.highlight-dark {
+  color: var(--color-black);
   font-family: var(--font-mono);
   font-size: 0.85em;
 }
@@ -528,13 +529,13 @@ const startSimulation = () => {
   font-size: 25px;
   line-height: 1.5;
   color: var(--foreground);
-  border-left: var(--border-orange);
+  border-left: var(--border-dark);
   padding-left: var(--space-md);
   margin-top: var(--space-md);
 }
 
 .blinking-cursor {
-  color: var(--color-green);
+  color: var(--color-gray-mid);
   animation: blink 1s step-end infinite;
 }
 
@@ -546,7 +547,7 @@ const startSimulation = () => {
 .decoration-square {
   width: var(--space-sm);
   height: var(--space-sm);
-  background: var(--color-green);
+  background: var(--color-gray-mid);
   margin-top: var(--space-md);
 }
 
@@ -560,13 +561,13 @@ const startSimulation = () => {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  color: var(--color-orange);
+  color: var(--color-black);
   font-size: 1.2rem;
   transition: var(--transition-fast);
 }
 
 .scroll-down-btn:hover {
-  border-color: var(--color-orange);
+  border-color: var(--color-gray-mid);
 }
 
 /* ── Warning Stripe Divider ── */
@@ -576,10 +577,10 @@ const startSimulation = () => {
   height: 7px;
   background: repeating-linear-gradient(
     -45deg,
-    var(--color-orange),
-    var(--color-orange) 11px,
-    var(--background) 11px,
-    var(--background) 22px
+    var(--color-black),
+    var(--color-black) 11px,
+    var(--color-white) 11px,
+    var(--color-white) 22px
   );
   margin-bottom: var(--space-xl);
 }
@@ -614,7 +615,7 @@ const startSimulation = () => {
 }
 
 .status-dot {
-  color: var(--color-green);
+  color: var(--color-gray-mid);
   font-size: 0.8rem;
 }
 
@@ -647,7 +648,7 @@ const startSimulation = () => {
   transition: var(--transition-fast);
 }
 
-.metric-card:hover { border-color: var(--color-orange); }
+.metric-card:hover { border-color: var(--color-black); }
 
 .metric-value {
   font-family: var(--font-display);
@@ -680,13 +681,13 @@ const startSimulation = () => {
 }
 .steps-container::before {
   top: 12px; left: 12px;
-  border-top: 3px solid var(--color-orange);
-  border-left: 3px solid var(--color-orange);
+  border-top: 3px solid var(--color-black);
+  border-left: 3px solid var(--color-black);
 }
 .steps-container::after {
   bottom: 12px; right: 12px;
-  border-bottom: 3px solid var(--color-green);
-  border-right: 3px solid var(--color-green);
+  border-bottom: 3px solid var(--color-gray-mid);
+  border-right: 3px solid var(--color-gray-mid);
 }
 
 .steps-header {
@@ -702,7 +703,7 @@ const startSimulation = () => {
 }
 
 .diamond-icon {
-  color: var(--color-orange);
+  color: var(--color-black);
   font-size: 1.2rem;
 }
 
@@ -722,7 +723,7 @@ const startSimulation = () => {
   font-family: var(--font-mono);
   font-weight: 700;
   font-size: 15px;
-  color: var(--color-orange);
+  color: var(--color-black);
   opacity: 0.5;
 }
 
@@ -761,13 +762,13 @@ const startSimulation = () => {
 }
 .console-box::before {
   top: -2px; right: -2px;
-  border-top: 3px solid var(--color-orange);
-  border-right: 3px solid var(--color-orange);
+  border-top: 3px solid var(--color-black);
+  border-right: 3px solid var(--color-black);
 }
 .console-box::after {
   bottom: -2px; left: -2px;
-  border-bottom: 3px solid var(--color-green);
-  border-left: 3px solid var(--color-green);
+  border-bottom: 3px solid var(--color-gray-mid);
+  border-left: 3px solid var(--color-gray-mid);
 }
 
 .console-section { padding: var(--space-md); }
@@ -802,13 +803,13 @@ const startSimulation = () => {
 .upload-zone.has-files { align-items: flex-start; }
 
 .upload-zone:hover {
-  border-color: var(--color-orange);
+  border-color: var(--color-black);
   background: var(--background);
 }
 
 .upload-zone.drag-over {
-  border-color: var(--color-green);
-  background: rgba(67,193,101,0.05);
+  border-color: var(--color-gray-mid);
+  background: rgba(10,10,10,0.05);
 }
 
 .upload-placeholder { text-align: center; }
@@ -821,7 +822,7 @@ const startSimulation = () => {
   align-items: center;
   justify-content: center;
   margin: 0 auto var(--space-sm);
-  color: var(--color-orange);
+  color: var(--color-black);
   font-size: 1.2rem;
 }
 
@@ -867,7 +868,7 @@ const startSimulation = () => {
   transition: var(--transition-fast);
 }
 
-.remove-btn:hover { color: var(--color-red); }
+.remove-btn:hover { color: var(--color-black); }
 
 /* ── Console Divider ── */
 .console-divider {
@@ -902,7 +903,7 @@ const startSimulation = () => {
 }
 
 .input-wrapper:focus-within {
-  border-color: var(--color-orange);
+  border-color: var(--color-black);
 }
 
 .code-input {
@@ -959,8 +960,8 @@ const startSimulation = () => {
 }
 
 .start-engine-btn:hover:not(:disabled) {
-  background: var(--color-orange);
-  border-color: var(--color-orange);
+  background: var(--color-gray-mid);
+  border-color: var(--color-gray-mid);
 }
 
 .start-engine-btn:active:not(:disabled) {
@@ -976,7 +977,7 @@ const startSimulation = () => {
 
 @keyframes btn-pulse {
   0%, 100% { border-color: var(--color-black); }
-  50% { border-color: var(--color-orange); }
+  50% { border-color: var(--color-gray-mid); }
 }
 
 /* ── URL Import Section ── */
@@ -1003,7 +1004,7 @@ const startSimulation = () => {
 }
 
 .url-input:focus {
-  border-color: var(--color-orange);
+  border-color: var(--color-black);
   background: var(--background);
 }
 
@@ -1031,8 +1032,8 @@ const startSimulation = () => {
 }
 
 .url-fetch-btn:hover:not(:disabled) {
-  background: var(--color-orange);
-  border-color: var(--color-orange);
+  background: var(--color-gray-mid);
+  border-color: var(--color-gray-mid);
 }
 
 .url-fetch-btn:disabled {
@@ -1044,7 +1045,7 @@ const startSimulation = () => {
   margin-top: var(--space-xs);
   font-family: var(--font-mono);
   font-size: 12px;
-  color: var(--color-red);
+  color: var(--color-black);
 }
 
 .url-doc-list {
@@ -1061,11 +1062,11 @@ const startSimulation = () => {
   background: var(--background);
   padding: var(--space-xs) var(--space-sm);
   border: var(--border-light);
-  border-left: 3px solid var(--color-green);
+  border-left: 3px solid var(--color-gray-mid);
 }
 
 .url-doc-icon {
-  color: var(--color-green);
+  color: var(--color-gray-mid);
   font-size: 14px;
   margin-top: 1px;
   flex-shrink: 0;
@@ -1109,7 +1110,7 @@ const startSimulation = () => {
 }
 
 .attribution-footer a:hover {
-  color: var(--color-orange);
+  color: var(--color-black);
 }
 
 /* ── Responsive ── */

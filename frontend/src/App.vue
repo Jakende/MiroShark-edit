@@ -9,19 +9,22 @@ import DebugPanel from './components/DebugPanel.vue'
 
 <style>
 /* ═══════════════════════════════════════════════════════════
-   MIROSHARK DESIGN SYSTEM — Hyperstitions v2.0
-   Evangelion-inspired. Orange + Green bicolor. 1.4x scale.
+   MIROSHARK DESIGN SYSTEM — Monochrome Policy Edition
+   Strict duotone black/white with grayscale accents. 1.4x scale.
    ═══════════════════════════════════════════════════════════ */
 
 :root {
   /* ── Primary Colors ── */
-  --color-orange: #FF6B1A;
-  --color-green: #43C165;
-  --color-white: #FAFAFA;
-  --color-black: #0A0A0A;
+  --color-black: #000000;
+  --color-white: #FFFFFF;
   --color-gray: #F5F5F5;
-  --color-amber: #FFB347;
-  --color-red: #FF4444;
+  --color-gray-mid: #666666;
+  --color-gray-dark: #333333;
+  --color-gray-light: #E5E5E5;
+  --color-orange: var(--color-gray-dark);
+  --color-green: var(--color-gray-mid);
+  --color-amber: var(--color-gray-light);
+  --color-red: var(--color-black);
 
   /* ── Semantic ── */
   --background: #FAFAFA;
@@ -38,8 +41,10 @@ import DebugPanel from './components/DebugPanel.vue'
   /* ── Borders ── */
   --border-light: 2px solid rgba(10,10,10,0.08);
   --border-medium: 2px solid rgba(10,10,10,0.12);
-  --border-orange: 3px solid var(--color-orange);
-  --border-green: 3px solid var(--color-green);
+  --border-dark: 3px solid var(--color-black);
+  --border-mid: 3px solid var(--color-gray-mid);
+  --border-orange: var(--border-dark);
+  --border-green: var(--border-mid);
 
   /* ── Transitions ── */
   --transition-fast: all 0.1s ease;
@@ -67,12 +72,12 @@ body, #app {
 
 /* ── Text Selection ── */
 ::selection {
-  background: var(--color-orange);
+  background: var(--color-black);
   color: var(--color-white);
 }
 
 ::-moz-selection {
-  background: var(--color-orange);
+  background: var(--color-black);
   color: var(--color-white);
 }
 
@@ -112,8 +117,8 @@ button {
   height: 7px;
   background: repeating-linear-gradient(
     -45deg,
-    var(--color-orange),
-    var(--color-orange) 11px,
+    var(--color-black),
+    var(--color-black) 11px,
     var(--color-white) 11px,
     var(--color-white) 22px
   );
@@ -122,8 +127,8 @@ button {
 /* ── Background Grid ── */
 .bg-grid {
   background-image:
-    linear-gradient(rgba(67,193,101,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(67,193,101,0.04) 1px, transparent 1px);
+    linear-gradient(rgba(10,10,10,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(10,10,10,0.04) 1px, transparent 1px);
   background-size: 70px 70px;
 }
 
@@ -139,8 +144,8 @@ button {
 }
 
 @keyframes pulse-border {
-  0%, 100% { border-color: var(--color-orange); }
-  50% { border-color: var(--color-green); }
+  0%, 100% { border-color: var(--color-black); }
+  50% { border-color: var(--color-gray-mid); }
 }
 
 @keyframes scan {
