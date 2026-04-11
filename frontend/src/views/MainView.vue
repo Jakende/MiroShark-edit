@@ -90,7 +90,7 @@ const router = useRouter()
 const viewMode = ref('split') // graph | split | workbench
 
 // Step State
-const currentStep = ref(1) // 1: Knowledge Structuring, 2: Stakeholder Setup, 3: Discourse Simulation, 4: Memorandum Generation, 5: Stakeholder Consultation
+const currentStep = ref(1)
 const stepNames = ['Knowledge Structuring', 'Stakeholder Setup', 'Discourse Simulation', 'Memorandum Generation', 'Stakeholder Consultation']
 
 // Data State

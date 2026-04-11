@@ -80,7 +80,7 @@
                 <span class="step-num">03</span>
                 <div class="step-info">
                   <div class="step-title">Start Simulation</div>
-                  <div class="step-desc">Multi-stakeholder parallel simulation & Automatic policy requirement parsing & Dynamic temporal memory updates</div>
+                  <div class="step-desc">Multi-stakeholder parallel simulation & automatic policy requirement parsing & dynamic temporal memory updates</div>
                 </div>
               </div>
               <div class="workflow-item">
