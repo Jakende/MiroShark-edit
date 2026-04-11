@@ -1,7 +1,7 @@
 <template>
   <div class="graph-panel">
     <div class="panel-header">
-      <span class="panel-title">Graph Overview</span>
+      <span class="panel-title">Discourse Graph</span>
       <!-- Top Toolbar (Internal Top Right) -->
       <div class="header-tools">
         <button class="tool-btn" @click="$emit('refresh')" :disabled="loading" title="Refresh Graph">
@@ -35,8 +35,8 @@
         <!-- Node/Edge Detail Panel -->
         <div v-if="selectedItem" class="detail-panel">
           <div class="detail-panel-header">
-            <span class="detail-title">{{ selectedItem.type === 'node' ? 'Agent Details' : 'Relationship' }}</span>
-            <span v-if="selectedItem.type === 'node'" class="detail-type-badge" :style="{ background: selectedItem.color, color: '#fff' }">
+            <span class="detail-title">{{ selectedItem.type === 'node' ? 'Stakeholder Details' : 'Relationship' }}</span>
+            <span v-if="selectedItem.type === 'node'" class="detail-type-badge" :style="{ background: selectedItem.color, color: getBadgeTextColor(selectedItem.color) }">
               {{ selectedItem.entityType }}
             </span>
             <button class="detail-close" @click="closeDetailPanel">×</button>
@@ -84,11 +84,11 @@
               </div>
             </div>
 
-            <!-- Agent Actions (shown during simulation) -->
+            <!-- Stakeholder Statements (shown during simulation) -->
             <div class="detail-section" v-if="simulationId">
               <div class="section-title actions-title" @click="actionsExpanded = !actionsExpanded" style="cursor: pointer;">
                 <span class="actions-toggle">{{ actionsExpanded ? '▼' : '▶' }}</span>
-                Agent Actions
+                Stakeholder Statements
                 <span v-if="agentActionsLoading" class="actions-loading">loading...</span>
                 <span v-else-if="agentActions.length > 0" class="actions-count">{{ agentActions.length }}</span>
               </div>
@@ -102,7 +102,7 @@
                     @click="toggleAction(idx)"
                   >
                     <div class="action-header">
-                      <span class="action-platform" :class="action.platform">{{ action.platform }}</span>
+                      <span class="action-platform" :class="action.platform">{{ formatPlatformLabel(action.platform) }}</span>
                       <span class="action-type">{{ action.action_type }}</span>
                       <span class="action-round" v-if="action.round_num != null">R{{ action.round_num }}</span>
                       <span class="action-expand-icon">{{ expandedActions.has(idx) ? '−' : '+' }}</span>
@@ -116,11 +116,11 @@
                         <span class="action-detail-value">{{ action.timestamp }}</span>
                       </div>
                       <div class="action-detail-row" v-if="action.agent_name">
-                        <span class="action-detail-label">Agent</span>
+                        <span class="action-detail-label">Stakeholder</span>
                         <span class="action-detail-value">{{ action.agent_name }}</span>
                       </div>
                       <div class="action-detail-row" v-if="action.agent_id != null">
-                        <span class="action-detail-label">Agent ID</span>
+                        <span class="action-detail-label">Stakeholder ID</span>
                         <span class="action-detail-value mono">{{ action.agent_id }}</span>
                       </div>
                       <div class="action-detail-row" v-if="action.action_args?.post_id != null">
@@ -289,7 +289,7 @@
 
     <!-- Bottom Legend (Bottom Left) -->
     <div v-if="graphData && entityTypes.length" class="graph-legend">
-      <span class="legend-title">Entity Types</span>
+      <span class="legend-title">Stakeholders · Concepts</span>
       <div class="legend-items">
         <div
           class="legend-item"
@@ -407,8 +407,8 @@ const toggleSelfLoop = (id) => {
 const entityTypes = computed(() => {
   if (!props.graphData?.nodes) return []
   const typeMap = {}
-  // Aesthetic color palette
-  const colors = ['#FF6B1A', '#43C165', '#0A0A0A', '#FFB347', '#FF4444', '#FF8C42', '#2D9B5E', '#D45B1A', '#7A7A7A', '#B8522E']
+  // Strict grayscale palette
+  const colors = ['#333333', '#555555', '#777777', '#AAAAAA', '#DDDDDD']
   
   props.graphData.nodes.forEach(node => {
     const type = node.labels?.find(l => l !== 'Entity') || 'Entity'
@@ -436,6 +436,34 @@ const formatDateTime = (dateStr) => {
   } catch {
     return dateStr
   }
+}
+
+const formatPlatformLabel = (platform) => {
+  const labels = {
+    twitter: 'Platform A',
+    reddit: 'Platform B',
+    polymarket: 'Platform C'
+  }
+  return labels[platform] || (platform || 'Platform')
+}
+
+const getBadgeTextColor = (backgroundColor) => {
+  if (!backgroundColor || !backgroundColor.startsWith('#') || backgroundColor.length !== 7) {
+    return '#FAFAFA'
+  }
+  const r = parseInt(backgroundColor.slice(1, 3), 16)
+  const g = parseInt(backgroundColor.slice(3, 5), 16)
+  const b = parseInt(backgroundColor.slice(5, 7), 16)
+  const toLinear = (value) => {
+    const v = value / 255
+    return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4
+  }
+  const bgLuminance = 0.2126 * toLinear(r) + 0.7152 * toLinear(g) + 0.0722 * toLinear(b)
+  const darkLuminance = 0.2126 * toLinear(10) + 0.7152 * toLinear(10) + 0.0722 * toLinear(10) // #0A0A0A
+  const lightLuminance = 0.2126 * toLinear(250) + 0.7152 * toLinear(250) + 0.0722 * toLinear(250) // #FAFAFA
+  const contrastDark = (Math.max(bgLuminance, darkLuminance) + 0.05) / (Math.min(bgLuminance, darkLuminance) + 0.05)
+  const contrastLight = (Math.max(bgLuminance, lightLuminance) + 0.05) / (Math.min(bgLuminance, lightLuminance) + 0.05)
+  return contrastDark >= contrastLight ? '#0A0A0A' : '#FAFAFA'
 }
 
 const closeDetailPanel = () => {
@@ -731,7 +759,7 @@ const renderGraph = () => {
       linkLabelBg.attr('fill', 'rgba(10,10,10,0.85)')
       linkLabels.attr('fill', 'rgba(250,250,250,0.5)')
       // Highlight currently selected edge
-      d3.select(event.target).attr('stroke', '#FF6B1A').attr('stroke-width', 3)
+      d3.select(event.target).attr('stroke', '#333333').attr('stroke-width', 3)
       
       selectedItem.value = {
         type: 'edge',
@@ -755,8 +783,8 @@ const renderGraph = () => {
       linkLabelBg.attr('fill', 'rgba(10,10,10,0.85)')
       linkLabels.attr('fill', 'rgba(250,250,250,0.5)')
       // Highlight corresponding edge
-      link.filter(l => l === d).attr('stroke', '#FF6B1A').attr('stroke-width', 3)
-      d3.select(event.target).attr('fill', 'rgba(255, 107, 26, 0.1)')
+      link.filter(l => l === d).attr('stroke', '#333333').attr('stroke-width', 3)
+      d3.select(event.target).attr('fill', 'rgba(102, 102, 102, 0.12)')
       
       selectedItem.value = {
         type: 'edge',
@@ -783,8 +811,8 @@ const renderGraph = () => {
       linkLabelBg.attr('fill', 'rgba(10,10,10,0.85)')
       linkLabels.attr('fill', 'rgba(250,250,250,0.5)')
       // Highlight corresponding edge
-      link.filter(l => l === d).attr('stroke', '#FF6B1A').attr('stroke-width', 3)
-      d3.select(event.target).attr('fill', '#FF6B1A')
+      link.filter(l => l === d).attr('stroke', '#333333').attr('stroke-width', 3)
+      d3.select(event.target).attr('fill', '#333333')
 
       selectedItem.value = {
         type: 'edge',
@@ -851,10 +879,10 @@ const renderGraph = () => {
       node.attr('stroke', 'rgba(10,10,10,0.6)').attr('stroke-width', 2.5)
       linkGroup.selectAll('path').attr('stroke', 'rgba(250,250,250,0.15)').attr('stroke-width', 1.5)
       // Highlight selected node
-      d3.select(event.target).attr('stroke', '#FF6B1A').attr('stroke-width', 4)
+      d3.select(event.target).attr('stroke', '#333333').attr('stroke-width', 4)
       // Highlight edges connected to this node
       link.filter(l => l.source.id === d.id || l.target.id === d.id)
-        .attr('stroke', '#FF6B1A')
+        .attr('stroke', '#333333')
         .attr('stroke-width', 2.5)
       
       selectedItem.value = {
@@ -1037,8 +1065,8 @@ onUnmounted(() => {
   height: 100%;
   background-color: #0A0A0A;
   background-image:
-    linear-gradient(rgba(67,193,101,0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(67,193,101,0.06) 1px, transparent 1px);
+    linear-gradient(rgba(102,102,102,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(102,102,102,0.06) 1px, transparent 1px);
   background-size: 70px 70px;
   overflow: hidden;
 }
@@ -1051,7 +1079,7 @@ onUnmounted(() => {
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, #FF6B1A 40px, transparent 40px, transparent calc(100% - 40px), #FF6B1A calc(100% - 40px));
+  background: linear-gradient(90deg, #333333 40px, transparent 40px, transparent calc(100% - 40px), #333333 calc(100% - 40px));
   z-index: 30;
   pointer-events: none;
 }
@@ -1063,7 +1091,7 @@ onUnmounted(() => {
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, #43C165 40px, transparent 40px, transparent calc(100% - 40px), #43C165 calc(100% - 40px));
+  background: linear-gradient(90deg, #666666 40px, transparent 40px, transparent calc(100% - 40px), #666666 calc(100% - 40px));
   z-index: 30;
   pointer-events: none;
 }
@@ -1120,7 +1148,7 @@ onUnmounted(() => {
 .tool-btn:hover {
   background: rgba(250,250,250,0.1);
   color: #FAFAFA;
-  border-color: #FF6B1A;
+  border-color: #333333;
 }
 
 .tool-btn .btn-text {
@@ -1180,7 +1208,7 @@ onUnmounted(() => {
   font-family: var(--font-mono);
   font-size: 10px;
   font-weight: 600;
-  color: #FF6B1A;
+  color: #333333;
   margin-bottom: 10px;
   text-transform: uppercase;
   letter-spacing: 3px;
@@ -1284,7 +1312,7 @@ onUnmounted(() => {
 }
 
 input:checked + .slider {
-  background-color: #FF6B1A;
+  background-color: #333333;
 }
 
 input:checked + .slider:before {
@@ -1406,7 +1434,7 @@ input:checked + .slider:before {
 }
 
 .detail-value.uuid-text.copyable:active {
-  color: #43C165;
+  color: #666666;
 }
 
 .detail-value.fact-text {
@@ -1493,7 +1521,7 @@ input:checked + .slider:before {
 
 .actions-loading {
   font-size: 10px;
-  color: #FF6B1A;
+  color: #333333;
   animation: shimmer 1.5s ease-in-out infinite;
 }
 
@@ -1504,7 +1532,7 @@ input:checked + .slider:before {
 
 .actions-count {
   font-size: 10px;
-  background: #FF6B1A;
+  background: #333333;
   color: #FAFAFA;
   padding: 1px 6px;
   font-family: var(--font-mono);
@@ -1535,7 +1563,7 @@ input:checked + .slider:before {
 }
 
 .action-item.expanded {
-  border-color: #FF6B1A;
+  border-color: #333333;
 }
 
 .action-header {
@@ -1556,8 +1584,8 @@ input:checked + .slider:before {
 }
 
 .action-platform.twitter { background: #0A0A0A; }
-.action-platform.reddit { background: #FF6B1A; }
-.action-platform.polymarket { background: #43C165; }
+.action-platform.reddit { background: #333333; }
+.action-platform.polymarket { background: #666666; }
 
 .action-type {
   font-family: var(--font-mono);
@@ -1570,7 +1598,7 @@ input:checked + .slider:before {
 .action-round {
   font-family: var(--font-mono);
   font-size: 10px;
-  color: #FF6B1A;
+  color: #333333;
   font-weight: 700;
 }
 
@@ -1636,8 +1664,8 @@ input:checked + .slider:before {
   font-size: 10px;
 }
 
-.action-detail-value.text-green { color: #43C165; font-weight: 700; }
-.action-detail-value.text-orange { color: #FF6B1A; font-weight: 700; }
+.action-detail-value.text-green { color: #666666; font-weight: 700; }
+.action-detail-value.text-orange { color: #333333; font-weight: 700; }
 
 .reasoning-text {
   font-size: 11px;
@@ -1730,12 +1758,12 @@ input:checked + .slider:before {
 .memory-icon {
   width: 18px;
   height: 18px;
-  color: #43C165;
+  color: #666666;
 }
 
 @keyframes breathe {
-  0%, 100% { opacity: 0.7; transform: scale(1); filter: drop-shadow(0 0 2px rgba(67, 193, 101, 0.3)); }
-  50% { opacity: 1; transform: scale(1.15); filter: drop-shadow(0 0 8px rgba(67, 193, 101, 0.6)); }
+  0%, 100% { opacity: 0.7; transform: scale(1); filter: drop-shadow(0 0 2px rgba(102, 102, 102, 0.30)); }
+  50% { opacity: 1; transform: scale(1.15); filter: drop-shadow(0 0 8px rgba(102, 102, 102, 0.60)); }
 }
 
 /* Post-simulation hint styles */
@@ -1753,7 +1781,7 @@ input:checked + .slider:before {
 .finished-hint .hint-icon {
   width: 18px;
   height: 18px;
-  color: #FF6B1A;
+  color: #333333;
 }
 
 .finished-hint .hint-text {
@@ -1785,7 +1813,7 @@ input:checked + .slider:before {
   width: 40px;
   height: 40px;
   border: 3px solid rgba(250,250,250,0.12);
-  border-top-color: #FF6B1A;
+  border-top-color: #333333;
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin: 0 auto 16px;
@@ -1796,8 +1824,8 @@ input:checked + .slider:before {
   display: flex;
   align-items: center;
   gap: 8px;
-  background: rgba(67, 193, 101, 0.08);
-  border: 2px solid rgba(67, 193, 101, 0.2);
+  background: rgba(102, 102, 102, 0.10);
+  border: 2px solid rgba(102, 102, 102, 0.24);
 }
 
 .self-loop-count {

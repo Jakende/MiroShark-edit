@@ -6,7 +6,7 @@
         <div class="brand" @click="router.push('/')">MIROSHARK</div>
       </div>
       <div class="header-center">
-        <span class="page-tag">Simulation Comparison</span>
+          <span class="page-tag">Discourse Comparison</span>
       </div>
       <div class="header-right">
         <button v-if="data" class="download-btn" @click="downloadComparison">
@@ -77,7 +77,7 @@
           <div class="metric-grid">
             <div class="metric-item">
               <span class="metric-val">{{ data.sim1.profiles_count }}</span>
-              <span class="metric-lbl">Agents</span>
+              <span class="metric-lbl">Stakeholders</span>
             </div>
             <div class="metric-item">
               <span class="metric-val">{{ data.sim1.total_rounds }}</span>
@@ -95,7 +95,7 @@
           <div class="metric-grid">
             <div class="metric-item">
               <span class="metric-val">{{ data.sim2.profiles_count }}</span>
-              <span class="metric-lbl">Agents</span>
+              <span class="metric-lbl">Stakeholders</span>
             </div>
             <div class="metric-item">
               <span class="metric-val">{{ data.sim2.total_rounds }}</span>
@@ -177,7 +177,7 @@
                 v-if="chartPoints1.length > 1"
                 :points="chartPoints1.map(p => `${p.x},${p.y}`).join(' ')"
                 fill="none"
-                stroke="#FF6B1A"
+                stroke="#333333"
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
@@ -187,7 +187,7 @@
                 v-if="chartPoints2.length > 1"
                 :points="chartPoints2.map(p => `${p.x},${p.y}`).join(' ')"
                 fill="none"
-                stroke="#43C165"
+                stroke="#666666"
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
@@ -197,14 +197,14 @@
                 v-for="p in chartPoints1"
                 :key="'a'+p.round"
                 :cx="p.x" :cy="p.y" r="3"
-                fill="#FF6B1A"
+                fill="#333333"
               />
               <!-- Dots Sim B -->
               <circle
                 v-for="p in chartPoints2"
                 :key="'b'+p.round"
                 :cx="p.x" :cy="p.y" r="3"
-                fill="#43C165"
+                fill="#666666"
               />
             </svg>
             <div class="chart-legend">
@@ -227,7 +227,7 @@
               <div v-for="m in data.sim1.markets" :key="m.market_id" class="market-row">
                 <span class="market-id">Market {{ m.market_id }}</span>
                 <div class="market-bar-wrap">
-                  <div class="market-bar" :style="{ width: (m.price_yes * 100) + '%', background: '#FF6B1A' }"></div>
+                  <div class="market-bar" :style="{ width: (m.price_yes * 100) + '%', background: '#333333' }"></div>
                 </div>
                 <span class="market-price">{{ (m.price_yes * 100).toFixed(1) }}% YES</span>
               </div>
@@ -237,7 +237,7 @@
               <div v-for="m in data.sim2.markets" :key="m.market_id" class="market-row">
                 <span class="market-id">Market {{ m.market_id }}</span>
                 <div class="market-bar-wrap">
-                  <div class="market-bar" :style="{ width: (m.price_yes * 100) + '%', background: '#43C165' }"></div>
+                  <div class="market-bar" :style="{ width: (m.price_yes * 100) + '%', background: '#666666' }"></div>
                 </div>
                 <span class="market-price">{{ (m.price_yes * 100).toFixed(1) }}% YES</span>
               </div>
@@ -434,7 +434,7 @@ const downloadComparison = () => {
 .brand {
   font-family: 'Young Serif', serif;
   font-size: 18px;
-  color: #FF6B1A;
+  color: #333333;
   cursor: pointer;
 }
 .page-tag {
@@ -455,8 +455,8 @@ const downloadComparison = () => {
   transition: all 0.15s;
 }
 .download-btn:hover {
-  border-color: #FF6B1A;
-  color: #FF6B1A;
+  border-color: #333333;
+  color: #333333;
 }
 
 /* Selector Bar */
@@ -493,7 +493,7 @@ const downloadComparison = () => {
 }
 .sim-select:focus {
   outline: none;
-  border-color: #FF6B1A;
+  border-color: #333333;
 }
 .vs-badge {
   padding: 8px 14px;
@@ -507,7 +507,7 @@ const downloadComparison = () => {
 }
 .compare-btn {
   padding: 9px 24px;
-  background: #FF6B1A;
+  background: #333333;
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -526,10 +526,10 @@ const downloadComparison = () => {
 .cmp-error {
   margin: 32px;
   padding: 14px;
-  background: rgba(255, 68, 68, 0.1);
-  border: 1px solid #FF4444;
+  background: rgba(102, 102, 102, 0.12);
+  border: 1px solid #333333;
   border-radius: 6px;
-  color: #FF4444;
+  color: #333333;
   font-size: 13px;
 }
 .cmp-loading {
@@ -545,7 +545,7 @@ const downloadComparison = () => {
   width: 36px;
   height: 36px;
   border: 3px solid #2A2A2A;
-  border-top-color: #FF6B1A;
+  border-top-color: #333333;
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
@@ -580,9 +580,9 @@ const downloadComparison = () => {
   font-size: 28px;
   font-weight: bold;
 }
-.divergence-score.low { color: #43C165; }
-.divergence-score.medium { color: #FFB347; }
-.divergence-score.high { color: #FF6B1A; }
+.divergence-score.low { color: #CCCCCC; }
+.divergence-score.medium { color: #666666; }
+.divergence-score.high { color: #333333; }
 .divergence-desc { font-size: 12px; color: #888; max-width: 400px; line-height: 1.5; }
 
 /* Metrics Row */
@@ -597,8 +597,8 @@ const downloadComparison = () => {
   border: 1px solid #2A2A2A;
   border-radius: 8px;
 }
-.metric-card.sim-a { border-top: 3px solid #FF6B1A; }
-.metric-card.sim-b { border-top: 3px solid #43C165; }
+.metric-card.sim-a { border-top: 3px solid #333333; }
+.metric-card.sim-b { border-top: 3px solid #666666; }
 .metric-sim-id { font-size: 11px; color: #555; margin-bottom: 12px; font-family: 'Space Mono', monospace; }
 .metric-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
 .metric-item { display: flex; flex-direction: column; gap: 4px; }
@@ -636,8 +636,8 @@ const downloadComparison = () => {
 .lb-name { color: #ccc; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .lb-score { color: #888; text-align: right; font-size: 11px; }
 .lb-delta { font-size: 10px; text-align: center; font-weight: bold; }
-.delta-up { color: #43C165; }
-.delta-down { color: #FF6B1A; }
+.delta-up { color: #666666; }
+.delta-down { color: #333333; }
 .delta-equal { color: #555; }
 .lb-empty { color: #444; font-size: 12px; padding: 12px 0; }
 
@@ -653,8 +653,8 @@ const downloadComparison = () => {
 .chart-legend { display: flex; gap: 20px; font-size: 11px; color: #666; }
 .legend-item { }
 .legend-label { color: #444; margin-left: auto; }
-.sim-a-color { color: #FF6B1A; }
-.sim-b-color { color: #43C165; }
+.sim-a-color { color: #333333; }
+.sim-b-color { color: #666666; }
 
 /* Markets */
 .markets-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
