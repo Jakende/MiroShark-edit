@@ -782,8 +782,8 @@ class OasisProfileGenerator:
                 "Use English."
             )
         return (
-            "You are an expert in institutional communications creating institutional communication "
-            "profiles for a multi-agent policy and discourse simulation. Institutional entities have "
+            "You are an expert in institutional communications creating communication profiles for a "
+            "multi-agent policy and discourse simulation. Institutional entities have "
             "a distinct voice — formal but not robotic, on-message, and strategically consistent "
             "across memorandums, press releases, policy briefs, and public statements.\n\n"
             "Return valid JSON. All string values must be plain text (no newlines, no markdown). "
@@ -858,7 +858,7 @@ CONTEXT (from knowledge graph and research):
 
 Return JSON with these fields:
 
-"bio": The official institutional summary. Professional, reflecting their public mission and strategic positioning.
+"bio": The official institutional summary (2-3 sentences). Professional, reflecting their public mission and strategic positioning.
 
 "persona": A communications playbook for this institution (600-900 words). This is a guide for how the institution communicates publicly:
 - INSTITUTIONAL IDENTITY: What is this organization, and what is its public mission? What image does it project?
@@ -917,8 +917,13 @@ IMPORTANT: Do NOT include karma, friend_count, follower_count, or statuses_count
             }
         
         elif entity_type_lower in ["mediaoutlet", "socialmediaplatform"]:
+            media_bio = (
+                f"Official communications and news from {entity_name}."
+                if entity_type_lower == "mediaoutlet"
+                else f"Official institutional communications from {entity_name}."
+            )
             return {
-                "bio": f"Official institution for {entity_name}. News and updates.",
+                "bio": media_bio,
                 "persona": f"{entity_name} is a media institution that reports news and facilitates public discourse. The entity shares timely updates and engages with the audience on current events.",
                 "age": 30,  # Virtual age for institutions
                 "gender": "other",  # Institutions use other
@@ -930,7 +935,7 @@ IMPORTANT: Do NOT include karma, friend_count, follower_count, or statuses_count
 
         elif entity_type_lower in ["university", "governmentagency", "ngo", "organization"]:
             return {
-                "bio": f"Official institution of {entity_name}.",
+                "bio": f"Official communications from {entity_name}.",
                 "persona": f"{entity_name} is an institutional entity that communicates official positions, announcements, and engages with stakeholders on relevant matters.",
                 "age": 30,  # Virtual age for institutions
                 "gender": "other",  # Institutions use other
