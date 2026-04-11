@@ -337,7 +337,7 @@ onMounted(() => {
 
 .status-indicator.processing .dot { background: #333333; animation: pulse 1s infinite; }
 .status-indicator.completed .dot { background: #666666; }
-.status-indicator.error .dot { background: #333333; }
+.status-indicator.error .dot { background: #B0B0B0; border: 1px solid #333333; animation: none; }
 
 @keyframes pulse { 50% { opacity: 0.5; } }
 
