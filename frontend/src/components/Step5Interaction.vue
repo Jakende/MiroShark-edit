@@ -250,7 +250,7 @@
                 </svg>
               </div>
               <p class="empty-text">
-                {{ chatTarget === 'report_agent' ? 'Consult with the report stakeholder to review memorandum details' : 'Consult with simulated stakeholders to understand their perspectives' }}
+                {{ chatTarget === 'report_agent' ? 'Consult with the report stakeholder to review report details' : 'Consult with simulated stakeholders to understand their perspectives' }}
               </p>
             </div>
             <div 

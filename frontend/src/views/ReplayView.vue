@@ -91,7 +91,7 @@
           <span class="stat-divider"></span>
           <span class="stat-item">
             <span class="stat-label">Forum</span>
-            <span class="stat-value">{{ visibleRedditCount }}</span>
+            <span class="stat-value">{{ visibleForumCount }}</span>
           </span>
           <span class="stat-divider"></span>
           <span class="stat-item">
@@ -284,7 +284,7 @@ const visibleActions = computed(() => {
 })
 
 const visibleTwitterCount = computed(() => visibleActions.value.filter(a => a.platform === 'twitter').length)
-const visibleRedditCount = computed(() => visibleActions.value.filter(a => a.platform === 'reddit').length)
+const visibleForumCount = computed(() => visibleActions.value.filter(a => a.platform === 'reddit').length)
 const visiblePolymarketCount = computed(() => visibleActions.value.filter(a => a.platform === 'polymarket').length)
 
 const progressPercent = computed(() => {

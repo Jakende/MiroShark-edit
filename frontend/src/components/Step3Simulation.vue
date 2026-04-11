@@ -79,7 +79,7 @@
       <span class="events-label">TOTAL EVENTS:</span>
       <span class="events-total">{{ (runStatus.twitter_actions_count || 0) + (runStatus.reddit_actions_count || 0) + (runStatus.polymarket_actions_count || 0) }}</span>
       <span class="events-divider"></span>
-      <span class="events-platform">X <span class="events-count">{{ runStatus.twitter_actions_count || 0 }}</span></span>
+      <span class="events-platform">X Platform <span class="events-count">{{ runStatus.twitter_actions_count || 0 }}</span></span>
       <span class="events-slash">/</span>
       <span class="events-platform">Forum <span class="events-count">{{ runStatus.reddit_actions_count || 0 }}</span></span>
       <span class="events-slash">/</span>
@@ -93,7 +93,7 @@
         <div class="platform-status twitter" :class="{ active: runStatus.twitter_running, completed: runStatus.twitter_completed, selected: filteredPlatform === 'twitter', dimmed: filteredPlatform && filteredPlatform !== 'twitter' }" @click="filterByPlatform('twitter')">
           <div class="platform-left">
             <svg class="platform-icon" viewBox="0 0 24 24" width="11" height="11" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-            <span class="platform-name">X</span>
+            <span class="platform-name">X Platform</span>
             <span v-if="runStatus.twitter_completed" class="status-badge done">done</span>
           </div>
           <div class="platform-stats">
@@ -156,7 +156,7 @@
       <!-- Platform Filter Bar -->
       <div v-if="filteredPlatform" class="agent-filter-bar">
         <div class="filter-info">
-          <span class="filter-name" :class="filteredPlatform">{{ filteredPlatform === 'twitter' ? 'Stakeholder Platform' : filteredPlatform === 'reddit' ? 'Public Forum' : 'Forecast Forum' }}</span>
+          <span class="filter-name" :class="filteredPlatform">{{ filteredPlatform === 'twitter' ? 'X Platform' : filteredPlatform === 'reddit' ? 'Forum' : 'Polymarket' }}</span>
           <span class="filter-count">{{ chronologicalActions.length }} events</span>
         </div>
         <button class="filter-clear" @click="clearPlatformFilter">Clear</button>
@@ -293,7 +293,7 @@
                 <template v-if="action.action_type === 'DISLIKE_COMMENT'">
                   <div class="like-info">
                     <svg class="icon-small" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path></svg>
-                    <span class="like-label">Rebutted @{{ action.action_args?.comment_author_name || 'Stakeholder' }}'s memorandum</span>
+                    <span class="like-label">Rebutted @{{ action.action_args?.comment_author_name || 'Stakeholder' }}'s memo</span>
                   </div>
                   <div v-if="action.action_args?.comment_content" class="liked-content">
                     "{{ truncateContent(action.action_args.comment_content, 120) }}"

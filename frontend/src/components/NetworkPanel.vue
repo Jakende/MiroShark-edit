@@ -74,8 +74,8 @@
       <span class="legend-title">Platforms</span>
       <div class="legend-items">
         <div class="legend-item"><span class="legend-dot" style="background: #0A0A0A"></span><span>X</span></div>
-        <div class="legend-item"><span class="legend-dot" style="background: #333333"></span><span>Reddit</span></div>
-        <div class="legend-item"><span class="legend-dot" style="background: #111111"></span><span>Polymarket</span></div>
+        <div class="legend-item"><span class="legend-dot" style="background: #666666"></span><span>Forum</span></div>
+        <div class="legend-item"><span class="legend-dot" style="background: #999999"></span><span>Polymarket</span></div>
       </div>
       <div class="legend-hint">Node size = activity · Edge thickness = interactions</div>
     </div>
@@ -110,7 +110,7 @@ let actionLayer = null    // D3 <g> for floating action indicators
 let nodePositions = {}    // agent_name -> { x, y } (updated by simulation tick)
 let graphBuilt = false
 
-const platformColors = { twitter: '#000000', reddit: '#333333', polymarket: '#111111' }
+const platformColors = { twitter: '#000000', reddit: '#666666', polymarket: '#999999' }
 
 const actionIcons = {
   CREATE_POST: '✎', QUOTE_POST: '❝', REPOST: '↻', LIKE_POST: '♥',
@@ -192,7 +192,7 @@ const buildFullNetworkData = () => {
   nodes.forEach(n => {
     let maxP = '', maxC = 0
     Object.entries(n.platforms).forEach(([p, c]) => { if (c > maxC) { maxC = c; maxP = p } })
-    n.color = platformColors[maxP] || '#777777'
+    n.color = platformColors[maxP] || '#666666'
   })
 
   return { nodes, edges }
@@ -638,7 +638,7 @@ onUnmounted(() => {
   position: absolute;
   top: 0; left: 0; right: 0;
   height: 3px;
-  background: linear-gradient(90deg, #333333 40px, transparent 40px, transparent calc(100% - 40px), #333333 calc(100% - 40px));
+  background: linear-gradient(90deg, #666666 40px, transparent 40px, transparent calc(100% - 40px), #666666 calc(100% - 40px));
   z-index: 30;
   pointer-events: none;
 }
@@ -648,7 +648,7 @@ onUnmounted(() => {
   position: absolute;
   bottom: 0; left: 0; right: 0;
   height: 3px;
-  background: linear-gradient(90deg, #111111 40px, transparent 40px, transparent calc(100% - 40px), #111111 calc(100% - 40px));
+  background: linear-gradient(90deg, #999999 40px, transparent 40px, transparent calc(100% - 40px), #999999 calc(100% - 40px));
   z-index: 30;
   pointer-events: none;
 }
@@ -798,14 +798,14 @@ onUnmounted(() => {
 .platform-bar { display: flex; align-items: center; gap: 8px; }
 .bar-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; min-width: 60px; color: rgba(10,10,10,0.5); }
 .bar-label.twitter { color: #0A0A0A; }
-.bar-label.reddit { color: #333333; }
-.bar-label.polymarket { color: #111111; }
+.bar-label.reddit { color: #666666; }
+.bar-label.polymarket { color: #999999; }
 
 .bar-track { flex: 1; height: 6px; background: rgba(10,10,10,0.06); }
 .bar-fill { height: 100%; transition: width 0.3s; }
 .bar-fill.twitter { background: #0A0A0A; }
-.bar-fill.reddit { background: #333333; }
-.bar-fill.polymarket { background: #111111; }
+.bar-fill.reddit { background: #666666; }
+.bar-fill.polymarket { background: #999999; }
 .bar-count { font-size: 10px; font-weight: 600; color: rgba(10,10,10,0.7); min-width: 20px; text-align: right; }
 
 .interaction-types { padding: 8px 14px 12px; display: flex; flex-wrap: wrap; gap: 4px; border-top: 1px solid rgba(10,10,10,0.06); }
