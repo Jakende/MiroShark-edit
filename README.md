@@ -77,7 +77,8 @@ Stakeholder channels execute simultaneously each round. Data flows between them:
                     └──────┬──────────┬──────────┬────────────┘
                            │          │          │
                     ┌──────▼───┐ ┌────▼─────┐ ┌─▼────────────┐
-                    │ Channel A│ │ Channel B│ │ Forecast Market│
+                    │Stakeholder│ │ Public   │ │ Forecast Market│
+                    │ Platform  │ │ Forums   │ │               │
                     │          │ │          │ │               │
                     │ Statements│ │ Rebuttals│ │ Trades (AMM)  │
                     │ Endorse   │ │ Citations│ │ Single market │

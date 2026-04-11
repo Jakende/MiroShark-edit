@@ -431,8 +431,8 @@
 
             <!-- Hot Topics -->
               <div class="topics-section">
-               <span class="box-label">Initial Core Topics</span>
-              <div class="hot-topics-grid">
+                <span class="box-label">Initial Core Topics</span>
+                <div class="hot-topics-grid">
                 <span v-for="topic in simulationConfig.event_config.hot_topics" :key="topic" class="hot-topic-tag">
                   # {{ topic }}
                 </span>
@@ -726,7 +726,9 @@ const customMaxRounds = ref(40)   // default recommended: 40 rounds
 
 // Watch stage to update phase
 watch(currentStage, (newStage) => {
-  if (newStage === 'Generating Agent Personas' || newStage === 'Generating Stakeholder Profiles' || newStage === 'generating_profiles') {
+  const normalizedStage = typeof newStage === 'string' ? newStage.toLowerCase() : ''
+  const profileStages = new Set(['generating_profiles', 'generating agent profiles', 'generating stakeholder profiles'])
+  if (profileStages.has(normalizedStage)) {
     phase.value = 1
   } else if (newStage === 'Generating Simulation Config' || newStage === 'generating_config') {
     phase.value = 2
