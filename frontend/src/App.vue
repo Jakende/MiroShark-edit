@@ -22,7 +22,8 @@ import DebugPanel from './components/DebugPanel.vue'
   --color-gray-dark: #333333;
   --color-gray-light: #E5E5E5;
   --color-overlay-subtle: rgba(0,0,0,0.05);
-  /* Legacy aliases retained for compatibility with untouched components. */
+  /* Legacy aliases retained for compatibility with untouched components.
+     TODO: remove these aliases after remaining component palette migration. */
   --color-orange: var(--color-gray-dark);
   --color-green: var(--color-gray-mid);
   --color-amber: var(--color-gray-light);

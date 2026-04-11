@@ -815,7 +815,7 @@ const startSimulation = () => {
 
 .upload-zone.drag-over {
   border-color: var(--color-gray-mid);
-  background: var(--color-overlay-subtle);
+  background: rgba(0,0,0,0.1);
 }
 
 .upload-placeholder { text-align: center; }
