@@ -381,7 +381,7 @@ onUnmounted(() => {
 .switch-btn.active {
   background: #0A0A0A;
   color: #FAFAFA;
-  border: 2px solid #FF6B1A;
+  border: 2px solid #333333;
 }
 
 .header-right {
@@ -433,9 +433,9 @@ onUnmounted(() => {
   background: rgba(250,250,250,0.2);
 }
 
-.status-indicator.processing .dot { background: #FF6B1A; animation: pulse 1s infinite; }
-.status-indicator.completed .dot { background: #43C165; }
-.status-indicator.error .dot { background: #FF4444; }
+.status-indicator.processing .dot { background: #333333; animation: pulse 1s infinite; }
+.status-indicator.completed .dot { background: #111111; }
+.status-indicator.error .dot { background: #666666; }
 
 @keyframes pulse { 50% { opacity: 0.5; } }
 
