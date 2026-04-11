@@ -48,7 +48,7 @@
 
       <!-- Right Panel: Step Components -->
       <div class="panel-wrapper right" :style="rightPanelStyle">
-        <!-- Step 1: Graph Construction -->
+        <!-- Step 1: Knowledge Structuring -->
         <Step1GraphBuild 
           v-if="currentStep === 1"
           :currentPhase="currentPhase"
@@ -59,7 +59,7 @@
           :systemLogs="systemLogs"
           @next-step="handleNextStep"
         />
-        <!-- Step 2: Agent Setup -->
+        <!-- Step 2: Stakeholder Setup -->
         <Step2EnvSetup
           v-else-if="currentStep === 2"
           :projectData="projectData"
@@ -90,8 +90,8 @@ const router = useRouter()
 const viewMode = ref('split') // graph | split | workbench
 
 // Step State
-const currentStep = ref(1) // 1: Graph Construction, 2: Agent Setup, 3: Start Simulation, 4: Report Generation, 5: Deep Interaction
-const stepNames = ['Graph Construction', 'Agent Setup', 'Start Simulation', 'Report Generation', 'Deep Interaction']
+const currentStep = ref(1)
+const stepNames = ['Knowledge Structuring', 'Stakeholder Setup', 'Discourse Simulation', 'Memorandum Generation', 'Stakeholder Consultation']
 
 // Data State
 const currentProjectId = ref(route.params.projectId)
@@ -423,13 +423,11 @@ onUnmounted(() => {
 <style scoped>
 /* Hyperstitions Design System v2.0 — Local Tokens */
 .main-view {
-  --color-orange: #FF6B1A;
-  --color-green: #43C165;
-  --color-black: #0A0A0A;
-  --color-white: #FAFAFA;
+  --color-black: #000000;
+  --color-white: #FFFFFF;
   --color-gray: #F5F5F5;
-  --color-red: #FF4444;
-  --color-amber: #FFB347;
+  --color-gray-mid: #666666;
+  --color-gray-dark: #333333;
   --font-display: 'Young Serif', Georgia, serif;
   --font-mono: 'Space Mono', 'Courier New', monospace;
   --border-light: 2px solid rgba(10,10,10,0.08);
@@ -555,9 +553,9 @@ onUnmounted(() => {
   background: rgba(250,250,250,0.2);
 }
 
-.status-indicator.processing .dot { background: var(--color-orange); animation: pulse 1s infinite; }
-.status-indicator.completed .dot { background: var(--color-green); }
-.status-indicator.error .dot { background: var(--color-red); }
+.status-indicator.processing .dot { background: var(--color-gray-mid); animation: pulse 1s infinite; }
+.status-indicator.completed .dot { background: var(--color-black); border: 1px solid var(--color-white); }
+.status-indicator.error .dot { background: transparent; border: 1px dashed var(--color-white); }
 
 @keyframes pulse { 50% { opacity: 0.5; } }
 

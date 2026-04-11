@@ -201,7 +201,7 @@ const buildFullNetworkData = () => {
   nodes.forEach(n => {
     let maxP = '', maxC = 0
     Object.entries(n.platforms).forEach(([p, c]) => { if (c > maxC) { maxC = c; maxP = p } })
-    n.color = platformColors[maxP] || '#7A7A7A'
+    n.color = platformColors[maxP] || '#666666'
   })
 
   return { nodes, edges }
@@ -457,7 +457,7 @@ const showRoundActions = (roundNum) => {
         .attr('x', -boxW / 2).attr('y', 0)
         .attr('width', boxW).attr('height', boxH)
         .attr('rx', 6)
-        .attr('fill', '#1A1A1A')
+        .attr('fill', '#111111')
         .attr('stroke', color)
         .attr('stroke-width', 1.5)
         .attr('opacity', 0.95)

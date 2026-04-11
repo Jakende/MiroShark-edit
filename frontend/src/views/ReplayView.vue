@@ -90,8 +90,8 @@
           </span>
           <span class="stat-divider"></span>
           <span class="stat-item">
-            <span class="stat-label">Reddit</span>
-            <span class="stat-value">{{ visibleRedditCount }}</span>
+            <span class="stat-label">Forum</span>
+            <span class="stat-value">{{ visibleForumCount }}</span>
           </span>
           <span class="stat-divider"></span>
           <span class="stat-item">
@@ -133,7 +133,7 @@
                   <div class="header-meta">
                     <div class="platform-indicator" :class="action.platform">
                       <svg v-if="action.platform === 'twitter'" viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                      <img v-else-if="action.platform === 'reddit'" src="/reddit.png" class="platform-logo" alt="Reddit" />
+                      <img v-else-if="action.platform === 'reddit'" src="/reddit.png" class="platform-logo" alt="Public Forum" />
                       <img v-else-if="action.platform === 'polymarket'" src="/pm.png" class="platform-logo" alt="Polymarket" />
                     </div>
                     <div class="action-badge" :class="getActionTypeClass(action.action_type)">
@@ -161,7 +161,7 @@
 
                   <!-- REPOST -->
                   <template v-if="action.action_type === 'REPOST'">
-                    <div class="repost-info">Reposted @{{ action.action_args?.original_author_name || 'User' }}</div>
+                    <div class="repost-info">Cited @{{ action.action_args?.original_author_name || 'User' }}</div>
                     <div v-if="action.action_args?.original_content" class="repost-content">
                       {{ truncate(action.action_args.original_content, 200) }}
                     </div>
@@ -169,7 +169,7 @@
 
                   <!-- LIKE_POST -->
                   <template v-if="action.action_type === 'LIKE_POST'">
-                    <div class="like-info">Liked @{{ action.action_args?.post_author_name || 'User' }}'s post</div>
+                    <div class="like-info">Endorsed @{{ action.action_args?.post_author_name || 'User' }}'s statement</div>
                     <div v-if="action.action_args?.post_content" class="liked-content">
                       "{{ truncate(action.action_args.post_content, 120) }}"
                     </div>
@@ -181,7 +181,7 @@
                       {{ action.action_args.content }}
                     </div>
                     <div v-if="action.action_args?.post_id" class="comment-context">
-                      Reply to post #{{ action.action_args.post_id }}
+                      Reply to statement #{{ action.action_args.post_id }}
                     </div>
                   </template>
 
@@ -192,18 +192,18 @@
 
                   <!-- SEARCH_POSTS -->
                   <template v-if="action.action_type === 'SEARCH_POSTS'">
-                    <div class="search-info">Search: <span class="search-query">"{{ action.action_args?.query || '' }}"</span></div>
+                    <div class="search-info">Review Archive: <span class="search-query">"{{ action.action_args?.query || '' }}"</span></div>
                   </template>
 
                   <!-- DISLIKE_POST -->
                   <template v-if="action.action_type === 'DISLIKE_POST'">
-                    <div class="like-info">Disliked @{{ action.action_args?.post_author_name || 'User' }}'s post</div>
+                    <div class="like-info">Rebutted @{{ action.action_args?.post_author_name || 'User' }}'s statement</div>
                   </template>
 
                   <!-- BUY_SHARES -->
                   <template v-if="action.action_type === 'BUY_SHARES'">
                     <div class="trade-info">
-                      <span class="trade-direction buy">BUY</span>
+                      <span class="trade-direction buy">POSITION +</span>
                       <span>{{ formatNum(action.action_args?.shares) }} <strong>{{ action.action_args?.outcome }}</strong> @ ${{ formatNum(action.action_args?.price) }}</span>
                     </div>
                   </template>
@@ -211,7 +211,7 @@
                   <!-- SELL_SHARES -->
                   <template v-if="action.action_type === 'SELL_SHARES'">
                     <div class="trade-info">
-                      <span class="trade-direction sell">SELL</span>
+                      <span class="trade-direction sell">POSITION -</span>
                       <span>{{ formatNum(action.action_args?.shares) }} <strong>{{ action.action_args?.outcome }}</strong> → ${{ formatNum(action.action_args?.usd_received) }}</span>
                     </div>
                   </template>
@@ -284,7 +284,7 @@ const visibleActions = computed(() => {
 })
 
 const visibleTwitterCount = computed(() => visibleActions.value.filter(a => a.platform === 'twitter').length)
-const visibleRedditCount = computed(() => visibleActions.value.filter(a => a.platform === 'reddit').length)
+const visibleForumCount = computed(() => visibleActions.value.filter(a => a.platform === 'reddit').length)
 const visiblePolymarketCount = computed(() => visibleActions.value.filter(a => a.platform === 'polymarket').length)
 
 const progressPercent = computed(() => {
@@ -415,13 +415,13 @@ const goBack = () => {
 // Helpers
 const getActionTypeLabel = (type) => {
   const labels = {
-    'CREATE_POST': 'POST', 'REPOST': 'REPOST', 'LIKE_POST': 'LIKE',
-    'CREATE_COMMENT': 'COMMENT', 'LIKE_COMMENT': 'LIKE', 'DISLIKE_POST': 'DISLIKE',
-    'DISLIKE_COMMENT': 'DISLIKE', 'MUTE': 'MUTE', 'DO_NOTHING': 'IDLE',
-    'FOLLOW': 'FOLLOW', 'SEARCH_POSTS': 'SEARCH', 'QUOTE_POST': 'QUOTE',
-    'UPVOTE_POST': 'UPVOTE', 'DOWNVOTE_POST': 'DOWNVOTE',
-    'BUY_SHARES': 'BUY', 'SELL_SHARES': 'SELL', 'CREATE_MARKET': 'NEW MARKET',
-    'BROWSE_MARKETS': 'BROWSE', 'VIEW_PORTFOLIO': 'PORTFOLIO', 'COMMENT_ON_MARKET': 'COMMENT',
+    'CREATE_POST': 'STATEMENT', 'REPOST': 'CITE', 'LIKE_POST': 'ENDORSE',
+    'CREATE_COMMENT': 'MEMO', 'LIKE_COMMENT': 'ENDORSE', 'DISLIKE_POST': 'REBUT',
+    'DISLIKE_COMMENT': 'REBUT', 'MUTE': 'DE-PRIORITIZE', 'DO_NOTHING': 'IDLE',
+    'FOLLOW': 'TRACK', 'SEARCH_POSTS': 'REVIEW', 'QUOTE_POST': 'MEMO',
+    'UPVOTE_POST': 'ENDORSE', 'DOWNVOTE_POST': 'REBUT',
+    'BUY_SHARES': 'POSITION +', 'SELL_SHARES': 'POSITION -', 'CREATE_MARKET': 'NEW FORUM',
+    'BROWSE_MARKETS': 'SCAN', 'VIEW_PORTFOLIO': 'PORTFOLIO', 'COMMENT_ON_MARKET': 'MEMO',
   }
   return labels[type] || type || 'UNKNOWN'
 }
@@ -499,10 +499,10 @@ onUnmounted(() => {
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 4px;
-  color: #FF6B1A;
-  background: rgba(255,107,26,0.1);
+  color: #333333;
+  background: rgba(51,51,51,0.1);
   padding: 4px 16px;
-  border: 1px solid rgba(255,107,26,0.3);
+  border: 1px solid rgba(51,51,51,0.3);
 }
 
 .brand {
@@ -552,7 +552,7 @@ onUnmounted(() => {
 .pulse-ring {
   width: 32px;
   height: 32px;
-  border: 2px solid #FF6B1A;
+  border: 2px solid #333333;
   animation: ripple 2s infinite;
 }
 
@@ -581,7 +581,7 @@ onUnmounted(() => {
 .control-btn.play {
   width: 36px;
   height: 36px;
-  background: #FF6B1A;
+  background: #333333;
   color: #FAFAFA;
   border: none;
   display: flex;
@@ -593,7 +593,7 @@ onUnmounted(() => {
 }
 
 .control-btn.play:hover {
-  background: #E05A10;
+  background: #333333;
 }
 
 .speed-controls {
@@ -615,9 +615,9 @@ onUnmounted(() => {
 }
 
 .speed-btn.active {
-  background: rgba(255,107,26,0.15);
-  color: #FF6B1A;
-  border-color: rgba(255,107,26,0.4);
+  background: rgba(51,51,51,0.15);
+  color: #333333;
+  border-color: rgba(51,51,51,0.4);
 }
 
 .speed-btn:hover:not(.active) {
@@ -645,7 +645,7 @@ onUnmounted(() => {
 .round-current {
   font-size: 20px;
   font-weight: 700;
-  color: #FF6B1A;
+  color: #333333;
 }
 
 .round-separator {
@@ -679,7 +679,7 @@ onUnmounted(() => {
   -webkit-appearance: none;
   width: 14px;
   height: 14px;
-  background: #FF6B1A;
+  background: #333333;
   border: none;
   cursor: pointer;
   margin-top: -4px;
@@ -688,7 +688,7 @@ onUnmounted(() => {
 .scrubber::-moz-range-thumb {
   width: 14px;
   height: 14px;
-  background: #FF6B1A;
+  background: #333333;
   border: none;
   cursor: pointer;
 }
@@ -708,7 +708,7 @@ onUnmounted(() => {
   top: 0;
   left: 0;
   height: 100%;
-  background: #FF6B1A;
+  background: #333333;
   pointer-events: none;
   z-index: 1;
   transition: width 0.1s linear;
@@ -802,9 +802,9 @@ onUnmounted(() => {
   font-size: 9px;
   font-weight: 700;
   letter-spacing: 3px;
-  color: #FF6B1A;
-  background: rgba(255,107,26,0.08);
-  border: 1px solid rgba(255,107,26,0.2);
+  color: #333333;
+  background: rgba(51,51,51,0.08);
+  border: 1px solid rgba(51,51,51,0.2);
   padding: 2px 10px;
   text-transform: uppercase;
 }
@@ -831,11 +831,11 @@ onUnmounted(() => {
 }
 
 .timeline-item.twitter .marker-dot { background: #0A0A0A; }
-.timeline-item.reddit .marker-dot { background: #FF6B1A; }
-.timeline-item.polymarket .marker-dot { background: #FF6B1A; }
+.timeline-item.reddit .marker-dot { background: #333333; }
+.timeline-item.polymarket .marker-dot { background: #333333; }
 .timeline-item.twitter .timeline-marker { border-color: #0A0A0A; }
-.timeline-item.reddit .timeline-marker { border-color: #FF6B1A; }
-.timeline-item.polymarket .timeline-marker { border-color: #FF6B1A; }
+.timeline-item.reddit .timeline-marker { border-color: #333333; }
+.timeline-item.polymarket .timeline-marker { border-color: #333333; }
 
 .timeline-card {
   width: calc(100% - 48px);
@@ -847,10 +847,10 @@ onUnmounted(() => {
   transition: all 0.2s;
 }
 
-.timeline-card:hover { border-color: #FF6B1A; }
+.timeline-card:hover { border-color: #333333; }
 .timeline-item.twitter .timeline-card { border-left: 2px solid #0A0A0A; }
-.timeline-item.reddit .timeline-card { border-left: 2px solid #FF6B1A; }
-.timeline-item.polymarket .timeline-card { border-left: 2px solid #FF6B1A; }
+.timeline-item.reddit .timeline-card { border-left: 2px solid #333333; }
+.timeline-item.polymarket .timeline-card { border-left: 2px solid #333333; }
 
 .card-header {
   display: flex;
@@ -921,8 +921,8 @@ onUnmounted(() => {
 .badge-action { background: #FAFAFA; color: rgba(10,10,10,0.5); border: 1px solid rgba(10,10,10,0.12); }
 .badge-meta { background: #FAFAFA; color: rgba(10,10,10,0.4); border: 1px dashed rgba(10,10,10,0.2); }
 .badge-idle { opacity: 0.5; }
-.badge-trade-buy { background: rgba(67,193,101,0.1); color: #43C165; border-color: rgba(67,193,101,0.2); }
-.badge-trade-sell { background: rgba(255,68,68,0.1); color: #FF4444; border-color: rgba(255,68,68,0.2); }
+.badge-trade-buy { background: #FAFAFA; color: #0A0A0A; border-color: #0A0A0A; }
+.badge-trade-sell { background: #0A0A0A; color: #FAFAFA; border-color: #0A0A0A; }
 
 .content-text {
   font-size: 13px;
@@ -978,8 +978,8 @@ onUnmounted(() => {
   padding: 1px 6px;
   letter-spacing: 3px;
 }
-.trade-direction.buy { background: rgba(67,193,101,0.1); color: #43C165; }
-.trade-direction.sell { background: rgba(255,68,68,0.1); color: #FF4444; }
+.trade-direction.buy { background: #FAFAFA; color: #0A0A0A; border: 1px solid #0A0A0A; }
+.trade-direction.sell { background: #0A0A0A; color: #FAFAFA; border: 1px solid #0A0A0A; }
 
 .market-question {
   font-size: 12px;
