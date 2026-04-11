@@ -41,12 +41,12 @@
         </div>
       </div>
 
-      <!-- Step 02: Generate Agent Profiles -->
+      <!-- Step 02: Generate Stakeholder Profiles -->
       <div class="step-card" :class="{ 'active': phase === 1, 'completed': phase > 1 }">
         <div class="card-header">
           <div class="step-info">
             <span class="step-num">02</span>
-            <span class="step-title">Generate Agent Profiles</span>
+            <span class="step-title">Generate Stakeholder Profiles</span>
           </div>
           <div class="step-status">
             <span v-if="phase > 1" class="badge success">Completed</span>
@@ -65,11 +65,11 @@
           <div v-if="profiles.length > 0" class="stats-grid">
             <div class="stat-card">
               <span class="stat-value">{{ profiles.length }}</span>
-              <span class="stat-label">Current Agents</span>
+              <span class="stat-label">Current Stakeholders</span>
             </div>
             <div class="stat-card">
               <span class="stat-value">{{ expectedTotal || '-' }}</span>
-              <span class="stat-label">Expected Total Agents</span>
+              <span class="stat-label">Expected Stakeholders</span>
             </div>
             <div class="stat-card">
               <span class="stat-value">{{ totalTopicsCount }}</span>
@@ -80,7 +80,7 @@
           <!-- Profiles List Preview -->
           <div v-if="profiles.length > 0" class="profiles-preview">
             <div class="preview-header">
-              <span class="preview-title">Generated Agent Profiles</span>
+              <span class="preview-title">Generated Stakeholder Profiles</span>
             </div>
             <div class="profiles-list">
               <div 
@@ -91,7 +91,7 @@
               >
                 <div class="profile-header">
                   <span class="profile-realname">{{ profile.username || 'Unknown' }}</span>
-                  <span class="profile-username">@{{ profile.name || `agent_${idx}` }}</span>
+                  <span class="profile-username">@{{ profile.name || `stakeholder_${idx}` }}</span>
                 </div>
                 <div class="profile-meta">
                   <span class="profile-profession">{{ profile.profession || 'Unknown Profession' }}</span>
@@ -198,10 +198,10 @@
               </div>
             </div>
 
-            <!-- Agent Configuration -->
+            <!-- Stakeholder Configuration -->
             <div class="config-block">
               <div class="config-block-header">
-                <span class="config-block-title">Agent Configuration</span>
+                <span class="config-block-title">Stakeholder Configuration</span>
                 <span class="config-block-badge">{{ simulationConfig.agent_configs?.length || 0 }}</span>
               </div>
               <div class="agents-cards">
@@ -213,7 +213,7 @@
                   <!-- Card Header -->
                   <div class="agent-card-header">
                     <div class="agent-identity">
-                      <span class="agent-id">Agent {{ agent.agent_id }}</span>
+                      <span class="agent-id">Stakeholder {{ agent.agent_id }}</span>
                       <span class="agent-name">{{ agent.entity_name }}</span>
                     </div>
                     <div class="agent-tags">
@@ -255,11 +255,11 @@
                   <div class="agent-params">
                     <div class="param-group">
                       <div class="param-item">
-                        <span class="param-label">Posts/hr</span>
+                        <span class="param-label">Statements/hr</span>
                         <span class="param-value">{{ agent.posts_per_hour }}</span>
                       </div>
                       <div class="param-item">
-                        <span class="param-label">Comments/hr</span>
+                        <span class="param-label">Rebuttals/hr</span>
                         <span class="param-value">{{ agent.comments_per_hour }}</span>
                       </div>
                       <div class="param-item">
@@ -299,7 +299,7 @@
               <div class="platforms-grid">
                 <div v-if="simulationConfig.twitter_config" class="platform-card">
                   <div class="platform-card-header">
-                    <span class="platform-name">X (Twitter)</span>
+                    <span class="platform-name">Stakeholder Platform</span>
                   </div>
                   <div class="platform-params">
                     <div class="param-row">
@@ -315,18 +315,18 @@
                       <span class="param-value">{{ simulationConfig.twitter_config.relevance_weight }}</span>
                     </div>
                     <div class="param-row">
-                      <span class="param-label">Viral Threshold</span>
+                      <span class="param-label">Core Concept Impact</span>
                       <span class="param-value">{{ simulationConfig.twitter_config.viral_threshold }}</span>
                     </div>
                     <div class="param-row">
-                      <span class="param-label">Echo Chamber Intensity</span>
+                      <span class="param-label">Discourse Intensity</span>
                       <span class="param-value">{{ simulationConfig.twitter_config.echo_chamber_strength }}</span>
                     </div>
                   </div>
                 </div>
                 <div v-if="simulationConfig.reddit_config" class="platform-card">
                   <div class="platform-card-header">
-                    <span class="platform-name">Reddit</span>
+                    <span class="platform-name">Public Forums</span>
                   </div>
                   <div class="platform-params">
                     <div class="param-row">
@@ -342,11 +342,11 @@
                       <span class="param-value">{{ simulationConfig.reddit_config.relevance_weight }}</span>
                     </div>
                     <div class="param-row">
-                      <span class="param-label">Viral Threshold</span>
+                      <span class="param-label">Core Concept Impact</span>
                       <span class="param-value">{{ simulationConfig.reddit_config.viral_threshold }}</span>
                     </div>
                     <div class="param-row">
-                      <span class="param-label">Echo Chamber Intensity</span>
+                      <span class="param-label">Discourse Intensity</span>
                       <span class="param-value">{{ simulationConfig.reddit_config.echo_chamber_strength }}</span>
                     </div>
                   </div>
@@ -369,8 +369,8 @@
                       <span class="param-value">Buy/Sell YES & NO shares</span>
                     </div>
                     <div class="param-row">
-                      <span class="param-label">Market-Media Bridge</span>
-                      <span class="param-value">Enabled (prices feed social media)</span>
+                      <span class="param-label">Market-Discourse Bridge</span>
+                      <span class="param-value">Enabled (prices feed stakeholder discourse)</span>
                     </div>
                   </div>
                 </div>
@@ -421,14 +421,8 @@
             <div class="narrative-box">
               <span class="box-label narrative-label">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="special-icon">
-                  <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="url(#paint0_linear)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M16.24 7.76L14.12 14.12L7.76 16.24L9.88 9.88L16.24 7.76Z" fill="url(#paint0_linear)" stroke="url(#paint0_linear)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  <defs>
-                    <linearGradient id="paint0_linear" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
-                      <stop stop-color="#FF5722"/>
-                      <stop offset="1" stop-color="#FF9800"/>
-                    </linearGradient>
-                  </defs>
+                  <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#333333" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M16.24 7.76L14.12 14.12L7.76 16.24L9.88 9.88L16.24 7.76Z" fill="#333333" stroke="#333333" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
                 Narrative Guidance Direction
               </span>
@@ -436,8 +430,8 @@
             </div>
 
             <!-- Hot Topics -->
-            <div class="topics-section">
-              <span class="box-label">Initial Hot Topics</span>
+              <div class="topics-section">
+               <span class="box-label">Initial Core Topics</span>
               <div class="hot-topics-grid">
                 <span v-for="topic in simulationConfig.event_config.hot_topics" :key="topic" class="hot-topic-tag">
                   # {{ topic }}
@@ -455,7 +449,7 @@
                     <div class="post-header">
                       <span class="post-role">{{ post.poster_type }}</span>
                       <span class="post-agent-info">
-                        <span class="post-id">Agent {{ post.poster_agent_id }}</span>
+                        <span class="post-id">Stakeholder {{ post.poster_agent_id }}</span>
                         <span class="post-username">@{{ getAgentUsername(post.poster_agent_id) }}</span>
                       </span>
                     </div>
@@ -732,7 +726,7 @@ const customMaxRounds = ref(40)   // default recommended: 40 rounds
 
 // Watch stage to update phase
 watch(currentStage, (newStage) => {
-  if (newStage === 'Generating Agent Personas' || newStage === 'generating_profiles') {
+  if (newStage === 'Generating Agent Personas' || newStage === 'Generating Stakeholder Profiles' || newStage === 'generating_profiles') {
     phase.value = 1
   } else if (newStage === 'Generating Simulation Config' || newStage === 'generating_config') {
     phase.value = 2
@@ -786,9 +780,9 @@ const getAgentProfile = (agentId) => {
 const getAgentUsername = (agentId) => {
   if (profiles.value && profiles.value.length > agentId && agentId >= 0) {
     const profile = profiles.value[agentId]
-    return profile?.username || `agent_${agentId}`
+    return profile?.username || `stakeholder_${agentId}`
   }
-  return `agent_${agentId}`
+  return `stakeholder_${agentId}`
 }
 
 // Calculate total related topics across all personas
@@ -863,7 +857,7 @@ const startPrepareSimulation = async () => {
       addLog(`Preparation task started`)
       addLog(`  └─ Task ID: ${res.data.task_id}`)
       
-      // Set Expected Total Agents immediately (from prepare API response)
+      // Set expected stakeholder total immediately (from prepare API response)
       if (res.data.expected_entities_count) {
         expectedTotal.value = res.data.expected_entities_count
         addLog(`Read ${res.data.expected_entities_count} entities from knowledge graph`)
@@ -998,15 +992,15 @@ const fetchProfilesRealtime = async () => {
         lastLoggedProfileCount = currentCount
         const total = expectedTotal.value || '?'
         const latestProfile = profiles.value[currentCount - 1]
-        const profileName = latestProfile?.name || latestProfile?.username || `Agent_${currentCount}`
+        const profileName = latestProfile?.name || latestProfile?.username || `Stakeholder_${currentCount}`
         if (currentCount === 1) {
-          addLog(`Starting to generate agent personas...`)
+          addLog(`Starting to generate stakeholder profiles...`)
         }
-        addLog(`→ Agent persona ${currentCount}/${total}: ${profileName} (${latestProfile?.profession || 'Unknown Profession'})`)
+        addLog(`→ Stakeholder profile ${currentCount}/${total}: ${profileName} (${latestProfile?.profession || 'Unknown Profession'})`)
         
         // If all generated
         if (expectedTotal.value && currentCount >= expectedTotal.value) {
-          addLog(`✓ All ${currentCount} agent personas generated`)
+          addLog(`✓ All ${currentCount} stakeholder profiles generated`)
         }
       }
     }
@@ -1059,7 +1053,7 @@ const fetchConfigRealtime = async () => {
       if (data.generation_stage && data.generation_stage !== lastLoggedConfigStage) {
         lastLoggedConfigStage = data.generation_stage
         if (data.generation_stage === 'generating_profiles') {
-          addLog('Generating agent persona configuration...')
+          addLog('Generating stakeholder simulation configuration...')
         } else if (data.generation_stage === 'generating_config') {
           addLog('Calling LLM to generate simulation configuration parameters...')
         }
@@ -1072,11 +1066,11 @@ const fetchConfigRealtime = async () => {
 
         // Show detailed config summary
         if (data.summary) {
-          addLog(`  ├─ Agent count: ${data.summary.total_agents}`)
+          addLog(`  ├─ Stakeholder count: ${data.summary.total_agents}`)
           addLog(`  ├─ Simulation duration: ${data.summary.simulation_hours} hours`)
           addLog(`  ├─ Initial posts: ${data.summary.initial_posts_count}`)
           addLog(`  ├─ Hot topics: ${data.summary.hot_topics_count}`)
-          addLog(`  └─ Platform config: Twitter ${data.summary.has_twitter_config ? '✓' : '✗'}, Reddit ${data.summary.has_reddit_config ? '✓' : '✗'}`)
+          addLog(`  └─ Discourse channels: Stakeholder Platform ${data.summary.has_twitter_config ? '✓' : '✗'}, Public Forums ${data.summary.has_reddit_config ? '✓' : '✗'}`)
         }
 
         // Show time configuration details
@@ -1132,7 +1126,7 @@ const loadPreparedData = async () => {
 
   // Fetch profiles one last time
   await fetchProfilesRealtime()
-  addLog(`Loaded ${profiles.value.length} agent personas`)
+  addLog(`Loaded ${profiles.value.length} stakeholder profiles`)
 
   // Get config (using real-time API)
   try {
@@ -1144,7 +1138,7 @@ const loadPreparedData = async () => {
 
         // Show detailed config summary
         if (res.data.summary) {
-          addLog(`  ├─ Agent count: ${res.data.summary.total_agents}`)
+          addLog(`  ├─ Stakeholder count: ${res.data.summary.total_agents}`)
           addLog(`  ├─ Simulation duration: ${res.data.summary.simulation_hours} hours`)
           addLog(`  └─ Initial posts: ${res.data.summary.initial_posts_count}`)
         }
@@ -1193,7 +1187,7 @@ onMounted(async () => {
       // no run state — fresh simulation
     }
 
-    addLog('Step 2 Agent Setup Initializing')
+    addLog('Step 2 Stakeholder Setup Initializing')
     startPrepareSimulation()
   }
 })
@@ -1227,7 +1221,7 @@ onUnmounted(() => {
 .step-card {
   background: #FAFAFA;
   padding: 22px;
-  border: 2px solid rgba(10,10,10,0.08);
+  border: 2px solid rgba(0,0,0,0.08);
   transition: all 0.3s ease;
   position: relative;
 }
@@ -1239,7 +1233,7 @@ onUnmounted(() => {
   left: 0;
   width: 34px;
   height: 3px;
-  background: #FF6B1A;
+  background: #333333;
 }
 
 .step-card::after {
@@ -1249,11 +1243,11 @@ onUnmounted(() => {
   right: 0;
   width: 34px;
   height: 3px;
-  background: #43C165;
+  background: #000000;
 }
 
 .step-card.active {
-  border-color: #FF6B1A;
+  border-color: #333333;
 }
 
 .card-header {
@@ -1273,12 +1267,12 @@ onUnmounted(() => {
   font-family: var(--font-mono);
   font-size: 20px;
   font-weight: 700;
-  color: rgba(10,10,10,0.12);
+  color: rgba(0,0,0,0.12);
 }
 
 .step-card.active .step-num,
 .step-card.completed .step-num {
-  color: #0A0A0A;
+  color: #000000;
 }
 
 .step-title {
@@ -1297,17 +1291,17 @@ onUnmounted(() => {
   letter-spacing: 3px;
 }
 
-.badge.success { background: #43C165; color: #FAFAFA; }
-.badge.processing { background: #FF6B1A; color: #FAFAFA; }
-.badge.pending { background: var(--color-gray); color: rgba(10,10,10,0.4); }
-.badge.accent { background: rgba(255,107,26,0.1); color: #FF6B1A; }
-.badge.error { background: #FF4444; color: #FAFAFA; }
+.badge.success { background: #000000; color: #FAFAFA; }
+.badge.processing { background: #333333; color: #FAFAFA; }
+.badge.pending { background: #F5F5F5; color: rgba(0,0,0,0.4); }
+.badge.accent { background: rgba(0,0,0,0.08); color: #333333; }
+.badge.error { background: #666666; color: #FAFAFA; }
 
-.step-card.error { border-color: rgba(255,68,68,0.3); }
+.step-card.error { border-color: rgba(0,0,0,0.24); }
 
 .config-error-panel {
-  border: 2px solid #FF4444;
-  background: rgba(255,68,68,0.04);
+  border: 2px solid #666666;
+  background: rgba(0,0,0,0.04);
   padding: 16px;
   margin-bottom: 16px;
 }
@@ -1318,27 +1312,27 @@ onUnmounted(() => {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 3px;
-  color: #FF4444;
+  color: #666666;
   margin-bottom: 8px;
 }
 
 .config-error-msg {
   font-size: 13px;
-  color: rgba(10,10,10,0.7);
+  color: rgba(0,0,0,0.7);
   margin-bottom: 8px;
   word-break: break-word;
 }
 
 .config-error-hint {
   font-size: 12px;
-  color: rgba(10,10,10,0.5);
+  color: rgba(0,0,0,0.5);
   margin-bottom: 14px;
   line-height: 1.6;
 }
 
 .config-error-hint code {
   font-family: var(--font-mono);
-  background: rgba(10,10,10,0.06);
+  background: rgba(0,0,0,0.06);
   padding: 1px 4px;
   font-size: 11px;
 }
@@ -1348,7 +1342,7 @@ onUnmounted(() => {
   align-items: center;
   gap: 6px;
   padding: 7px 16px;
-  background: #FF4444;
+  background: #666666;
   color: #FAFAFA;
   border: none;
   font-family: var(--font-mono);
@@ -1360,7 +1354,7 @@ onUnmounted(() => {
   transition: background 0.2s;
 }
 
-.retry-config-btn:hover:not(:disabled) { background: #E03C3C; }
+.retry-config-btn:hover:not(:disabled) { background: #333333; }
 .retry-config-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
 .loading-spinner-small {
@@ -1380,13 +1374,13 @@ onUnmounted(() => {
 .api-note {
   font-family: var(--font-mono);
   font-size: 10px;
-  color: rgba(10,10,10,0.4);
+  color: rgba(0,0,0,0.4);
   margin-bottom: 8px;
 }
 
 .description {
   font-size: 12px;
-  color: rgba(10,10,10,0.5);
+  color: rgba(0,0,0,0.5);
   line-height: 1.5;
   margin-bottom: 16px;
 }
@@ -1412,7 +1406,7 @@ onUnmounted(() => {
 }
 
 .action-btn.primary {
-  background: #0A0A0A;
+  background: #000000;
   color: #FAFAFA;
 }
 
@@ -1421,12 +1415,12 @@ onUnmounted(() => {
 }
 
 .action-btn.secondary {
-  background: var(--color-gray);
-  color: rgba(10,10,10,0.7);
+  background: #F5F5F5;
+  color: rgba(0,0,0,0.7);
 }
 
 .action-btn.secondary:hover:not(:disabled) {
-  background: rgba(10,10,10,0.08);
+  background: rgba(0,0,0,0.08);
 }
 
 .action-btn:disabled {
@@ -1451,7 +1445,7 @@ onUnmounted(() => {
 
 /* Info Card */
 .info-card {
-  background: var(--color-gray);
+  background: #F5F5F5;
   padding: 16px;
   margin-top: 16px;
 }
@@ -1461,18 +1455,18 @@ onUnmounted(() => {
   justify-content: space-between;
   align-items: center;
   padding: 8px 0;
-  border-bottom: 1px dashed rgba(10,10,10,0.12);
+  border-bottom: 1px dashed rgba(0,0,0,0.12);
   cursor: pointer;
   user-select: none;
 }
 
 .info-row:hover .info-value.copyable {
-  color: #0A0A0A;
+  color: #000000;
   text-decoration: underline;
 }
 
 .info-row:active .info-value.copyable {
-  color: #43C165;
+  color: #000000;
 }
 
 .info-row:last-child {
@@ -1482,7 +1476,7 @@ onUnmounted(() => {
 .info-label {
   font-family: var(--font-mono);
   font-size: 11px;
-  color: rgba(10,10,10,0.5);
+  color: rgba(0,0,0,0.5);
   text-transform: uppercase;
   letter-spacing: 3px;
 }
@@ -1502,7 +1496,7 @@ onUnmounted(() => {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 11px;
-  background: var(--color-gray);
+  background: #F5F5F5;
   padding: 16px;
 }
 
@@ -1514,14 +1508,14 @@ onUnmounted(() => {
   display: block;
   font-size: 20px;
   font-weight: 700;
-  color: #0A0A0A;
+  color: #000000;
   font-family: var(--font-mono);
 }
 
 .stat-label {
   font-family: var(--font-mono);
   font-size: 9px;
-  color: rgba(10,10,10,0.4);
+  color: rgba(0,0,0,0.4);
   text-transform: uppercase;
   letter-spacing: 3px;
   margin-top: 4px;
@@ -1531,7 +1525,7 @@ onUnmounted(() => {
 /* Profiles Preview */
 .profiles-preview {
   margin-top: 22px;
-  border-top: 2px solid rgba(10,10,10,0.08);
+  border-top: 2px solid rgba(0,0,0,0.08);
   padding-top: 16px;
 }
 
@@ -1546,7 +1540,7 @@ onUnmounted(() => {
   font-family: var(--font-mono);
   font-size: 11px;
   font-weight: 600;
-  color: rgba(10,10,10,0.5);
+  color: rgba(0,0,0,0.5);
   text-transform: uppercase;
   letter-spacing: 3px;
 }
@@ -1560,7 +1554,7 @@ onUnmounted(() => {
 
 .profile-card {
   background: #FAFAFA;
-  border: 2px solid rgba(10,10,10,0.08);
+  border: 2px solid rgba(0,0,0,0.08);
   padding: 14px;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -1569,7 +1563,7 @@ onUnmounted(() => {
 }
 
 .profile-card:hover {
-  border-color: #FF6B1A;
+  border-color: #333333;
   background: #FAFAFA;
 }
 
@@ -1591,13 +1585,13 @@ onUnmounted(() => {
   font-family: var(--font-display);
   font-size: 14px;
   font-weight: 700;
-  color: #0A0A0A;
+  color: #000000;
 }
 
 .profile-username {
   font-family: var(--font-mono);
   font-size: 11px;
-  color: rgba(10,10,10,0.4);
+  color: rgba(0,0,0,0.4);
 }
 
 .profile-meta {
@@ -1607,14 +1601,14 @@ onUnmounted(() => {
 .profile-profession {
   font-family: var(--font-mono);
   font-size: 11px;
-  color: rgba(10,10,10,0.5);
-  background: var(--color-gray);
+  color: rgba(0,0,0,0.5);
+  background: #F5F5F5;
   padding: 2px 8px;
 }
 
 .profile-bio {
   font-size: 12px;
-  color: rgba(10,10,10,0.5);
+  color: rgba(0,0,0,0.5);
   line-height: 1.6;
   margin: 0 0 10px 0;
   display: -webkit-box;
@@ -1632,14 +1626,14 @@ onUnmounted(() => {
 .topic-tag {
   font-family: var(--font-mono);
   font-size: 10px;
-  color: #FF6B1A;
-  background: rgba(255,107,26,0.1);
+  color: #333333;
+  background: rgba(0,0,0,0.08);
   padding: 2px 8px;
 }
 
 .topic-more {
   font-size: 10px;
-  color: rgba(10,10,10,0.4);
+  color: rgba(0,0,0,0.4);
   padding: 2px 6px;
 }
 
@@ -1651,7 +1645,7 @@ onUnmounted(() => {
 
 .config-block {
   margin-top: 16px;
-  border-top: 2px solid rgba(10,10,10,0.08);
+  border-top: 2px solid rgba(0,0,0,0.08);
   padding-top: 12px;
 }
 
@@ -1672,7 +1666,7 @@ onUnmounted(() => {
   font-family: var(--font-mono);
   font-size: 11px;
   font-weight: 600;
-  color: rgba(10,10,10,0.5);
+  color: rgba(0,0,0,0.5);
   text-transform: uppercase;
   letter-spacing: 3px;
 }
@@ -1680,8 +1674,8 @@ onUnmounted(() => {
 .config-block-badge {
   font-family: var(--font-mono);
   font-size: 11px;
-  background: var(--color-gray);
-  color: rgba(10,10,10,0.5);
+  background: #F5F5F5;
+  color: rgba(0,0,0,0.5);
   padding: 2px 8px;
 }
 
@@ -1693,7 +1687,7 @@ onUnmounted(() => {
 }
 
 .config-item {
-  background: var(--color-gray);
+  background: #F5F5F5;
   padding: 12px 14px;
   display: flex;
   flex-direction: column;
@@ -1703,7 +1697,7 @@ onUnmounted(() => {
 .config-item-label {
   font-family: var(--font-mono);
   font-size: 11px;
-  color: rgba(10,10,10,0.4);
+  color: rgba(0,0,0,0.4);
   text-transform: uppercase;
   letter-spacing: 3px;
 }
@@ -1712,7 +1706,7 @@ onUnmounted(() => {
   font-family: var(--font-mono);
   font-size: 16px;
   font-weight: 600;
-  color: #0A0A0A;
+  color: #000000;
 }
 
 /* Time Periods */
@@ -1728,21 +1722,21 @@ onUnmounted(() => {
   align-items: center;
   gap: 11px;
   padding: 8px 12px;
-  background: var(--color-gray);
+  background: #F5F5F5;
 }
 
 .period-label {
   font-family: var(--font-mono);
   font-size: 12px;
   font-weight: 500;
-  color: rgba(10,10,10,0.5);
+  color: rgba(0,0,0,0.5);
   min-width: 70px;
 }
 
 .period-hours {
   font-family: var(--font-mono);
   font-size: 11px;
-  color: rgba(10,10,10,0.5);
+  color: rgba(0,0,0,0.5);
   flex: 1;
 }
 
@@ -1750,8 +1744,8 @@ onUnmounted(() => {
   font-family: var(--font-mono);
   font-size: 11px;
   font-weight: 600;
-  color: #FF6B1A;
-  background: rgba(255,107,26,0.1);
+  color: #333333;
+  background: rgba(0,0,0,0.08);
   padding: 2px 6px;
 }
 
@@ -1764,8 +1758,8 @@ onUnmounted(() => {
 
 
 .agent-card {
-  background: var(--color-gray);
-  border: 2px solid rgba(10,10,10,0.08);
+  background: #F5F5F5;
+  border: 2px solid rgba(0,0,0,0.08);
   padding: 14px;
   transition: all 0.2s ease;
   min-width: 0;
@@ -1773,7 +1767,7 @@ onUnmounted(() => {
 }
 
 .agent-card:hover {
-  border-color: #FF6B1A;
+  border-color: #333333;
   background: #FAFAFA;
 }
 
@@ -1784,7 +1778,7 @@ onUnmounted(() => {
   align-items: flex-start;
   margin-bottom: 14px;
   padding-bottom: 12px;
-  border-bottom: 2px solid rgba(10,10,10,0.08);
+  border-bottom: 2px solid rgba(0,0,0,0.08);
 }
 
 .agent-identity {
@@ -1796,14 +1790,14 @@ onUnmounted(() => {
 .agent-id {
   font-family: var(--font-mono);
   font-size: 10px;
-  color: rgba(10,10,10,0.4);
+  color: rgba(0,0,0,0.4);
 }
 
 .agent-name {
   font-family: var(--font-display);
   font-size: 14px;
   font-weight: 600;
-  color: #0A0A0A;
+  color: #000000;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -1817,8 +1811,8 @@ onUnmounted(() => {
 .agent-type {
   font-family: var(--font-mono);
   font-size: 10px;
-  color: rgba(10,10,10,0.5);
-  background: var(--color-gray);
+  color: rgba(0,0,0,0.5);
+  background: #F5F5F5;
   padding: 2px 8px;
 }
 
@@ -1832,23 +1826,23 @@ onUnmounted(() => {
 }
 
 .stance-neutral {
-  background: var(--color-gray);
-  color: rgba(10,10,10,0.5);
+  background: #F5F5F5;
+  color: rgba(0,0,0,0.5);
 }
 
 .stance-supportive {
-  background: rgba(67,193,101,0.1);
-  color: #43C165;
+  background: rgba(0,0,0,0.08);
+  color: #000000;
 }
 
 .stance-opposing {
-  background: rgba(255,68,68,0.1);
-  color: #FF4444;
+  background: rgba(0,0,0,0.16);
+  color: #333333;
 }
 
 .stance-observer {
-  background: rgba(255,179,71,0.1);
-  color: #FFB347;
+  background: #F5F5F5;
+  color: #666666;
 }
 
 /* Agent Profile Info */
@@ -1866,18 +1860,18 @@ onUnmounted(() => {
   font-family: var(--font-mono);
   font-size: 0.7rem;
   padding: 2px 8px;
-  border: 2px solid rgba(10,10,10,0.08);
-  color: rgba(10,10,10,0.5);
+  border: 2px solid rgba(0,0,0,0.08);
+  color: rgba(0,0,0,0.5);
   letter-spacing: 0.5px;
 }
 
-.profile-profession-tag { border-color: var(--color-orange, #FF6B1A); color: var(--color-orange, #FF6B1A); }
-.profile-mbti-tag { border-color: var(--color-green, #43C165); color: var(--color-green, #43C165); }
+.profile-profession-tag { border-color: #333333; color: #333333; }
+.profile-mbti-tag { border-color: #666666; color: #666666; }
 
 .profile-bio-snippet {
   width: 100%;
   font-size: 0.75rem;
-  color: rgba(10,10,10,0.4);
+  color: rgba(0,0,0,0.4);
   line-height: 1.4;
   margin-top: 4px;
   display: -webkit-box;
@@ -1895,7 +1889,7 @@ onUnmounted(() => {
   display: block;
   font-family: var(--font-mono);
   font-size: 10px;
-  color: rgba(10,10,10,0.4);
+  color: rgba(0,0,0,0.4);
   margin-bottom: 6px;
   text-transform: uppercase;
   letter-spacing: 3px;
@@ -1905,18 +1899,18 @@ onUnmounted(() => {
   display: flex;
   gap: 2px;
   height: 16px;
-  background: var(--color-gray);
+  background: #F5F5F5;
   padding: 3px;
 }
 
 .timeline-hour {
   flex: 1;
-  background: rgba(10,10,10,0.08);
+  background: rgba(0,0,0,0.08);
   transition: all 0.2s;
 }
 
 .timeline-hour.active {
-  background: #FF6B1A;
+  background: #333333;
 }
 
 .timeline-marks {
@@ -1925,7 +1919,7 @@ onUnmounted(() => {
   margin-top: 4px;
   font-family: var(--font-mono);
   font-size: 9px;
-  color: rgba(10,10,10,0.4);
+  color: rgba(0,0,0,0.4);
 }
 
 /* Agent Params */
@@ -1950,14 +1944,14 @@ onUnmounted(() => {
 .param-item .param-label {
   font-family: var(--font-mono);
   font-size: 10px;
-  color: rgba(10,10,10,0.4);
+  color: rgba(0,0,0,0.4);
 }
 
 .param-item .param-value {
   font-family: var(--font-mono);
   font-size: 12px;
   font-weight: 600;
-  color: rgba(10,10,10,0.5);
+  color: rgba(0,0,0,0.5);
 }
 
 .param-value.with-bar {
@@ -1968,25 +1962,25 @@ onUnmounted(() => {
 
 .mini-bar {
   height: 4px;
-  background: #FF6B1A;
+  background: #333333;
   min-width: 4px;
   max-width: 40px;
 }
 
 .param-value.positive {
-  color: #43C165;
+  color: #000000;
 }
 
 .param-value.negative {
-  color: #FF4444;
+  color: #666666;
 }
 
 .param-value.neutral {
-  color: rgba(10,10,10,0.5);
+  color: rgba(0,0,0,0.5);
 }
 
 .param-value.highlight {
-  color: #FF6B1A;
+  color: #333333;
 }
 
 /* Platforms Grid */
@@ -1997,22 +1991,22 @@ onUnmounted(() => {
 }
 
 .platform-card {
-  background: var(--color-gray);
+  background: #F5F5F5;
   padding: 14px;
-  border: 2px solid rgba(10,10,10,0.08);
+  border: 2px solid rgba(0,0,0,0.08);
 }
 
 .platform-card-header {
   margin-bottom: 10px;
   padding-bottom: 8px;
-  border-bottom: 2px solid rgba(10,10,10,0.08);
+  border-bottom: 2px solid rgba(0,0,0,0.08);
 }
 
 .platform-name {
   font-family: var(--font-display);
   font-size: 13px;
   font-weight: 600;
-  color: rgba(10,10,10,0.7);
+  color: rgba(0,0,0,0.7);
 }
 
 .platform-params {
@@ -2030,14 +2024,14 @@ onUnmounted(() => {
 .param-label {
   font-family: var(--font-mono);
   font-size: 12px;
-  color: rgba(10,10,10,0.5);
+  color: rgba(0,0,0,0.5);
 }
 
 .param-value {
   font-family: var(--font-mono);
   font-size: 12px;
   font-weight: 600;
-  color: #0A0A0A;
+  color: #000000;
 }
 
 /* Reasoning Content */
@@ -2049,12 +2043,12 @@ onUnmounted(() => {
 
 .reasoning-item {
   padding: 12px 14px;
-  background: var(--color-gray);
+  background: #F5F5F5;
 }
 
 .reasoning-text {
   font-size: 13px;
-  color: rgba(10,10,10,0.5);
+  color: rgba(0,0,0,0.5);
   line-height: 1.7;
   margin: 0;
 }
@@ -2082,7 +2076,7 @@ onUnmounted(() => {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  border: 2px solid rgba(10,10,10,0.12);
+  border: 2px solid rgba(0,0,0,0.12);
 }
 
 .modal-header {
@@ -2091,7 +2085,7 @@ onUnmounted(() => {
   align-items: flex-start;
   padding: 22px;
   background: #FAFAFA;
-  border-bottom: 2px solid rgba(10,10,10,0.08);
+  border-bottom: 2px solid rgba(0,0,0,0.08);
 }
 
 .modal-header-info {
@@ -2109,20 +2103,20 @@ onUnmounted(() => {
   font-family: var(--font-display);
   font-size: 20px;
   font-weight: 700;
-  color: #0A0A0A;
+  color: #000000;
 }
 
 .modal-username {
   font-family: var(--font-mono);
   font-size: 13px;
-  color: rgba(10,10,10,0.4);
+  color: rgba(0,0,0,0.4);
 }
 
 .modal-profession {
   font-family: var(--font-mono);
   font-size: 12px;
-  color: rgba(10,10,10,0.5);
-  background: var(--color-gray);
+  color: rgba(0,0,0,0.5);
+  background: #F5F5F5;
   padding: 4px 10px;
   display: inline-block;
   font-weight: 500;
@@ -2133,7 +2127,7 @@ onUnmounted(() => {
   height: 32px;
   border: none;
   background: none;
-  color: rgba(10,10,10,0.4);
+  color: rgba(0,0,0,0.4);
   font-size: 24px;
   cursor: pointer;
   display: flex;
@@ -2145,7 +2139,7 @@ onUnmounted(() => {
 }
 
 .close-btn:hover {
-  color: rgba(10,10,10,0.7);
+  color: rgba(0,0,0,0.7);
 }
 
 .modal-body {
@@ -2174,7 +2168,7 @@ onUnmounted(() => {
 .info-label {
   font-family: var(--font-mono);
   font-size: 11px;
-  color: rgba(10,10,10,0.4);
+  color: rgba(0,0,0,0.4);
   text-transform: uppercase;
   letter-spacing: 3px;
   font-weight: 600;
@@ -2183,12 +2177,12 @@ onUnmounted(() => {
 .info-value {
   font-size: 15px;
   font-weight: 600;
-  color: rgba(10,10,10,0.7);
+  color: rgba(0,0,0,0.7);
 }
 
 .info-value.mbti {
   font-family: var(--font-mono);
-  color: #FF6B1A;
+  color: #333333;
 }
 
 /* Section Area */
@@ -2201,7 +2195,7 @@ onUnmounted(() => {
   font-family: var(--font-mono);
   font-size: 11px;
   font-weight: 600;
-  color: rgba(10,10,10,0.4);
+  color: rgba(0,0,0,0.4);
   text-transform: uppercase;
   letter-spacing: 3px;
   margin-bottom: 12px;
@@ -2209,12 +2203,12 @@ onUnmounted(() => {
 
 .section-bio {
   font-size: 14px;
-  color: rgba(10,10,10,0.7);
+  color: rgba(0,0,0,0.7);
   line-height: 1.6;
   margin: 0;
   padding: 16px;
-  background: var(--color-gray);
-  border-left: 3px solid rgba(10,10,10,0.12);
+  background: #F5F5F5;
+  border-left: 3px solid rgba(0,0,0,0.12);
 }
 
 /* Topic Tags */
@@ -2227,16 +2221,16 @@ onUnmounted(() => {
 .topic-item {
   font-family: var(--font-mono);
   font-size: 11px;
-  color: #FF6B1A;
-  background: rgba(255,107,26,0.1);
+  color: #333333;
+  background: rgba(0,0,0,0.08);
   padding: 4px 10px;
   transition: all 0.2s;
   border: none;
 }
 
 .topic-item:hover {
-  background: rgba(255,107,26,0.2);
-  color: #FF6B1A;
+  background: rgba(0,0,0,0.14);
+  color: #333333;
 }
 
 /* Detailed Persona */
@@ -2248,15 +2242,15 @@ onUnmounted(() => {
 }
 
 .dimension-card {
-  background: var(--color-gray);
+  background: #F5F5F5;
   padding: 12px;
-  border-left: 3px solid rgba(10,10,10,0.12);
+  border-left: 3px solid rgba(0,0,0,0.12);
   transition: all 0.2s;
 }
 
 .dimension-card:hover {
-  background: rgba(10,10,10,0.05);
-  border-left-color: #FF6B1A;
+  background: rgba(0,0,0,0.05);
+  border-left-color: #333333;
 }
 
 .dim-title {
@@ -2264,14 +2258,14 @@ onUnmounted(() => {
   font-family: var(--font-display);
   font-size: 12px;
   font-weight: 700;
-  color: rgba(10,10,10,0.7);
+  color: rgba(0,0,0,0.7);
   margin-bottom: 4px;
 }
 
 .dim-desc {
   display: block;
   font-size: 10px;
-  color: rgba(10,10,10,0.4);
+  color: rgba(0,0,0,0.4);
   line-height: 1.4;
 }
 
@@ -2289,12 +2283,12 @@ onUnmounted(() => {
 }
 
 .persona-content::-webkit-scrollbar-thumb {
-  background: rgba(10,10,10,0.12);
+  background: rgba(0,0,0,0.12);
 }
 
 .section-persona {
   font-size: 13px;
-  color: rgba(10,10,10,0.5);
+  color: rgba(0,0,0,0.5);
   line-height: 1.8;
   margin: 0;
   text-align: justify;
@@ -2302,11 +2296,11 @@ onUnmounted(() => {
 
 /* System Logs */
 .system-logs {
-  background: #0A0A0A;
+  background: #000000;
   color: rgba(250,250,250,0.8);
   padding: 16px;
   font-family: var(--font-mono);
-  border-top: 2px solid rgba(10,10,10,0.12);
+  border-top: 2px solid rgba(0,0,0,0.12);
   flex-shrink: 0;
 }
 
@@ -2372,8 +2366,8 @@ onUnmounted(() => {
 .spinner-sm {
   width: 16px;
   height: 16px;
-  border: 2px solid rgba(10,10,10,0.08);
-  border-top-color: #FF6B1A;
+  border: 2px solid rgba(0,0,0,0.08);
+  border-top-color: #333333;
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
@@ -2394,7 +2388,7 @@ onUnmounted(() => {
   font-family: var(--font-mono);
   font-size: 11px;
   font-weight: 600;
-  color: rgba(10,10,10,0.5);
+  color: rgba(0,0,0,0.5);
   text-transform: uppercase;
   letter-spacing: 3px;
   margin-bottom: 11px;
@@ -2403,7 +2397,7 @@ onUnmounted(() => {
 .narrative-box {
   background: #FAFAFA;
   padding: 22px;
-  border: 2px solid rgba(10,10,10,0.08);
+  border: 2px solid rgba(0,0,0,0.08);
   transition: all 0.3s ease;
 }
 
@@ -2411,7 +2405,7 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   gap: 8px;
-  color: rgba(10,10,10,0.5);
+  color: rgba(0,0,0,0.5);
   font-family: var(--font-mono);
   font-size: 13px;
   letter-spacing: 3px;
@@ -2430,7 +2424,7 @@ onUnmounted(() => {
 
 .narrative-text {
   font-size: 14px;
-  color: rgba(10,10,10,0.7);
+  color: rgba(0,0,0,0.7);
   line-height: 1.8;
   margin: 0;
   text-align: justify;
@@ -2450,20 +2444,20 @@ onUnmounted(() => {
 .hot-topic-tag {
   font-family: var(--font-mono);
   font-size: 12px;
-  color: #FF6B1A;
-  background: rgba(255,107,26,0.1);
+  color: #333333;
+  background: rgba(0,0,0,0.08);
   padding: 4px 10px;
   font-weight: 500;
 }
 
 .hot-topic-more {
   font-size: 11px;
-  color: rgba(10,10,10,0.4);
+  color: rgba(0,0,0,0.4);
   padding: 4px 6px;
 }
 
 .initial-posts-section {
-  border-top: 2px solid rgba(10,10,10,0.08);
+  border-top: 2px solid rgba(0,0,0,0.08);
   padding-top: 16px;
 }
 
@@ -2472,7 +2466,7 @@ onUnmounted(() => {
   flex-direction: column;
   gap: 16px;
   padding-left: 8px;
-  border-left: 2px solid rgba(10,10,10,0.08);
+  border-left: 2px solid rgba(0,0,0,0.08);
   margin-top: 12px;
 }
 
@@ -2487,13 +2481,13 @@ onUnmounted(() => {
   top: 14px;
   width: 12px;
   height: 2px;
-  background: rgba(10,10,10,0.12);
+  background: rgba(0,0,0,0.12);
 }
 
 .timeline-content {
-  background: var(--color-gray);
+  background: #F5F5F5;
   padding: 12px;
-  border: 2px solid rgba(10,10,10,0.08);
+  border: 2px solid rgba(0,0,0,0.08);
 }
 
 .post-header {
@@ -2506,7 +2500,7 @@ onUnmounted(() => {
   font-family: var(--font-mono);
   font-size: 11px;
   font-weight: 700;
-  color: rgba(10,10,10,0.7);
+  color: rgba(0,0,0,0.7);
   text-transform: uppercase;
   letter-spacing: 3px;
 }
@@ -2521,7 +2515,7 @@ onUnmounted(() => {
 .post-username {
   font-family: var(--font-mono);
   font-size: 10px;
-  color: rgba(10,10,10,0.5);
+  color: rgba(0,0,0,0.5);
   line-height: 1;
   vertical-align: baseline;
 }
@@ -2532,7 +2526,7 @@ onUnmounted(() => {
 
 .post-text {
   font-size: 12px;
-  color: rgba(10,10,10,0.5);
+  color: rgba(0,0,0,0.5);
   line-height: 1.5;
   margin: 0;
 }
@@ -2541,7 +2535,7 @@ onUnmounted(() => {
 .rounds-config-section {
   margin: 22px 0;
   padding-top: 22px;
-  border-top: 2px solid rgba(10,10,10,0.08);
+  border-top: 2px solid rgba(0,0,0,0.08);
 }
 
 .rounds-header {
@@ -2561,19 +2555,19 @@ onUnmounted(() => {
   font-family: var(--font-display);
   font-size: 14px;
   font-weight: 600;
-  color: #0A0A0A;
+  color: #000000;
 }
 
 .section-desc {
   font-size: 12px;
-  color: rgba(10,10,10,0.4);
+  color: rgba(0,0,0,0.4);
 }
 
 .desc-highlight {
   font-family: var(--font-mono);
   font-weight: 600;
-  color: #0A0A0A;
-  background: var(--color-gray);
+  color: #000000;
+  background: #F5F5F5;
   padding: 1px 6px;
   margin: 0 2px;
 }
@@ -2589,7 +2583,7 @@ onUnmounted(() => {
 }
 
 .switch-control:hover {
-  background: var(--color-gray);
+  background: #F5F5F5;
 }
 
 .switch-control input {
@@ -2599,7 +2593,7 @@ onUnmounted(() => {
 .switch-track {
   width: 36px;
   height: 20px;
-  background: rgba(10,10,10,0.12);
+  background: rgba(0,0,0,0.12);
   position: relative;
   transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
@@ -2616,7 +2610,7 @@ onUnmounted(() => {
 }
 
 .switch-control input:checked + .switch-track {
-  background: #0A0A0A;
+  background: #000000;
 }
 
 .switch-control input:checked + .switch-track::after {
@@ -2627,11 +2621,11 @@ onUnmounted(() => {
   font-family: var(--font-mono);
   font-size: 12px;
   font-weight: 500;
-  color: rgba(10,10,10,0.5);
+  color: rgba(0,0,0,0.5);
 }
 
 .switch-control input:checked ~ .switch-label {
-  color: #0A0A0A;
+  color: #000000;
 }
 
 /* Slider Content */
@@ -2656,21 +2650,21 @@ onUnmounted(() => {
   font-family: var(--font-mono);
   font-size: 24px;
   font-weight: 700;
-  color: #0A0A0A;
+  color: #000000;
 }
 
 .val-unit {
   font-family: var(--font-mono);
   font-size: 12px;
-  color: rgba(10,10,10,0.5);
+  color: rgba(0,0,0,0.5);
   font-weight: 500;
 }
 
 .slider-meta-info {
   font-family: var(--font-mono);
   font-size: 11px;
-  color: rgba(10,10,10,0.5);
-  background: var(--color-gray);
+  color: rgba(0,0,0,0.5);
+  background: #F5F5F5;
   padding: 4px 8px;
 }
 
@@ -2683,9 +2677,9 @@ onUnmounted(() => {
   -webkit-appearance: none;
   width: 100%;
   height: 4px;
-  background: rgba(10,10,10,0.08);
+  background: rgba(0,0,0,0.08);
   outline: none;
-  background-image: linear-gradient(#0A0A0A, #0A0A0A);
+  background-image: linear-gradient(#000000, #000000);
   background-size: var(--percent, 0%) 100%;
   background-repeat: no-repeat;
   cursor: pointer;
@@ -2696,7 +2690,7 @@ onUnmounted(() => {
   width: 16px;
   height: 16px;
   background: #FAFAFA;
-  border: 2px solid #0A0A0A;
+  border: 2px solid #000000;
   cursor: pointer;
   transition: transform 0.1s;
   margin-top: -6px; /* Center thumb */
@@ -2716,7 +2710,7 @@ onUnmounted(() => {
   margin-top: 8px;
   font-family: var(--font-mono);
   font-size: 10px;
-  color: rgba(10,10,10,0.4);
+  color: rgba(0,0,0,0.4);
   position: relative;
 }
 
@@ -2727,11 +2721,11 @@ onUnmounted(() => {
 }
 
 .mark-recommend:hover {
-  color: #0A0A0A;
+  color: #000000;
 }
 
 .mark-recommend.active {
-  color: #0A0A0A;
+  color: #000000;
   font-weight: 600;
 }
 
@@ -2743,7 +2737,7 @@ onUnmounted(() => {
   transform: translateX(-50%);
   width: 1px;
   height: 4px;
-  background: rgba(10,10,10,0.12);
+  background: rgba(0,0,0,0.12);
 }
 
 /* Auto Info */
@@ -2751,7 +2745,7 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   gap: 22px;
-  background: var(--color-gray);
+  background: #F5F5F5;
   padding: 16px 22px;
 }
 
@@ -2761,7 +2755,7 @@ onUnmounted(() => {
   align-items: baseline;
   gap: 4px;
   padding-right: 22px;
-  border-right: 2px solid rgba(10,10,10,0.08);
+  border-right: 2px solid rgba(0,0,0,0.08);
 }
 
 .auto-content {
@@ -2784,9 +2778,9 @@ onUnmounted(() => {
   font-family: var(--font-mono);
   font-size: 11px;
   font-weight: 500;
-  color: rgba(10,10,10,0.5);
+  color: rgba(0,0,0,0.5);
   background: #FAFAFA;
-  border: 2px solid rgba(10,10,10,0.08);
+  border: 2px solid rgba(0,0,0,0.08);
   padding: 3px 8px;
 }
 
@@ -2799,14 +2793,14 @@ onUnmounted(() => {
 .auto-desc p {
   margin: 0;
   font-size: 13px;
-  color: rgba(10,10,10,0.5);
+  color: rgba(0,0,0,0.5);
   line-height: 1.5;
 }
 
 .highlight-tip {
   margin-top: 4px !important;
   font-size: 12px !important;
-  color: #0A0A0A !important;
+  color: #000000 !important;
   font-weight: 500;
   cursor: pointer;
 }
