@@ -15,7 +15,7 @@
             :class="{ active: viewMode === mode }"
             @click="viewMode = mode"
           >
-            {{ { graph: 'Graph', network: 'Network', workbench: 'Workbench' }[mode] }}
+            {{ { graph: 'Discourse Graph', network: 'Discourse Network', workbench: 'Policy Dossier' }[mode] }}
           </button>
         </div>
       </div>
@@ -23,7 +23,7 @@
       <div class="header-right">
         <div class="workflow-step">
           <span class="step-num">Step 4/5</span>
-          <span class="step-name">Report Generation</span>
+          <span class="step-name">Policy Impact Analysis</span>
         </div>
         <div class="step-divider"></div>
         <span class="status-indicator" :class="statusClass">
@@ -283,7 +283,7 @@ onMounted(() => {
 .switch-btn.active {
   background: #0A0A0A;
   color: #FAFAFA;
-  border: 2px solid #FF6B1A;
+  border: 2px solid #333333;
 }
 
 .header-right {
@@ -335,9 +335,9 @@ onMounted(() => {
   background: rgba(250,250,250,0.2);
 }
 
-.status-indicator.processing .dot { background: #FF6B1A; animation: pulse 1s infinite; }
-.status-indicator.completed .dot { background: #43C165; }
-.status-indicator.error .dot { background: #FF4444; }
+.status-indicator.processing .dot { background: #333333; animation: pulse 1s infinite; }
+.status-indicator.completed .dot { background: #666666; }
+.status-indicator.error .dot { background: #B0B0B0; border: 1px solid #333333; animation: none; }
 
 @keyframes pulse { 50% { opacity: 0.5; } }
 

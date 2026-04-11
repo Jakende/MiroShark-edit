@@ -1,9 +1,9 @@
 <template>
   <div class="network-panel">
     <div class="panel-header">
-      <span class="panel-title">Agent Network</span>
+      <span class="panel-title">Discourse Network</span>
       <div class="header-tools">
-        <span class="node-count" v-if="networkStats.nodes">{{ networkStats.nodes }} agents · {{ networkStats.edges }} links</span>
+        <span class="node-count" v-if="networkStats.nodes">{{ networkStats.nodes }} stakeholders · {{ networkStats.edges }} links</span>
         <button class="tool-btn" @click="resetView" title="Reset View">
           <span class="icon-refresh">↻</span>
           <span class="btn-text">Reset</span>
@@ -36,19 +36,19 @@
     <div class="network-container" ref="networkContainer">
       <svg ref="networkSvg" class="network-svg"></svg>
 
-      <!-- Selected Agent Detail -->
+      <!-- Selected Stakeholder Detail -->
       <div v-if="selectedAgent" class="agent-detail">
         <div class="detail-header">
           <div class="agent-avatar" :style="{ background: selectedAgent.color }">{{ selectedAgent.name[0] }}</div>
           <div class="agent-meta">
             <span class="agent-name">{{ selectedAgent.name }}</span>
-            <span class="agent-stats-line">{{ selectedAgent.actionCount }} actions · {{ selectedAgent.connections }} connections</span>
+            <span class="agent-stats-line">{{ selectedAgent.actionCount }} statements · {{ selectedAgent.connections }} connections</span>
           </div>
           <button class="detail-close" @click="selectedAgent = null">×</button>
         </div>
         <div class="platform-breakdown">
           <div v-for="(count, platform) in selectedAgent.platforms" :key="platform" class="platform-bar">
-            <span class="bar-label" :class="platform">{{ platform }}</span>
+            <span class="bar-label" :class="platform">{{ formatPlatformLabel(platform) }}</span>
             <div class="bar-track">
               <div class="bar-fill" :class="platform" :style="{ width: (count / selectedAgent.actionCount * 100) + '%' }"></div>
             </div>
@@ -65,17 +65,17 @@
       <!-- Empty State -->
       <div v-if="!hasData" class="empty-state">
         <div class="pulse-ring"></div>
-        <span>Waiting for agent interactions...</span>
+          <span>Waiting for stakeholder discourse...</span>
       </div>
     </div>
 
     <!-- Legend -->
     <div class="network-legend" v-if="hasData">
-      <span class="legend-title">Platforms</span>
+      <span class="legend-title">Policy Platforms</span>
       <div class="legend-items">
-        <div class="legend-item"><span class="legend-dot" style="background: #0A0A0A"></span><span>X</span></div>
-        <div class="legend-item"><span class="legend-dot" style="background: #666666"></span><span>Forum</span></div>
-        <div class="legend-item"><span class="legend-dot" style="background: #999999"></span><span>Polymarket</span></div>
+        <div class="legend-item"><span class="legend-dot" style="background: #0A0A0A"></span><span>Platform A</span></div>
+        <div class="legend-item"><span class="legend-dot" style="background: #666666"></span><span>Platform B</span></div>
+        <div class="legend-item"><span class="legend-dot" style="background: #CCCCCC"></span><span>Platform C</span></div>
       </div>
       <div class="legend-hint">Node size = activity · Edge thickness = interactions</div>
     </div>
@@ -110,7 +110,16 @@ let actionLayer = null    // D3 <g> for floating action indicators
 let nodePositions = {}    // agent_name -> { x, y } (updated by simulation tick)
 let graphBuilt = false
 
-const platformColors = { twitter: '#000000', reddit: '#666666', polymarket: '#999999' }
+const platformColors = { twitter: '#0A0A0A', reddit: '#666666', polymarket: '#CCCCCC' }
+const platformLabels = Object.freeze({
+  twitter: 'Platform A',
+  reddit: 'Platform B',
+  polymarket: 'Platform C'
+})
+
+const formatPlatformLabel = (platform) => {
+  return platformLabels[platform] || (platform || 'Platform')
+}
 
 const actionIcons = {
   CREATE_POST: '✎', QUOTE_POST: '❝', REPOST: '↻', LIKE_POST: '♥',
@@ -350,22 +359,22 @@ const getActionDetail = (action) => {
   const type = action.action_type || ''
 
   if (type === 'CREATE_POST') {
-    return args.content ? args.content.slice(0, 80) : 'New post'
+    return args.content ? args.content.slice(0, 80) : 'New statement'
   }
   if (type === 'CREATE_COMMENT') {
-    return args.content ? args.content.slice(0, 80) : 'Commented'
+    return args.content ? args.content.slice(0, 80) : 'Added comment'
   }
   if (type === 'LIKE_POST' || type === 'UPVOTE_POST') {
     const who = args.post_author_name || ''
     const snippet = args.post_content ? args.post_content.slice(0, 50) : ''
-    return who ? `Liked ${who}'s post${snippet ? ': ' + snippet : ''}` : 'Liked a post'
+    return who ? `Endorsed ${who}'s statement${snippet ? ': ' + snippet : ''}` : 'Endorsed a statement'
   }
   if (type === 'DISLIKE_POST' || type === 'DOWNVOTE_POST') {
-    return args.post_author_name ? `Disliked ${args.post_author_name}'s post` : 'Disliked a post'
+    return args.post_author_name ? `Contested ${args.post_author_name}'s statement` : 'Contested a statement'
   }
   if (type === 'LIKE_COMMENT') {
     const snippet = args.comment_content ? args.comment_content.slice(0, 50) : ''
-    return args.comment_author_name ? `Liked ${args.comment_author_name}'s comment${snippet ? ': ' + snippet : ''}` : 'Liked a comment'
+    return args.comment_author_name ? `Endorsed ${args.comment_author_name}'s comment${snippet ? ': ' + snippet : ''}` : 'Endorsed a comment'
   }
   if (type === 'REPOST') {
     return args.original_author_name ? `Reposted ${args.original_author_name}` : 'Reposted'
@@ -379,7 +388,7 @@ const getActionDetail = (action) => {
   }
   if (type === 'BUY_SHARES') return args.market_id ? `Bought shares on market ${args.market_id}` : 'Bought shares'
   if (type === 'SELL_SHARES') return args.market_id ? `Sold shares on market ${args.market_id}` : 'Sold shares'
-  if (type === 'SEARCH_POSTS') return args.query ? `Searched: ${args.query}` : 'Searched posts'
+  if (type === 'SEARCH_POSTS') return args.query ? `Searched: ${args.query}` : 'Searched statements'
   if (type === 'DO_NOTHING') return null  // Skip idle actions
   return type.replace(/_/g, ' ').toLowerCase()
 }
@@ -625,8 +634,8 @@ onUnmounted(() => {
   height: 100%;
   background-color: #0A0A0A;
   background-image:
-    linear-gradient(rgba(51,51,51,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(51,51,51,0.04) 1px, transparent 1px);
+    linear-gradient(rgba(102,102,102,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(102,102,102,0.05) 1px, transparent 1px);
   background-size: 70px 70px;
   overflow: hidden;
   display: flex;
@@ -638,7 +647,7 @@ onUnmounted(() => {
   position: absolute;
   top: 0; left: 0; right: 0;
   height: 3px;
-  background: linear-gradient(90deg, #666666 40px, transparent 40px, transparent calc(100% - 40px), #666666 calc(100% - 40px));
+  background: linear-gradient(90deg, #333333 40px, transparent 40px, transparent calc(100% - 40px), #333333 calc(100% - 40px));
   z-index: 30;
   pointer-events: none;
 }
@@ -648,7 +657,7 @@ onUnmounted(() => {
   position: absolute;
   bottom: 0; left: 0; right: 0;
   height: 3px;
-  background: linear-gradient(90deg, #999999 40px, transparent 40px, transparent calc(100% - 40px), #999999 calc(100% - 40px));
+  background: linear-gradient(90deg, #666666 40px, transparent 40px, transparent calc(100% - 40px), #666666 calc(100% - 40px));
   z-index: 30;
   pointer-events: none;
 }
@@ -733,7 +742,7 @@ onUnmounted(() => {
   flex-shrink: 0;
 }
 
-.scrub-btn:hover { border-color: #333333; background: rgba(51,51,51,0.1); }
+.scrub-btn:hover { border-color: #333333; background: rgba(102,102,102,0.12); }
 
 .round-slider {
   flex: 1;
@@ -798,14 +807,14 @@ onUnmounted(() => {
 .platform-bar { display: flex; align-items: center; gap: 8px; }
 .bar-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; min-width: 60px; color: rgba(10,10,10,0.5); }
 .bar-label.twitter { color: #0A0A0A; }
-.bar-label.reddit { color: #666666; }
-.bar-label.polymarket { color: #999999; }
+.bar-label.reddit { color: #333333; }
+.bar-label.polymarket { color: #666666; }
 
 .bar-track { flex: 1; height: 6px; background: rgba(10,10,10,0.06); }
 .bar-fill { height: 100%; transition: width 0.3s; }
 .bar-fill.twitter { background: #0A0A0A; }
-.bar-fill.reddit { background: #666666; }
-.bar-fill.polymarket { background: #999999; }
+.bar-fill.reddit { background: #333333; }
+.bar-fill.polymarket { background: #666666; }
 .bar-count { font-size: 10px; font-weight: 600; color: rgba(10,10,10,0.7); min-width: 20px; text-align: right; }
 
 .interaction-types { padding: 8px 14px 12px; display: flex; flex-wrap: wrap; gap: 4px; border-top: 1px solid rgba(10,10,10,0.06); }
@@ -829,7 +838,7 @@ onUnmounted(() => {
 }
 
 .pulse-ring { width: 32px; height: 32px; border: 2px solid #333333; animation: ripple 2s infinite; }
-@keyframes ripple { 0% { transform: scale(0.8); opacity: 1; border-color: #333333; } 100% { transform: scale(2.5); opacity: 0; border-color: rgba(51,51,51,0.1); } }
+@keyframes ripple { 0% { transform: scale(0.8); opacity: 1; border-color: #333333; } 100% { transform: scale(2.5); opacity: 0; border-color: rgba(102,102,102,0.12); } }
 
 /* Legend */
 .network-legend {
