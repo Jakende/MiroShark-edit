@@ -489,10 +489,15 @@ const startSimulation = () => {
 
 .gradient-text {
   color: var(--color-black);
-  background: linear-gradient(90deg, var(--color-black) 0%, var(--color-gray-mid) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   display: inline;
+}
+
+@supports (-webkit-background-clip: text) {
+  .gradient-text {
+    background: linear-gradient(90deg, var(--color-black) 0%, var(--color-gray-mid) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 }
 
 .hero-desc {
@@ -810,7 +815,7 @@ const startSimulation = () => {
 
 .upload-zone.drag-over {
   border-color: var(--color-gray-mid);
-  background: rgba(0,0,0,0.05);
+  background: var(--color-overlay-subtle);
 }
 
 .upload-placeholder { text-align: center; }

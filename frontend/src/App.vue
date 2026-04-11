@@ -21,13 +21,15 @@ import DebugPanel from './components/DebugPanel.vue'
   --color-gray-mid: #666666;
   --color-gray-dark: #333333;
   --color-gray-light: #E5E5E5;
+  --color-overlay-subtle: rgba(0,0,0,0.05);
+  /* Legacy aliases retained for compatibility with untouched components. */
   --color-orange: var(--color-gray-dark);
   --color-green: var(--color-gray-mid);
   --color-amber: var(--color-gray-light);
   --color-red: var(--color-black);
 
   /* ── Semantic ── */
-  --background: #FAFAFA;
+  --background: var(--color-white);
   --foreground: #0A0A0A;
 
   /* ── 1.4x Modular Spacing Scale ── */
