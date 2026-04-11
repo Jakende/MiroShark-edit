@@ -434,7 +434,7 @@ const downloadComparison = () => {
 .brand {
   font-family: 'Young Serif', serif;
   font-size: 18px;
-  color: #333333;
+  color: #FAFAFA;
   cursor: pointer;
 }
 .page-tag {
