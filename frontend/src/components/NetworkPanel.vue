@@ -75,7 +75,7 @@
       <div class="legend-items">
         <div class="legend-item"><span class="legend-dot" style="background: #0A0A0A"></span><span>Platform A</span></div>
         <div class="legend-item"><span class="legend-dot" style="background: #666666"></span><span>Platform B</span></div>
-        <div class="legend-item"><span class="legend-dot" style="background: #CCCCCC"></span><span>Platform C</span></div>
+        <div class="legend-item"><span class="legend-dot" style="background: #999999"></span><span>Platform C</span></div>
       </div>
       <div class="legend-hint">Node size = activity · Edge thickness = interactions</div>
     </div>
@@ -110,7 +110,7 @@ let actionLayer = null    // D3 <g> for floating action indicators
 let nodePositions = {}    // agent_name -> { x, y } (updated by simulation tick)
 let graphBuilt = false
 
-const platformColors = { twitter: '#0A0A0A', reddit: '#666666', polymarket: '#CCCCCC' }
+const platformColors = { twitter: '#0A0A0A', reddit: '#666666', polymarket: '#999999' }
 const platformLabels = Object.freeze({
   twitter: 'Platform A',
   reddit: 'Platform B',
@@ -201,7 +201,7 @@ const buildFullNetworkData = () => {
   nodes.forEach(n => {
     let maxP = '', maxC = 0
     Object.entries(n.platforms).forEach(([p, c]) => { if (c > maxC) { maxC = c; maxP = p } })
-    n.color = platformColors[maxP] || '#7A7A7A'
+    n.color = platformColors[maxP] || '#666666'
   })
 
   return { nodes, edges }
@@ -457,7 +457,7 @@ const showRoundActions = (roundNum) => {
         .attr('x', -boxW / 2).attr('y', 0)
         .attr('width', boxW).attr('height', boxH)
         .attr('rx', 6)
-        .attr('fill', '#1A1A1A')
+        .attr('fill', '#111111')
         .attr('stroke', color)
         .attr('stroke-width', 1.5)
         .attr('opacity', 0.95)
@@ -634,8 +634,8 @@ onUnmounted(() => {
   height: 100%;
   background-color: #0A0A0A;
   background-image:
-    linear-gradient(rgba(102,102,102,0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(102,102,102,0.05) 1px, transparent 1px);
+    linear-gradient(rgba(51,51,51,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(51,51,51,0.04) 1px, transparent 1px);
   background-size: 70px 70px;
   overflow: hidden;
   display: flex;
@@ -647,7 +647,7 @@ onUnmounted(() => {
   position: absolute;
   top: 0; left: 0; right: 0;
   height: 3px;
-  background: linear-gradient(90deg, #333333 40px, transparent 40px, transparent calc(100% - 40px), #333333 calc(100% - 40px));
+  background: linear-gradient(90deg, #666666 40px, transparent 40px, transparent calc(100% - 40px), #666666 calc(100% - 40px));
   z-index: 30;
   pointer-events: none;
 }
@@ -657,7 +657,7 @@ onUnmounted(() => {
   position: absolute;
   bottom: 0; left: 0; right: 0;
   height: 3px;
-  background: linear-gradient(90deg, #666666 40px, transparent 40px, transparent calc(100% - 40px), #666666 calc(100% - 40px));
+  background: linear-gradient(90deg, #999999 40px, transparent 40px, transparent calc(100% - 40px), #999999 calc(100% - 40px));
   z-index: 30;
   pointer-events: none;
 }
@@ -742,7 +742,7 @@ onUnmounted(() => {
   flex-shrink: 0;
 }
 
-.scrub-btn:hover { border-color: #333333; background: rgba(102,102,102,0.12); }
+.scrub-btn:hover { border-color: #333333; background: rgba(51,51,51,0.1); }
 
 .round-slider {
   flex: 1;
@@ -807,14 +807,14 @@ onUnmounted(() => {
 .platform-bar { display: flex; align-items: center; gap: 8px; }
 .bar-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; min-width: 60px; color: rgba(10,10,10,0.5); }
 .bar-label.twitter { color: #0A0A0A; }
-.bar-label.reddit { color: #333333; }
-.bar-label.polymarket { color: #666666; }
+.bar-label.reddit { color: #666666; }
+.bar-label.polymarket { color: #999999; }
 
 .bar-track { flex: 1; height: 6px; background: rgba(10,10,10,0.06); }
 .bar-fill { height: 100%; transition: width 0.3s; }
 .bar-fill.twitter { background: #0A0A0A; }
-.bar-fill.reddit { background: #333333; }
-.bar-fill.polymarket { background: #666666; }
+.bar-fill.reddit { background: #666666; }
+.bar-fill.polymarket { background: #999999; }
 .bar-count { font-size: 10px; font-weight: 600; color: rgba(10,10,10,0.7); min-width: 20px; text-align: right; }
 
 .interaction-types { padding: 8px 14px 12px; display: flex; flex-wrap: wrap; gap: 4px; border-top: 1px solid rgba(10,10,10,0.06); }
@@ -838,7 +838,7 @@ onUnmounted(() => {
 }
 
 .pulse-ring { width: 32px; height: 32px; border: 2px solid #333333; animation: ripple 2s infinite; }
-@keyframes ripple { 0% { transform: scale(0.8); opacity: 1; border-color: #333333; } 100% { transform: scale(2.5); opacity: 0; border-color: rgba(102,102,102,0.12); } }
+@keyframes ripple { 0% { transform: scale(0.8); opacity: 1; border-color: #333333; } 100% { transform: scale(2.5); opacity: 0; border-color: rgba(51,51,51,0.1); } }
 
 /* Legend */
 .network-legend {
